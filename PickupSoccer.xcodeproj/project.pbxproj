@@ -1,0 +1,921 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2F169ED325DB4E4200FAFA06 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F169ED225DB4E4200FAFA06 /* Day.swift */; };
+		2F169ED525DB590A00FAFA06 /* MonthMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F169ED425DB590A00FAFA06 /* MonthMetaData.swift */; };
+		2F169ED825DB60F500FAFA06 /* CalendarDateViewCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F169ED725DB60F500FAFA06 /* CalendarDateViewCVCell.swift */; };
+		2F18899325D97FA600ECA469 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18899225D97FA600ECA469 /* AppDelegate.swift */; };
+		2F18899525D97FA600ECA469 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18899425D97FA600ECA469 /* SceneDelegate.swift */; };
+		2F18899C25D97FAA00ECA469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F18899B25D97FAA00ECA469 /* Assets.xcassets */; };
+		2F18899F25D97FAA00ECA469 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F18899D25D97FAA00ECA469 /* LaunchScreen.storyboard */; };
+		2F28E35925E6A66A00E64E70 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */; };
+		2F2D0AFB25F2840900FC87AA /* CreateGameProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0AFA25F2840900FC87AA /* CreateGameProtocols.swift */; };
+		2F2D0AFE25F30A6300FC87AA /* CreateGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */; };
+		2F2D0B0125F310E000FC87AA /* CreateGameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0B0025F310E000FC87AA /* CreateGameRouter.swift */; };
+		2F2D0B0425F3137800FC87AA /* CreateGamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0B0325F3137800FC87AA /* CreateGamePresenter.swift */; };
+		2F360DE025FEB37B009B711F /* GameDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F360DDF25FEB37B009B711F /* GameDetailsFooterView.swift */; };
+		2F364A3825F5583A00FC4216 /* GameLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F364A3725F5583900FC4216 /* GameLocationVC.swift */; };
+		2F38FB9225D9837200056052 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F38FB9125D9837200056052 /* Game.swift */; };
+		2F38FB9725D9A49800056052 /* GameAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F38FB9625D9A49800056052 /* GameAnnotation.swift */; };
+		2F38FB9925D9BA4F00056052 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F38FB9825D9BA4F00056052 /* Constants.swift */; };
+		2F3C853D262EFF3B00A01405 /* GamesModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C853C262EFF3B00A01405 /* GamesModule.swift */; };
+		2F3C8544262EFFB500A01405 /* GamesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C8543262EFFB500A01405 /* GamesProtocols.swift */; };
+		2F3C8546262F014C00A01405 /* GamesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C8545262F014C00A01405 /* GamesVC.swift */; };
+		2F3C8548262F032C00A01405 /* GamesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C8547262F032C00A01405 /* GamesPresenter.swift */; };
+		2F3C854A262F04C800A01405 /* GamesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C8549262F04C800A01405 /* GamesInteractor.swift */; };
+		2F3C854C262F063000A01405 /* GamesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C854B262F063000A01405 /* GamesRouter.swift */; };
+		2F46E9C62600F4EB0023D667 /* CalendarModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F46E9C52600F4EB0023D667 /* CalendarModule.swift */; };
+		2F690C2525FB04F900A7C054 /* CalendarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F690C2425FB04F900A7C054 /* CalendarInteractor.swift */; };
+		2F6BCB2126023DD6000DA4C5 /* UserLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6BCB2026023DD6000DA4C5 /* UserLocationService.swift */; };
+		2F6BCB2326024038000DA4C5 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6BCB2226024038000DA4C5 /* App.swift */; };
+		2F6BCB2B2602D62C000DA4C5 /* CalendarInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6BCB2A2602D62C000DA4C5 /* CalendarInteractorTests.swift */; };
+		2F8666142604CDD8007978B9 /* CalendarVC_MVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8666132604CDD7007978B9 /* CalendarVC_MVVM.swift */; };
+		2F8666162604DC6D007978B9 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8666152604DC6D007978B9 /* CalendarViewModel.swift */; };
+		2F86A79125FFA6D40093BB38 /* CalendarProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79025FFA6D40093BB38 /* CalendarProtocols.swift */; };
+		2F86A79325FFAA960093BB38 /* CalendarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79225FFAA960093BB38 /* CalendarPresenter.swift */; };
+		2F86A79525FFAB5D0093BB38 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79425FFAB5D0093BB38 /* CalendarVC.swift */; };
+		2F86A79725FFAD800093BB38 /* CalendarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79625FFAD800093BB38 /* CalendarRouter.swift */; };
+		2FA375A225EDB93700016633 /* GameTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA375A125EDB93700016633 /* GameTimeVC.swift */; };
+		2FA50F8E25DB6EB6000F401A /* CalendarPickerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA50F8D25DB6EB6000F401A /* CalendarPickerHeaderView.swift */; };
+		2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA50F8F25DB6EE8000F401A /* CalendarPickerFooterView.swift */; };
+		2FA596F42600FA68009FA3C2 /* CreateGameModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA596F32600FA68009FA3C2 /* CreateGameModule.swift */; };
+		2FB11A3C2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */; };
+		2FB11A3E2632F2DC00F0A723 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB11A3D2632F2DC00F0A723 /* PersistentContainer.swift */; };
+		2FDC2DAB26038E7B00B6C876 /* CreateGameInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC2DAA26038E7B00B6C876 /* CreateGameInteractorTests.swift */; };
+		2FEAEC3225E0120D00826A89 /* SetTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAEC3125E0120D00826A89 /* SetTimeView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2F6BCB2D2602D62C000DA4C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F18898725D97FA600ECA469 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F18898E25D97FA600ECA469;
+			remoteInfo = PickupSoccer;
+		};
+		2FDC2DAD26038E7B00B6C876 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F18898725D97FA600ECA469 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F18898E25D97FA600ECA469;
+			remoteInfo = PickupSoccer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2F169ED225DB4E4200FAFA06 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		2F169ED425DB590A00FAFA06 /* MonthMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetaData.swift; sourceTree = "<group>"; };
+		2F169ED725DB60F500FAFA06 /* CalendarDateViewCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateViewCVCell.swift; sourceTree = "<group>"; };
+		2F18898F25D97FA600ECA469 /* PickupSoccer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PickupSoccer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F18899225D97FA600ECA469 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2F18899425D97FA600ECA469 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		2F18899B25D97FAA00ECA469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2F18899E25D97FAA00ECA469 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2F1889A025D97FAA00ECA469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
+		2F2D0AFA25F2840900FC87AA /* CreateGameProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameProtocols.swift; sourceTree = "<group>"; };
+		2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameInteractor.swift; sourceTree = "<group>"; };
+		2F2D0B0025F310E000FC87AA /* CreateGameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameRouter.swift; sourceTree = "<group>"; };
+		2F2D0B0325F3137800FC87AA /* CreateGamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGamePresenter.swift; sourceTree = "<group>"; };
+		2F360DDF25FEB37B009B711F /* GameDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsFooterView.swift; sourceTree = "<group>"; };
+		2F364A3725F5583900FC4216 /* GameLocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLocationVC.swift; sourceTree = "<group>"; };
+		2F38FB9125D9837200056052 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		2F38FB9625D9A49800056052 /* GameAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAnnotation.swift; sourceTree = "<group>"; };
+		2F38FB9825D9BA4F00056052 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2F3C853C262EFF3B00A01405 /* GamesModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesModule.swift; sourceTree = "<group>"; };
+		2F3C8543262EFFB500A01405 /* GamesProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesProtocols.swift; sourceTree = "<group>"; };
+		2F3C8545262F014C00A01405 /* GamesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesVC.swift; sourceTree = "<group>"; };
+		2F3C8547262F032C00A01405 /* GamesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesPresenter.swift; sourceTree = "<group>"; };
+		2F3C8549262F04C800A01405 /* GamesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesInteractor.swift; sourceTree = "<group>"; };
+		2F3C854B262F063000A01405 /* GamesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesRouter.swift; sourceTree = "<group>"; };
+		2F46E9C52600F4EB0023D667 /* CalendarModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModule.swift; sourceTree = "<group>"; };
+		2F690C2425FB04F900A7C054 /* CalendarInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInteractor.swift; sourceTree = "<group>"; };
+		2F6BCB2026023DD6000DA4C5 /* UserLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationService.swift; sourceTree = "<group>"; };
+		2F6BCB2226024038000DA4C5 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		2F6BCB282602D62C000DA4C5 /* CalendarInteractorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalendarInteractorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F6BCB2A2602D62C000DA4C5 /* CalendarInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInteractorTests.swift; sourceTree = "<group>"; };
+		2F6BCB2C2602D62C000DA4C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F8666132604CDD7007978B9 /* CalendarVC_MVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC_MVVM.swift; sourceTree = "<group>"; };
+		2F8666152604DC6D007978B9 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		2F86A79025FFA6D40093BB38 /* CalendarProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarProtocols.swift; sourceTree = "<group>"; };
+		2F86A79225FFAA960093BB38 /* CalendarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPresenter.swift; sourceTree = "<group>"; };
+		2F86A79425FFAB5D0093BB38 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
+		2F86A79625FFAD800093BB38 /* CalendarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarRouter.swift; sourceTree = "<group>"; };
+		2FA375A125EDB93700016633 /* GameTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeVC.swift; sourceTree = "<group>"; };
+		2FA50F8D25DB6EB6000F401A /* CalendarPickerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerHeaderView.swift; sourceTree = "<group>"; };
+		2FA50F8F25DB6EE8000F401A /* CalendarPickerFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerFooterView.swift; sourceTree = "<group>"; };
+		2FA50F9125DB7453000F401A /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2FA596F32600FA68009FA3C2 /* CreateGameModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameModule.swift; sourceTree = "<group>"; };
+		2FB11A3B2632EF3B00F0A723 /* Game.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Game.xcdatamodel; sourceTree = "<group>"; };
+		2FB11A3D2632F2DC00F0A723 /* PersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
+		2FDC2DA826038E7B00B6C876 /* CreateGameInteractorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreateGameInteractorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FDC2DAA26038E7B00B6C876 /* CreateGameInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameInteractorTests.swift; sourceTree = "<group>"; };
+		2FDC2DAC26038E7B00B6C876 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2FEAEC3125E0120D00826A89 /* SetTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2F18898C25D97FA600ECA469 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F6BCB252602D62C000DA4C5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FDC2DA526038E7B00B6C876 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2F18898625D97FA600ECA469 = {
+			isa = PBXGroup;
+			children = (
+				2F18899125D97FA600ECA469 /* PickupSoccer */,
+				2F6BCB292602D62C000DA4C5 /* CalendarInteractorTests */,
+				2FDC2DA926038E7B00B6C876 /* CreateGameInteractorTests */,
+				2F18899025D97FA600ECA469 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2F18899025D97FA600ECA469 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2F18898F25D97FA600ECA469 /* PickupSoccer.app */,
+				2F6BCB282602D62C000DA4C5 /* CalendarInteractorTests.xctest */,
+				2FDC2DA826038E7B00B6C876 /* CreateGameInteractorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F18899125D97FA600ECA469 /* PickupSoccer */ = {
+			isa = PBXGroup;
+			children = (
+				2FA3758725ED3D4E00016633 /* Common */,
+				2F28E35725E6A65800E64E70 /* Extensions */,
+				2FA3758B25ED3F2300016633 /* Modules */,
+				2F8666132604CDD7007978B9 /* CalendarVC_MVVM.swift */,
+				2F8666152604DC6D007978B9 /* CalendarViewModel.swift */,
+				2F18899225D97FA600ECA469 /* AppDelegate.swift */,
+				2F18899425D97FA600ECA469 /* SceneDelegate.swift */,
+				2F38FB9825D9BA4F00056052 /* Constants.swift */,
+				2F18899B25D97FAA00ECA469 /* Assets.xcassets */,
+				2F18899D25D97FAA00ECA469 /* LaunchScreen.storyboard */,
+				2F1889A025D97FAA00ECA469 /* Info.plist */,
+				2FA50F9125DB7453000F401A /* MyPlayground.playground */,
+			);
+			path = PickupSoccer;
+			sourceTree = "<group>";
+		};
+		2F28E35725E6A65800E64E70 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2F2D0AF925F283EB00FC87AA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2F2D0AFA25F2840900FC87AA /* CreateGameProtocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2F2D0AFC25F30A4100FC87AA /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */,
+				2F38FB9625D9A49800056052 /* GameAnnotation.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		2F2D0AFF25F310CF00FC87AA /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				2F2D0B0025F310E000FC87AA /* CreateGameRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		2F2D0B0225F3136800FC87AA /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				2F2D0B0325F3137800FC87AA /* CreateGamePresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		2F2D0B0525F315C300FC87AA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2FA375A125EDB93700016633 /* GameTimeVC.swift */,
+				2F364A3725F5583900FC4216 /* GameLocationVC.swift */,
+				2FEAEC3125E0120D00826A89 /* SetTimeView.swift */,
+				2F360DDF25FEB37B009B711F /* GameDetailsFooterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2F38FB9025D9836500056052 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2F38FB9125D9837200056052 /* Game.swift */,
+				2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2F3C853B262EFF0B00A01405 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				2F3C853C262EFF3B00A01405 /* GamesModule.swift */,
+				2F3C8542262EFF9B00A01405 /* View */,
+				2F3C8541262EFF9400A01405 /* Interactor */,
+				2F3C8540262EFF8C00A01405 /* Presenter */,
+				2F3C853F262EFF8600A01405 /* Router */,
+				2F3C853E262EFF7E00A01405 /* Protocols */,
+			);
+			path = Games;
+			sourceTree = "<group>";
+		};
+		2F3C853E262EFF7E00A01405 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2F3C8543262EFFB500A01405 /* GamesProtocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2F3C853F262EFF8600A01405 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				2F3C854B262F063000A01405 /* GamesRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		2F3C8540262EFF8C00A01405 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				2F3C8547262F032C00A01405 /* GamesPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		2F3C8541262EFF9400A01405 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				2F3C8549262F04C800A01405 /* GamesInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		2F3C8542262EFF9B00A01405 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2F3C8545262F014C00A01405 /* GamesVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2F6BCB1F26023DC4000DA4C5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2F6BCB2026023DD6000DA4C5 /* UserLocationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2F6BCB292602D62C000DA4C5 /* CalendarInteractorTests */ = {
+			isa = PBXGroup;
+			children = (
+				2F6BCB2A2602D62C000DA4C5 /* CalendarInteractorTests.swift */,
+				2F6BCB2C2602D62C000DA4C5 /* Info.plist */,
+			);
+			path = CalendarInteractorTests;
+			sourceTree = "<group>";
+		};
+		2F86A78A25FFA6740093BB38 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				2F46E9C52600F4EB0023D667 /* CalendarModule.swift */,
+				2F86A78B25FFA6970093BB38 /* View */,
+				2F86A78D25FFA6A20093BB38 /* Interactor */,
+				2F86A78C25FFA69D0093BB38 /* Presenter */,
+				2F86A78E25FFA6AE0093BB38 /* Router */,
+				2F86A78F25FFA6BC0093BB38 /* Protocols */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		2F86A78B25FFA6970093BB38 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2F86A79425FFAB5D0093BB38 /* CalendarVC.swift */,
+				2F169ED725DB60F500FAFA06 /* CalendarDateViewCVCell.swift */,
+				2FA50F8D25DB6EB6000F401A /* CalendarPickerHeaderView.swift */,
+				2FA50F8F25DB6EE8000F401A /* CalendarPickerFooterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2F86A78C25FFA69D0093BB38 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				2F86A79225FFAA960093BB38 /* CalendarPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		2F86A78D25FFA6A20093BB38 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				2F690C2425FB04F900A7C054 /* CalendarInteractor.swift */,
+				2F169ED225DB4E4200FAFA06 /* Day.swift */,
+				2F169ED425DB590A00FAFA06 /* MonthMetaData.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		2F86A78E25FFA6AE0093BB38 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				2F86A79625FFAD800093BB38 /* CalendarRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		2F86A78F25FFA6BC0093BB38 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2F86A79025FFA6D40093BB38 /* CalendarProtocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2FA3758725ED3D4E00016633 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2F6BCB2226024038000DA4C5 /* App.swift */,
+				2F6BCB1F26023DC4000DA4C5 /* Services */,
+				2F38FB9025D9836500056052 /* Model */,
+				2FB11A3D2632F2DC00F0A723 /* PersistentContainer.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		2FA3758B25ED3F2300016633 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				2F3C853B262EFF0B00A01405 /* Games */,
+				2F86A78A25FFA6740093BB38 /* Calendar */,
+				2FA3758C25ED3F3700016633 /* CreateGame */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		2FA3758C25ED3F3700016633 /* CreateGame */ = {
+			isa = PBXGroup;
+			children = (
+				2FA596F32600FA68009FA3C2 /* CreateGameModule.swift */,
+				2F2D0B0525F315C300FC87AA /* View */,
+				2F2D0AFC25F30A4100FC87AA /* Interactor */,
+				2F2D0B0225F3136800FC87AA /* Presenter */,
+				2F2D0AFF25F310CF00FC87AA /* Router */,
+				2F2D0AF925F283EB00FC87AA /* Protocols */,
+			);
+			path = CreateGame;
+			sourceTree = "<group>";
+		};
+		2FDC2DA926038E7B00B6C876 /* CreateGameInteractorTests */ = {
+			isa = PBXGroup;
+			children = (
+				2FDC2DAA26038E7B00B6C876 /* CreateGameInteractorTests.swift */,
+				2FDC2DAC26038E7B00B6C876 /* Info.plist */,
+			);
+			path = CreateGameInteractorTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2F18898E25D97FA600ECA469 /* PickupSoccer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F1889A325D97FAA00ECA469 /* Build configuration list for PBXNativeTarget "PickupSoccer" */;
+			buildPhases = (
+				2F18898B25D97FA600ECA469 /* Sources */,
+				2F18898C25D97FA600ECA469 /* Frameworks */,
+				2F18898D25D97FA600ECA469 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PickupSoccer;
+			productName = PickupSoccer;
+			productReference = 2F18898F25D97FA600ECA469 /* PickupSoccer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2F6BCB272602D62C000DA4C5 /* CalendarInteractorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F6BCB2F2602D62C000DA4C5 /* Build configuration list for PBXNativeTarget "CalendarInteractorTests" */;
+			buildPhases = (
+				2F6BCB242602D62C000DA4C5 /* Sources */,
+				2F6BCB252602D62C000DA4C5 /* Frameworks */,
+				2F6BCB262602D62C000DA4C5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2F6BCB2E2602D62C000DA4C5 /* PBXTargetDependency */,
+			);
+			name = CalendarInteractorTests;
+			productName = CalendarInteractorTests;
+			productReference = 2F6BCB282602D62C000DA4C5 /* CalendarInteractorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2FDC2DA726038E7B00B6C876 /* CreateGameInteractorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FDC2DB126038E7B00B6C876 /* Build configuration list for PBXNativeTarget "CreateGameInteractorTests" */;
+			buildPhases = (
+				2FDC2DA426038E7B00B6C876 /* Sources */,
+				2FDC2DA526038E7B00B6C876 /* Frameworks */,
+				2FDC2DA626038E7B00B6C876 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2FDC2DAE26038E7B00B6C876 /* PBXTargetDependency */,
+			);
+			name = CreateGameInteractorTests;
+			productName = CreateGameInteractorTests;
+			productReference = 2FDC2DA826038E7B00B6C876 /* CreateGameInteractorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2F18898725D97FA600ECA469 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Heriberto Rodriguez";
+				TargetAttributes = {
+					2F18898E25D97FA600ECA469 = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+					2F6BCB272602D62C000DA4C5 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 2F18898E25D97FA600ECA469;
+					};
+					2FDC2DA726038E7B00B6C876 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 2F18898E25D97FA600ECA469;
+					};
+				};
+			};
+			buildConfigurationList = 2F18898A25D97FA600ECA469 /* Build configuration list for PBXProject "PickupSoccer" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2F18898625D97FA600ECA469;
+			productRefGroup = 2F18899025D97FA600ECA469 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2F18898E25D97FA600ECA469 /* PickupSoccer */,
+				2F6BCB272602D62C000DA4C5 /* CalendarInteractorTests */,
+				2FDC2DA726038E7B00B6C876 /* CreateGameInteractorTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2F18898D25D97FA600ECA469 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F18899F25D97FAA00ECA469 /* LaunchScreen.storyboard in Resources */,
+				2F18899C25D97FAA00ECA469 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F6BCB262602D62C000DA4C5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FDC2DA626038E7B00B6C876 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2F18898B25D97FA600ECA469 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F86A79725FFAD800093BB38 /* CalendarRouter.swift in Sources */,
+				2F3C8544262EFFB500A01405 /* GamesProtocols.swift in Sources */,
+				2F86A79325FFAA960093BB38 /* CalendarPresenter.swift in Sources */,
+				2F169ED825DB60F500FAFA06 /* CalendarDateViewCVCell.swift in Sources */,
+				2F6BCB2326024038000DA4C5 /* App.swift in Sources */,
+				2FA50F8E25DB6EB6000F401A /* CalendarPickerHeaderView.swift in Sources */,
+				2FB11A3C2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld in Sources */,
+				2F38FB9725D9A49800056052 /* GameAnnotation.swift in Sources */,
+				2F2D0AFE25F30A6300FC87AA /* CreateGameInteractor.swift in Sources */,
+				2F2D0B0425F3137800FC87AA /* CreateGamePresenter.swift in Sources */,
+				2F2D0B0125F310E000FC87AA /* CreateGameRouter.swift in Sources */,
+				2F3C8546262F014C00A01405 /* GamesVC.swift in Sources */,
+				2F169ED325DB4E4200FAFA06 /* Day.swift in Sources */,
+				2F18899325D97FA600ECA469 /* AppDelegate.swift in Sources */,
+				2F8666142604CDD8007978B9 /* CalendarVC_MVVM.swift in Sources */,
+				2F690C2525FB04F900A7C054 /* CalendarInteractor.swift in Sources */,
+				2F18899525D97FA600ECA469 /* SceneDelegate.swift in Sources */,
+				2F360DE025FEB37B009B711F /* GameDetailsFooterView.swift in Sources */,
+				2F86A79125FFA6D40093BB38 /* CalendarProtocols.swift in Sources */,
+				2F28E35925E6A66A00E64E70 /* ViewController+Ext.swift in Sources */,
+				2F86A79525FFAB5D0093BB38 /* CalendarVC.swift in Sources */,
+				2F364A3825F5583A00FC4216 /* GameLocationVC.swift in Sources */,
+				2FB11A3E2632F2DC00F0A723 /* PersistentContainer.swift in Sources */,
+				2F38FB9225D9837200056052 /* Game.swift in Sources */,
+				2F3C854A262F04C800A01405 /* GamesInteractor.swift in Sources */,
+				2F3C853D262EFF3B00A01405 /* GamesModule.swift in Sources */,
+				2F169ED525DB590A00FAFA06 /* MonthMetaData.swift in Sources */,
+				2F38FB9925D9BA4F00056052 /* Constants.swift in Sources */,
+				2FA596F42600FA68009FA3C2 /* CreateGameModule.swift in Sources */,
+				2F3C8548262F032C00A01405 /* GamesPresenter.swift in Sources */,
+				2FEAEC3225E0120D00826A89 /* SetTimeView.swift in Sources */,
+				2F8666162604DC6D007978B9 /* CalendarViewModel.swift in Sources */,
+				2F3C854C262F063000A01405 /* GamesRouter.swift in Sources */,
+				2FA375A225EDB93700016633 /* GameTimeVC.swift in Sources */,
+				2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */,
+				2F6BCB2126023DD6000DA4C5 /* UserLocationService.swift in Sources */,
+				2F2D0AFB25F2840900FC87AA /* CreateGameProtocols.swift in Sources */,
+				2F46E9C62600F4EB0023D667 /* CalendarModule.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F6BCB242602D62C000DA4C5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F6BCB2B2602D62C000DA4C5 /* CalendarInteractorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FDC2DA426038E7B00B6C876 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FDC2DAB26038E7B00B6C876 /* CreateGameInteractorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2F6BCB2E2602D62C000DA4C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F18898E25D97FA600ECA469 /* PickupSoccer */;
+			targetProxy = 2F6BCB2D2602D62C000DA4C5 /* PBXContainerItemProxy */;
+		};
+		2FDC2DAE26038E7B00B6C876 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F18898E25D97FA600ECA469 /* PickupSoccer */;
+			targetProxy = 2FDC2DAD26038E7B00B6C876 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2F18899D25D97FAA00ECA469 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F18899E25D97FAA00ECA469 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2F1889A125D97FAA00ECA469 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2F1889A225D97FAA00ECA469 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2F1889A425D97FAA00ECA469 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = PickupSoccer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				NEW_SETTING = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.PickupSoccer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = DEBUG_GAME_TIME_VC;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2F1889A525D97FAA00ECA469 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = PickupSoccer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				NEW_SETTING = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.PickupSoccer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2F6BCB302602D62C000DA4C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = CalendarInteractorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.CalendarInteractorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PickupSoccer.app/PickupSoccer";
+			};
+			name = Debug;
+		};
+		2F6BCB312602D62C000DA4C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = CalendarInteractorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.CalendarInteractorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PickupSoccer.app/PickupSoccer";
+			};
+			name = Release;
+		};
+		2FDC2DAF26038E7B00B6C876 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = CreateGameInteractorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.CreateGameInteractorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PickupSoccer.app/PickupSoccer";
+			};
+			name = Debug;
+		};
+		2FDC2DB026038E7B00B6C876 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = CreateGameInteractorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.CreateGameInteractorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PickupSoccer.app/PickupSoccer";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2F18898A25D97FA600ECA469 /* Build configuration list for PBXProject "PickupSoccer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F1889A125D97FAA00ECA469 /* Debug */,
+				2F1889A225D97FAA00ECA469 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F1889A325D97FAA00ECA469 /* Build configuration list for PBXNativeTarget "PickupSoccer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F1889A425D97FAA00ECA469 /* Debug */,
+				2F1889A525D97FAA00ECA469 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F6BCB2F2602D62C000DA4C5 /* Build configuration list for PBXNativeTarget "CalendarInteractorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F6BCB302602D62C000DA4C5 /* Debug */,
+				2F6BCB312602D62C000DA4C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2FDC2DB126038E7B00B6C876 /* Build configuration list for PBXNativeTarget "CreateGameInteractorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FDC2DAF26038E7B00B6C876 /* Debug */,
+				2FDC2DB026038E7B00B6C876 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2FB11A3B2632EF3B00F0A723 /* Game.xcdatamodel */,
+			);
+			currentVersion = 2FB11A3B2632EF3B00F0A723 /* Game.xcdatamodel */;
+			path = PickupSoccer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 2F18898725D97FA600ECA469 /* Project object */;
+}
