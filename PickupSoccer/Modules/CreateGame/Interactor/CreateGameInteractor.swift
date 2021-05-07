@@ -76,6 +76,10 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
         presenter?.convertDateIntervalToStartDateAndDuration(newGame.dateInterval)
     }
     
+    func setAddressOfNewGame(_ address: String) {
+        newGame.setAddress(address)
+    }
+    
     func saveNewGame() {
         // 1. get reference to app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -94,6 +98,7 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
         locationMO.setValue(newGame.location.longitude, forKey: "longitude")
         dateIntervalMO.setValue(newGame.dateInterval.start, forKey: "start")
         dateIntervalMO.setValue(newGame.dateInterval.end, forKey: "end")
+        gameMO.setValue(newGame.address, forKey: "address")
         gameMO.setValue(locationMO, forKey: "location")
         gameMO.setValue(dateIntervalMO, forKey: "dateInterval")
         // 6. save managed object context

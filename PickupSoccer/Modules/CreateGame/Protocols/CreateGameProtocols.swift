@@ -47,6 +47,7 @@ protocol CreateGamePresenterToCreateGameInteractor {
     func setDateIntervalOfNewGame(_ interval: DateInterval)
     func generateUsersLocation(completionHandler: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void)
     func setLocationOfNewGame(_ location: CLLocationCoordinate2D)
+    func setAddressOfNewGame(_ address: String)
     func returnStartDateAndEndDateOfGame()
     func saveNewGame()
 }

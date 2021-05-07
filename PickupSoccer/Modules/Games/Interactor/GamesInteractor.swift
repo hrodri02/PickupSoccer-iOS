@@ -29,6 +29,7 @@ class GamesInteractor: GamesPresenterToGamesInteractor {
             let managedObjects: [NSManagedObject] = try managedObjectContext.fetch(fetchRequest)
             var coordinateToGame: [String : Game] = [:]
             for mo in managedObjects {
+                let address = mo.value(forKey: "address") as? String
                 let locationMO = mo.value(forKey: "location") as? NSManagedObject
                 let dateIntervalMO = mo.value(forKey: "dateInterval") as? NSManagedObject
                 let latitude = locationMO?.value(forKey: "latitude") as? Double
@@ -39,7 +40,7 @@ class GamesInteractor: GamesPresenterToGamesInteractor {
                 let location = CLLocationCoordinate2D(latitude: latitude!,
                                                       longitude: longitude!)
                 let dateInterval = DateInterval(start: start!, end: end!)
-                let game = Game(location, dateInterval)
+                let game = Game(location, dateInterval, address ?? "")
                 if game.location.latitude > center.latitude - latitudeDelta / 2 &&
                    game.location.latitude < center.latitude + latitudeDelta / 2 &&
                    game.location.longitude > center.longitude - longitudeDelta / 2 &&

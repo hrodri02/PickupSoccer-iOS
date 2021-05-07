@@ -77,6 +77,7 @@ extension CreateGamePresenter: GameLocationViewToCreateGamePresenter {
             else {
                 if let address = placemarks?.first?.name {
                     self.gameLocationView?.convertedCoordinateToAddress(address)
+                    self.createGameInteractor?.setAddressOfNewGame(address)
                 }
             }
         }
