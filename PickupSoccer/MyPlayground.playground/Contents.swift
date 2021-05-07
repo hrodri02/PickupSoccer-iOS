@@ -4,6 +4,12 @@
 // ocean view park
 //37.71590334951762, -122.45735797571214
 
+let arr = [5,1,7,2,3]
+
+for i in arr where i > 2 {
+    print(i)
+}
+
 import CoreLocation
 
 let MILES_IN_METER = 0.000621371
