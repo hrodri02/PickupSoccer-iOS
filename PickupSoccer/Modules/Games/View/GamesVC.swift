@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class GamesVC: UIViewController, UICollectionViewDelegate
 {
@@ -207,9 +208,11 @@ extension GamesVC: GamesPresenterToGamesView {
         }
         
         collectionView.reloadData()
-        collectionView.scrollToItem(at: IndexPath(item: (DUPLICATE_DATA_SETS / 2) * annotations.count, section: 0),
-                                    at: .centeredHorizontally,
-                                    animated: false)
+        if annotations.count > 0 {
+            collectionView.scrollToItem(at: IndexPath(item: (DUPLICATE_DATA_SETS / 2) * annotations.count, section: 0),
+            at: .centeredHorizontally,
+            animated: false)
+        }
     }
     
     func displayErrorMessage(_ errorMessage: String) {
