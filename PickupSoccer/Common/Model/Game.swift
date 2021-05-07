@@ -10,17 +10,24 @@ import MapKit
 
 struct Game
 {
+    var address: String
     var location: CLLocationCoordinate2D
     var dateInterval: DateInterval
     
     init() {
+        address = ""
         dateInterval = DateInterval()
         location = CLLocationCoordinate2D()
     }
     
-    init(_ location: CLLocationCoordinate2D, _ dateInterval: DateInterval) {
+    init(_ location: CLLocationCoordinate2D, _ dateInterval: DateInterval, _ address: String = "") {
+        self.address = address
         self.location = location
         self.dateInterval = dateInterval
+    }
+    
+    mutating func setAddress(_ address: String) {
+        self.address = address
     }
     
     mutating func setDateInterval(_ interval: DateInterval) {
