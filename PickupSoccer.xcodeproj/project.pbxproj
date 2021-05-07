@@ -30,7 +30,9 @@
 		2F3C8548262F032C00A01405 /* GamesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C8547262F032C00A01405 /* GamesPresenter.swift */; };
 		2F3C854A262F04C800A01405 /* GamesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C8549262F04C800A01405 /* GamesInteractor.swift */; };
 		2F3C854C262F063000A01405 /* GamesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C854B262F063000A01405 /* GamesRouter.swift */; };
+		2F45EE922640996D00F3A3B4 /* GameCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45EE912640996D00F3A3B4 /* GameCVCell.swift */; };
 		2F46E9C62600F4EB0023D667 /* CalendarModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F46E9C52600F4EB0023D667 /* CalendarModule.swift */; };
+		2F4C9A512638BAF70095F114 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4C9A502638BAF70095F114 /* CarouselLayout.swift */; };
 		2F690C2525FB04F900A7C054 /* CalendarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F690C2425FB04F900A7C054 /* CalendarInteractor.swift */; };
 		2F6BCB2126023DD6000DA4C5 /* UserLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6BCB2026023DD6000DA4C5 /* UserLocationService.swift */; };
 		2F6BCB2326024038000DA4C5 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6BCB2226024038000DA4C5 /* App.swift */; };
@@ -94,7 +96,9 @@
 		2F3C8547262F032C00A01405 /* GamesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesPresenter.swift; sourceTree = "<group>"; };
 		2F3C8549262F04C800A01405 /* GamesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesInteractor.swift; sourceTree = "<group>"; };
 		2F3C854B262F063000A01405 /* GamesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesRouter.swift; sourceTree = "<group>"; };
+		2F45EE912640996D00F3A3B4 /* GameCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCVCell.swift; sourceTree = "<group>"; };
 		2F46E9C52600F4EB0023D667 /* CalendarModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModule.swift; sourceTree = "<group>"; };
+		2F4C9A502638BAF70095F114 /* CarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
 		2F690C2425FB04F900A7C054 /* CalendarInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInteractor.swift; sourceTree = "<group>"; };
 		2F6BCB2026023DD6000DA4C5 /* UserLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationService.swift; sourceTree = "<group>"; };
 		2F6BCB2226024038000DA4C5 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				2F3C8545262F014C00A01405 /* GamesVC.swift */,
+				2F45EE912640996D00F3A3B4 /* GameCVCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				2F6BCB1F26023DC4000DA4C5 /* Services */,
 				2F38FB9025D9836500056052 /* Model */,
 				2FB11A3D2632F2DC00F0A723 /* PersistentContainer.swift */,
+				2F4C9A502638BAF70095F114 /* CarouselLayout.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -550,6 +556,7 @@
 				2F3C8544262EFFB500A01405 /* GamesProtocols.swift in Sources */,
 				2F86A79325FFAA960093BB38 /* CalendarPresenter.swift in Sources */,
 				2F169ED825DB60F500FAFA06 /* CalendarDateViewCVCell.swift in Sources */,
+				2F4C9A512638BAF70095F114 /* CarouselLayout.swift in Sources */,
 				2F6BCB2326024038000DA4C5 /* App.swift in Sources */,
 				2FA50F8E25DB6EB6000F401A /* CalendarPickerHeaderView.swift in Sources */,
 				2FB11A3C2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld in Sources */,
@@ -583,6 +590,7 @@
 				2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */,
 				2F6BCB2126023DD6000DA4C5 /* UserLocationService.swift in Sources */,
 				2F2D0AFB25F2840900FC87AA /* CreateGameProtocols.swift in Sources */,
+				2F45EE922640996D00F3A3B4 /* GameCVCell.swift in Sources */,
 				2F46E9C62600F4EB0023D667 /* CalendarModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
