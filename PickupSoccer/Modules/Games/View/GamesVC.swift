@@ -196,14 +196,13 @@ extension GamesVC: GamesPresenterToGamesView {
         for (coordinate, game) in coordinateToGame {
             if coordinateToAnnotation[coordinate] == nil {
                 let annotation = GameAnnotation(coor: game.location)
+                annotation.title = game.address
                 mapView.addAnnotation(annotation)
                 coordinateToAnnotation[coordinate] = annotation
             }
         }
         
         for (_, annotation) in coordinateToAnnotation {
-            let coordinate = annotation.coordinate
-            annotation.title = "lat = \(coordinate.latitude),\nlon = \(coordinate.longitude)"
             annotations.append(annotation)
         }
         
@@ -273,8 +272,9 @@ extension GamesVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! GameCVCell
-        let annotationTag = indexPath.item % annotations.count
-        cell.locationLabel.text = "\(annotationTag). Ocean View Park"
+        let index = indexPath.item % annotations.count
+        let address = annotations[index].title ?? ""
+        cell.locationLabel.text = "\(index). \(address)"
         return cell
     }
 }
