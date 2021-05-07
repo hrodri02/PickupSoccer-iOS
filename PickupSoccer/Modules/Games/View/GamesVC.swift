@@ -9,10 +9,13 @@
 import UIKit
 import MapKit
 
-class GamesVC: UIViewController
+class GamesVC: UIViewController, UICollectionViewDelegate
 {
+    var annotations: [GameAnnotation] = []
     var coordinateToAnnotation: [String: GameAnnotation] = [:]
+    var selectedItem: Int = 0
     // mcdonals by crocker: 37.70720493819644, -122.41545805721627
+    let DUPLICATE_DATA_SETS = 1000
     let LATITUDINAL_METERS: Double = 3000
     let LONGITUDINAL_METERS: Double = 3000
     let KM_IN_DEGREE: Double = 111
@@ -42,6 +45,18 @@ class GamesVC: UIViewController
         return button
     }()
     
+    lazy var collectionView: UICollectionView = {
+        let layout = CarouselLayout()
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.register(GameCVCell.self, forCellWithReuseIdentifier: "CellID")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.isScrollEnabled = true
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
     lazy var addGameButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
@@ -60,6 +75,7 @@ class GamesVC: UIViewController
         addSubviews()
         setMapViewConstraints()
         setRedoSearchButtonConstriants()
+        setCollectionViewContraints()
         setAddGameButtonConstraints()
     }
     
@@ -100,6 +116,16 @@ class GamesVC: UIViewController
         }
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let maxZoom: CGFloat = CarouselLayoutConstants.maxCellHeight / CarouselLayoutConstants.minCellHeight
+        let deltaWidth = CarouselLayoutConstants.minCellWidth * (maxZoom - 1.0)
+        let minLineSpacing = CarouselLayoutConstants.horizontalSpaceBetweenCells + (deltaWidth / 2.0)
+        let item = (collectionView.bounds.midX - CarouselLayoutConstants.minCellWidth / 2.0) / (CarouselLayoutConstants.minCellWidth + minLineSpacing)
+        selectedItem = Int(round(item))
+        print(selectedItem)
+    }
+    
+    
     private func setupTopNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close,
                                                            target: self,
@@ -108,6 +134,7 @@ class GamesVC: UIViewController
     
     private func addSubviews() {
         mapView.addSubview(redoSearchButton)
+        mapView.addSubview(collectionView)
         mapView.addSubview(addGameButton)
         view.addSubview(mapView)
     }
@@ -133,6 +160,15 @@ class GamesVC: UIViewController
         ])
     }
     
+    private func setCollectionViewContraints() {
+        NSLayoutConstraint.activate([
+            collectionView.bottomAnchor.constraint(equalTo: addGameButton.topAnchor, constant: -10),
+            collectionView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: SCREEN_HEIGHT * 0.25)
+        ])
+    }
+    
     private func setAddGameButtonConstraints() {
         NSLayoutConstraint.activate([
             addGameButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -SCREEN_WIDTH * 0.05),
@@ -145,7 +181,9 @@ class GamesVC: UIViewController
 
 extension GamesVC: GamesPresenterToGamesView {
     func displayGames(_ coordinateToGame: [String : Game]) {
-        // remove old annotations
+        annotations.removeAll()
+        
+        // remove old annotations that are no longer within the visible region
         for (coordinate, annotation) in coordinateToAnnotation {
             if coordinateToGame[coordinate] == nil {
                 mapView.removeAnnotation(annotation)
@@ -161,6 +199,17 @@ extension GamesVC: GamesPresenterToGamesView {
                 coordinateToAnnotation[coordinate] = annotation
             }
         }
+        
+        for (_, annotation) in coordinateToAnnotation {
+            let coordinate = annotation.coordinate
+            annotation.title = "lat = \(coordinate.latitude),\nlon = \(coordinate.longitude)"
+            annotations.append(annotation)
+        }
+        
+        collectionView.reloadData()
+        collectionView.scrollToItem(at: IndexPath(item: (DUPLICATE_DATA_SETS / 2) * annotations.count, section: 0),
+                                    at: .centeredHorizontally,
+                                    animated: false)
     }
     
     func displayErrorMessage(_ errorMessage: String) {
@@ -180,5 +229,49 @@ extension GamesVC: MKMapViewDelegate {
             annotationView.bounds = CGRect(x: 0, y: 0, width: SCREEN_WIDTH * 0.10, height: SCREEN_WIDTH * 0.10)
             return annotationView
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let coordinate = view.annotation?.coordinate {
+            let key = "lat=\(coordinate.latitude), lon=\(coordinate.longitude)"
+            if let annotation = coordinateToAnnotation[key],
+                let targetItem = annotations.firstIndex(of: annotation)
+            {
+                let currItem = selectedItem % annotations.count
+                if currItem == targetItem {
+                    return
+                }
+                
+                let stepsToRight = (currItem > targetItem) ? annotations.count - (currItem) + targetItem : targetItem - currItem
+                let stepsToLeft = (currItem > targetItem) ? currItem - targetItem : annotations.count - targetItem + (currItem)
+                if selectedItem - stepsToLeft < 0 {
+                    selectedItem += stepsToRight
+                }
+                else if selectedItem + stepsToRight >= annotations.count * DUPLICATE_DATA_SETS {
+                    selectedItem -= stepsToLeft
+                }
+                else {
+                    selectedItem += (stepsToLeft <= stepsToRight) ? -stepsToLeft : stepsToRight
+                }
+                collectionView.scrollToItem(at: IndexPath(item: selectedItem, section: 0),
+                                            at: .centeredHorizontally,
+                                            animated: true)
+            }
+        }
+    }
+    
+    
+}
+
+extension GamesVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return annotations.count * DUPLICATE_DATA_SETS
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! GameCVCell
+        let annotationTag = indexPath.item % annotations.count
+        cell.locationLabel.text = "\(annotationTag). Ocean View Park"
+        return cell
     }
 }
