@@ -13,9 +13,7 @@ struct GamesModule
     static func build() -> UIViewController {
         let view = GamesVC()
         let presenter = GamesPresenter()
-        let gamesDataManager = GamesDataManager()
-        gamesDataManager.coreDataStore = App.shared.coreDataStore
-        let interactor = GamesInteractor(dataManager: gamesDataManager)
+        let interactor = GamesInteractor(dataStore: App.shared.coreDataStore)
         let router = GamesRouter()
         
         view.presenter = presenter
