@@ -27,6 +27,14 @@ class GameCVCell: UICollectionViewCell {
         return imageView
     }()
     
+    let verticalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "May 7, 3:00 PM"
@@ -52,12 +60,14 @@ class GameCVCell: UICollectionViewCell {
         
         addSubview(locationLabel)
         addSubview(imageView)
-        addSubview(dateLabel)
-        addSubview(durationLabel)
+        
+        verticalStackView.addArrangedSubview(dateLabel)
+        verticalStackView.addArrangedSubview(durationLabel)
+        addSubview(verticalStackView)
+        
         setLocationLabelConstraints()
         setImageViewConstraints()
-        setDateLabelConstraints()
-        setDurationLabelConstraints()
+        setVerticalStackViewConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -80,17 +90,10 @@ class GameCVCell: UICollectionViewCell {
         ])
     }
     
-    private func setDateLabelConstraints() {
+    private func setVerticalStackViewConstraints() {
         NSLayoutConstraint.activate([
-            dateLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 5),
-            dateLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 5)
-        ])
-    }
-    
-    private func setDurationLabelConstraints() {
-        NSLayoutConstraint.activate([
-            durationLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 5),
-            durationLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor)
+            verticalStackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 5),
+            verticalStackView.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 5),
         ])
     }
 }
