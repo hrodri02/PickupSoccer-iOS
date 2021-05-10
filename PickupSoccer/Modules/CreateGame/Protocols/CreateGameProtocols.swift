@@ -39,6 +39,7 @@ protocol CreateGamePresenterToGameLocationView: AnyObject {
     func convertedCoordinateToAddress(_ address: String)
     func onFailedToConvertCoordinateToAddress(errorMessage: String)
     func setStartDateAndDuration(startDate: String, duration: String)
+    func onFailedToSaveNewGame(errorMessage: String)
 }
 
 // MARK: - Communication between interactors and presenter
@@ -55,6 +56,7 @@ protocol CreateGamePresenterToCreateGameInteractor {
 protocol CreateGameInteractorToCreateGamePresenter: AnyObject {
     func validatedGameTime(isValid: Bool)
     func convertDateIntervalToStartDateAndDuration(_ dateInterval: DateInterval)
+    func failedToSaveNewGame(errorMessage: String)
 }
 
 // MARK: - Communication between presenter and router
