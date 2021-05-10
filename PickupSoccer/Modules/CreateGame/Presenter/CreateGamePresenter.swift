@@ -107,4 +107,8 @@ extension CreateGamePresenter: CreateGameInteractorToCreateGamePresenter {
         dateFormatter.dateFormat = "MMM d, h:mm a"
         gameLocationView?.setStartDateAndDuration(startDate: dateFormatter.string(from: dateInterval.start), duration: duration)
     }
+    
+    func failedToSaveNewGame(errorMessage: String) {
+        gameLocationView?.onFailedToSaveNewGame(errorMessage: errorMessage)
+    }
 }
