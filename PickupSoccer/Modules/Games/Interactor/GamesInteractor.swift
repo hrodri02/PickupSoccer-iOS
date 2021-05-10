@@ -11,10 +11,10 @@ import UIKit
 
 class GamesInteractor: GamesPresenterToGamesInteractor {
     weak var presenter: GamesInteractorToGamesPresenter?
-    let dataManager: GamesDataManager
+    let dataStore: DataStore
     
-    init(dataManager: GamesDataManager) {
-        self.dataManager = dataManager
+    init(dataStore: DataStore) {
+        self.dataStore = dataStore
     }
     
     deinit {
@@ -25,7 +25,7 @@ class GamesInteractor: GamesPresenterToGamesInteractor {
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees)
     {
-        dataManager.fetchGames(center: center, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta) { (result) in
+        dataStore.fetchGames(center: center, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta) { (result) in
             switch result {
             case .success(let coordinateToGame):
                 self.presenter?.onFetchGamesSuccess(coordinateToGame)
