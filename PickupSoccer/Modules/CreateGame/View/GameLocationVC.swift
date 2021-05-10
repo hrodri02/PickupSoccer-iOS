@@ -123,6 +123,10 @@ class GameLocationVC: UIViewController, CreateGamePresenterToGameLocationView {
         gameDuration = duration
     }
     
+    func onFailedToSaveNewGame(errorMessage: String) {
+        presentErrorMessage(errorMessage)
+    }
+    
     private func zoomIn(_ annotation: GameAnnotation) {
         let region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 200, longitudinalMeters: 200)
         mapView.setRegion(region, animated: true)
