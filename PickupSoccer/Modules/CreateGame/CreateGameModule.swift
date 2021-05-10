@@ -21,7 +21,8 @@ class CreateGameModule
         router.view = gameTimeVC
         presenter.router = router
         
-        let createGameInteractor = CreateGameInteractor(userLocationService: App.shared.userLocationService)
+        let createGameInteractor = CreateGameInteractor(userLocationService: App.shared.userLocationService,
+                                                        dataStore: App.shared.coreDataStore)
         presenter.createGameInteractor = createGameInteractor
         createGameInteractor.presenter = presenter
         
