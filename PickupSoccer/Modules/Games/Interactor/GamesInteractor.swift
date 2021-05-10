@@ -8,10 +8,14 @@
 
 import CoreLocation
 import UIKit
-import CoreData
 
 class GamesInteractor: GamesPresenterToGamesInteractor {
     weak var presenter: GamesInteractorToGamesPresenter?
+    let dataManager: GamesDataManager
+    
+    init(dataManager: GamesDataManager) {
+        self.dataManager = dataManager
+    }
     
     deinit {
         print("Games Interactor \(#function)")
@@ -21,37 +25,13 @@ class GamesInteractor: GamesPresenterToGamesInteractor {
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees)
     {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedObjectContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
-        
-        do {
-            let managedObjects: [NSManagedObject] = try managedObjectContext.fetch(fetchRequest)
-            var coordinateToGame: [String : Game] = [:]
-            for mo in managedObjects {
-                let address = mo.value(forKey: "address") as? String
-                let locationMO = mo.value(forKey: "location") as? NSManagedObject
-                let dateIntervalMO = mo.value(forKey: "dateInterval") as? NSManagedObject
-                let latitude = locationMO?.value(forKey: "latitude") as? Double
-                let longitude = locationMO?.value(forKey: "longitude") as? Double
-                let start = dateIntervalMO?.value(forKey: "start") as? Date
-                let end = dateIntervalMO?.value(forKey: "end") as? Date
-                let key = "lat=\(latitude!), lon=\(longitude!)"
-                let location = CLLocationCoordinate2D(latitude: latitude!,
-                                                      longitude: longitude!)
-                let dateInterval = DateInterval(start: start!, end: end!)
-                let game = Game(location, dateInterval, address ?? "")
-                if game.location.latitude > center.latitude - latitudeDelta / 2 &&
-                   game.location.latitude < center.latitude + latitudeDelta / 2 &&
-                   game.location.longitude > center.longitude - longitudeDelta / 2 &&
-                    game.location.longitude < center.longitude + longitudeDelta / 2 {
-                    coordinateToGame[key] = game
-                }
+        dataManager.fetchGames(center: center, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta) { (result) in
+            switch result {
+            case .success(let coordinateToGame):
+                self.presenter?.onFetchGamesSuccess(coordinateToGame)
+            case .failure(let error):
+                self.presenter?.onFetchGamesFailed(error.localizedDescription)
             }
-            presenter?.onFetchGamesSuccess(coordinateToGame)
-        }
-        catch {
-            print("Failed to fetch games from CoreData")
         }
     }
 }

@@ -15,6 +15,10 @@ class App {
         return UserLocationService()
     }
     
+    var coreDataStore: CoreDataStore {
+        return CoreDataStore()
+    }
+    
     private init() {
         
     }
