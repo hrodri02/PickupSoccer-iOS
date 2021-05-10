@@ -208,9 +208,10 @@ extension GamesVC: GamesPresenterToGamesView {
         
         collectionView.reloadData()
         if annotations.count > 0 {
-            collectionView.scrollToItem(at: IndexPath(item: (DUPLICATE_DATA_SETS / 2) * annotations.count, section: 0),
-            at: .centeredHorizontally,
-            animated: false)
+            selectedItem = (DUPLICATE_DATA_SETS / 2) * annotations.count
+            collectionView.scrollToItem(at: IndexPath(item: selectedItem, section: 0),
+                                        at: .centeredHorizontally,
+                                        animated: false)
         }
     }
     
