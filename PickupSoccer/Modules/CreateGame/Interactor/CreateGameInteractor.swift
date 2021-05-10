@@ -8,15 +8,15 @@
 
 import UIKit
 import CoreLocation
-import CoreData
 
 class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor {
     weak var presenter: CreateGameInteractorToCreateGamePresenter?
-//    private var createGameDataManager: CreateGameDataManager?
     private var userLocationService: UserLocationServiceProtocol
+    private let dataStore: DataStore
     private var newGame: Game
     
-    init(userLocationService: UserLocationServiceProtocol) {
+    init(userLocationService: UserLocationServiceProtocol, dataStore: DataStore) {
+        self.dataStore = dataStore
         self.userLocationService = userLocationService
         self.newGame = Game()
         super.init()
@@ -81,33 +81,10 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
     }
     
     func saveNewGame() {
-        // 1. get reference to app delegate
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // 2. get reference to managed object context
-        let managedObjectConext = appDelegate.persistentContainer.viewContext
-        // 3. create a game entity
-        let gameEntity = NSEntityDescription.entity(forEntityName: "Game", in: managedObjectConext)!
-        let locationEntity = NSEntityDescription.entity(forEntityName: "Location", in: managedObjectConext)!
-        let dateIntervalEntity = NSEntityDescription.entity(forEntityName: "DateInterval", in: managedObjectConext)!
-        // 4. create managed objects
-        let gameMO = NSManagedObject(entity: gameEntity, insertInto: managedObjectConext)
-        let locationMO = NSManagedObject(entity: locationEntity, insertInto: managedObjectConext)
-        let dateIntervalMO = NSManagedObject(entity: dateIntervalEntity, insertInto: managedObjectConext)
-        // 5. set properties of game entity
-        locationMO.setValue(newGame.location.latitude, forKey: "latitude")
-        locationMO.setValue(newGame.location.longitude, forKey: "longitude")
-        dateIntervalMO.setValue(newGame.dateInterval.start, forKey: "start")
-        dateIntervalMO.setValue(newGame.dateInterval.end, forKey: "end")
-        gameMO.setValue(newGame.address, forKey: "address")
-        gameMO.setValue(locationMO, forKey: "location")
-        gameMO.setValue(dateIntervalMO, forKey: "dateInterval")
-        // 6. save managed object context
-        do {
-            try managedObjectConext.save()
-            print("NEW GAME SAVED")
-        }
-        catch {
-            print("Failed to save game in CoreData: \(error.localizedDescription)")
+        dataStore.save(newGame) { (error) in
+            if let err = error {
+                self.presenter?.failedToSaveNewGame(errorMessage: err.localizedDescription)
+            }
         }
     }
 }
