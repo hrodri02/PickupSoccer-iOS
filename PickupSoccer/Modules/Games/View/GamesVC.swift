@@ -208,8 +208,7 @@ extension GamesVC: GamesPresenterToGamesView {
         // add new annotations
         for (coordinate, game) in coordinateToGame {
             if coordinateToAnnotation[coordinate] == nil {
-                let annotation = GameAnnotation(coor: game.location)
-                annotation.title = game.address
+                let annotation = GameAnnotation(game: game)
                 mapView.addAnnotation(annotation)
                 coordinateToAnnotation[coordinate] = annotation
             }
@@ -287,8 +286,8 @@ extension GamesVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! GameCVCell
         let index = indexPath.item % annotations.count
-        let address = annotations[index].title ?? ""
-        cell.locationLabel.text = "\(index). \(address)"
+        let annotation = annotations[index]
+        cell.configure(with: annotation, index: index)
         return cell
     }
 }
