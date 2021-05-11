@@ -194,7 +194,7 @@ extension GameLocationVC: MKMapViewDelegate
 extension GameLocationVC {
     func createGameAnnotationForCenterOfCurrentRegion() {
         let coordinate = mapView.centerCoordinate
-        gameAnnotation = GameAnnotation(coor: coordinate)
+        gameAnnotation = GameAnnotation(coordinate: coordinate)
         presenter?.setLocationOfNewGame(coordinate)
         presenter?.convertCoordinateToAddress(coordinate)
     }
