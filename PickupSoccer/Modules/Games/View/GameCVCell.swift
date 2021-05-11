@@ -74,6 +74,22 @@ class GameCVCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func configure(with annotation: GameAnnotation, index: Int) {
+        if let game = annotation.game {
+            let address = game.address
+            locationLabel.text = "\(index). \(address)"
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM d, h:mm a"
+            dateLabel.text = dateFormatter.string(from: game.dateInterval.start)
+            
+            let durationInMins = game.dateInterval.duration / 60
+            let hours = Int(durationInMins) / 60
+            let mins = Int(durationInMins) % 60
+            durationLabel.text = "\(hours) h \(mins) m"
+        }
+    }
+    
     private func setLocationLabelConstraints() {
         NSLayoutConstraint.activate([
             locationLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
