@@ -208,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */,
-				2F38FB9625D9A49800056052 /* GameAnnotation.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -244,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				2F38FB9125D9837200056052 /* Game.swift */,
+				2F38FB9625D9A49800056052 /* GameAnnotation.swift */,
 				2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */,
 			);
 			path = Model;
