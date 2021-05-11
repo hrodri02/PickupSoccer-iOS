@@ -12,22 +12,23 @@ import CoreData
 
 class GamesVC: UIViewController, UICollectionViewDelegate
 {
+    let DUPLICATE_ANNOTATIONS_DATA_SETS = 1000
+    let MAX_LATITUDINAL_METERS: Double = 10_000
+    let MAX_LONGITUDINAL_METTERS: Double = 10_000
+    let INIT_LATITUDINAL_METERS: Double = 5000
+    let INIT_LONGITUDINAL_METERS: Double = 5000
+    let KM_IN_DEGREE: Double = 111
+    let userCoordinate = CLLocationCoordinate2D(latitude: 37.70720493819644, longitude: -122.41545805721627)
     var annotations: [GameAnnotation] = []
     var coordinateToAnnotation: [String: GameAnnotation] = [:]
     var selectedItem: Int = 0
-    // mcdonals by crocker: 37.70720493819644, -122.41545805721627
-    let DUPLICATE_DATA_SETS = 1000
-    let LATITUDINAL_METERS: Double = 3000
-    let LONGITUDINAL_METERS: Double = 3000
-    let KM_IN_DEGREE: Double = 111
-    let userCoordinate = CLLocationCoordinate2D(latitude: 37.70720493819644, longitude: -122.41545805721627)
     var presenter: GamesViewToGamesPresenter?
     
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         let region = MKCoordinateRegion(center: self.userCoordinate,
-                                        latitudinalMeters: LATITUDINAL_METERS,
-                                        longitudinalMeters: LONGITUDINAL_METERS)
+                                        latitudinalMeters: INIT_LATITUDINAL_METERS,
+                                        longitudinalMeters: INIT_LONGITUDINAL_METERS)
         mapView.setRegion(region, animated: false)
         mapView.delegate = self
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,11 +83,10 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("GamesVC viewWillAppear")
         let centerCoordinate = mapView.centerCoordinate
         presenter?.updateGamesView(center: centerCoordinate,
-                                   latitudeDelta: (LATITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE,
-                                   longitudeDelta: (LONGITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE)
+                                   latitudeDelta: (INIT_LATITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE,
+                                   longitudeDelta: (INIT_LONGITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -106,9 +106,22 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     }
     
     @objc func redoSearchButtonTapped() {
+        let latitudinalMeters = mapView.region.span.latitudeDelta * (KM_IN_DEGREE * 1000)
+        let longitudinalMeters = mapView.region.span.longitudeDelta * (KM_IN_DEGREE * 1000)
+        var latitudeDelta = mapView.region.span.latitudeDelta
+        var longitudeDelta = mapView.region.span.longitudeDelta
+        // if region is too big, zoom into a smaller region
+        if latitudinalMeters > MAX_LATITUDINAL_METERS || longitudinalMeters > MAX_LONGITUDINAL_METTERS {
+            let region = MKCoordinateRegion(center: mapView.region.center,
+                                            latitudinalMeters: MAX_LATITUDINAL_METERS,
+                                            longitudinalMeters: MAX_LONGITUDINAL_METTERS)
+            latitudeDelta = region.span.latitudeDelta
+            longitudeDelta = region.span.longitudeDelta
+            mapView.setRegion(region, animated: true)
+        }
         presenter?.updateGamesView(center: mapView.region.center,
-                                   latitudeDelta: mapView.region.span.latitudeDelta,
-                                   longitudeDelta: mapView.region.span.longitudeDelta)
+                                   latitudeDelta: latitudeDelta,
+                                   longitudeDelta: longitudeDelta)
     }
     
     @objc func addGameButtonTapped() {
@@ -208,7 +221,7 @@ extension GamesVC: GamesPresenterToGamesView {
         
         collectionView.reloadData()
         if annotations.count > 0 {
-            selectedItem = (DUPLICATE_DATA_SETS / 2) * annotations.count
+            selectedItem = (DUPLICATE_ANNOTATIONS_DATA_SETS / 2) * annotations.count
             collectionView.scrollToItem(at: IndexPath(item: selectedItem, section: 0),
                                         at: .centeredHorizontally,
                                         animated: false)
@@ -250,7 +263,7 @@ extension GamesVC: MKMapViewDelegate {
                 if selectedItem - stepsToLeft < 0 {
                     selectedItem += stepsToRight
                 }
-                else if selectedItem + stepsToRight >= annotations.count * DUPLICATE_DATA_SETS {
+                else if selectedItem + stepsToRight >= annotations.count * DUPLICATE_ANNOTATIONS_DATA_SETS {
                     selectedItem -= stepsToLeft
                 }
                 else {
@@ -268,7 +281,7 @@ extension GamesVC: MKMapViewDelegate {
 
 extension GamesVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return annotations.count * DUPLICATE_DATA_SETS
+        return annotations.count * DUPLICATE_ANNOTATIONS_DATA_SETS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
