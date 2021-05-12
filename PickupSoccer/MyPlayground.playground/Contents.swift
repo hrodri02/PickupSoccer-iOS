@@ -3,6 +3,13 @@
 
 // ocean view park
 //37.71590334951762, -122.45735797571214
+import CoreLocation
+
+let mcdonals = CLLocation(latitude: 37.70676399399633, longitude: -122.41537376707768)
+var dict: [CLLocationCoordinate2D : Bool] = [:]
+dict[mcdonals] = true
+print(dict)
+
 
 let arr = [5,1,7,2,3]
 
@@ -10,10 +17,10 @@ for i in arr where i > 2 {
     print(i)
 }
 
-import CoreLocation
+
 
 let MILES_IN_METER = 0.000621371
-let mcdonals = CLLocation(latitude: 37.70676399399633, longitude: -122.41537376707768)
+
 let oceanViewPark = CLLocation(latitude: 37.71590334951762, longitude: -122.45735797571214)
 let distance = mcdonals.distance(from: oceanViewPark) * MILES_IN_METER
 
