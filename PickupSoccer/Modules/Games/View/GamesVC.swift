@@ -122,9 +122,10 @@ class GamesVC: UIViewController, UICollectionViewDelegate
             longitudeDelta = region.span.longitudeDelta
             mapView.setRegion(region, animated: true)
         }
-        presenter?.updateGamesView(center: mapView.region.center,
-                                   latitudeDelta: latitudeDelta,
-                                   longitudeDelta: longitudeDelta)
+        
+        fetchGames(coordinate: mapView.region.center,
+                   latitudeDelta: latitudeDelta,
+                   longitudeDelta: longitudeDelta)
     }
     
     @objc func addGameButtonTapped() {
@@ -135,7 +136,10 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     
     func fetchGamesNearUsersLocation() {
         if let userCoordinate = self.userCoordinate {
-            fetchGames(coordinate: userCoordinate)
+            let degrees = (INIT_LATITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE
+            fetchGames(coordinate: userCoordinate,
+                       latitudeDelta: degrees,
+                       longitudeDelta: degrees)
         }
         else {
             fetchUsersLocation()
@@ -148,7 +152,10 @@ class GamesVC: UIViewController, UICollectionViewDelegate
             case .success(let userCoordinate):
                 self.userCoordinate = userCoordinate
                 self.zoom(into: userCoordinate)
-                self.fetchGames(coordinate: userCoordinate)
+                let degrees = (self.INIT_LATITUDINAL_METERS * 2 / 1000) / self.KM_IN_DEGREE
+                self.fetchGames(coordinate: userCoordinate,
+                                latitudeDelta: degrees,
+                                longitudeDelta: degrees)
             case .failure(let error):
                 print(error.localizedDescription)
                 // TODO: - display a message to tell the user to enable app to use their location
@@ -164,10 +171,13 @@ class GamesVC: UIViewController, UICollectionViewDelegate
         mapView.setRegion(region, animated: false)
     }
     
-    func fetchGames(coordinate: CLLocationCoordinate2D) {
+    func fetchGames(coordinate: CLLocationCoordinate2D,
+                    latitudeDelta: CLLocationDegrees,
+                    longitudeDelta: CLLocationDegrees)
+    {
         presenter?.updateGamesView(center: coordinate,
-                                   latitudeDelta: (INIT_LATITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE,
-                                   longitudeDelta: (INIT_LONGITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE)
+                                   latitudeDelta: latitudeDelta,
+                                   longitudeDelta: longitudeDelta)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
