@@ -18,7 +18,8 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     let INIT_LATITUDINAL_METERS: Double = 5000
     let INIT_LONGITUDINAL_METERS: Double = 5000
     let KM_IN_DEGREE: Double = 111
-    let userCoordinate = CLLocationCoordinate2D(latitude: 37.70720493819644, longitude: -122.41545805721627)
+    let userLocationService: UserLocationServiceProtocol
+    var userCoordinate: CLLocationCoordinate2D?
     var annotations: [GameAnnotation] = []
     var coordinateToAnnotation: [String: GameAnnotation] = [:]
     var selectedItem: Int = 0
@@ -26,10 +27,6 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
-        let region = MKCoordinateRegion(center: self.userCoordinate,
-                                        latitudinalMeters: INIT_LATITUDINAL_METERS,
-                                        longitudinalMeters: INIT_LONGITUDINAL_METERS)
-        mapView.setRegion(region, animated: false)
         mapView.delegate = self
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
@@ -70,6 +67,15 @@ class GamesVC: UIViewController, UICollectionViewDelegate
         return button
     }()
     
+    init(userLocationService: UserLocationServiceProtocol) {
+        self.userLocationService = userLocationService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -83,10 +89,7 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let centerCoordinate = mapView.centerCoordinate
-        presenter?.updateGamesView(center: centerCoordinate,
-                                   latitudeDelta: (INIT_LATITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE,
-                                   longitudeDelta: (INIT_LONGITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE)
+        fetchGamesNearUsersLocation()
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -128,6 +131,43 @@ class GamesVC: UIViewController, UICollectionViewDelegate
         if let navController = navigationController {
             presenter?.addGameButtonTapped(navController)
         }
+    }
+    
+    func fetchGamesNearUsersLocation() {
+        if let userCoordinate = self.userCoordinate {
+            fetchGames(coordinate: userCoordinate)
+        }
+        else {
+            fetchUsersLocation()
+        }
+    }
+    
+    func fetchUsersLocation() {
+        userLocationService.generateUsersLocation { (result) in
+            switch result {
+            case .success(let userCoordinate):
+                self.userCoordinate = userCoordinate
+                self.zoom(into: userCoordinate)
+                self.fetchGames(coordinate: userCoordinate)
+            case .failure(let error):
+                print(error.localizedDescription)
+                // TODO: - display a message to tell the user to enable app to use their location
+                //         so that they can join and create games near their location
+            }
+        }
+    }
+    
+    func zoom(into userCoordinate: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(center: userCoordinate,
+                                        latitudinalMeters: INIT_LATITUDINAL_METERS,
+                                        longitudinalMeters: INIT_LONGITUDINAL_METERS)
+        mapView.setRegion(region, animated: false)
+    }
+    
+    func fetchGames(coordinate: CLLocationCoordinate2D) {
+        presenter?.updateGamesView(center: coordinate,
+                                   latitudeDelta: (INIT_LATITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE,
+                                   longitudeDelta: (INIT_LONGITUDINAL_METERS * 2 / 1000) / KM_IN_DEGREE)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
