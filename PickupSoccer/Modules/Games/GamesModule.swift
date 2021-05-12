@@ -11,7 +11,7 @@ import UIKit
 struct GamesModule
 {
     static func build() -> UIViewController {
-        let view = GamesVC()
+        let view = GamesVC(userLocationService: App.shared.userLocationService)
         let presenter = GamesPresenter()
         let interactor = GamesInteractor(dataStore: App.shared.coreDataStore)
         let router = GamesRouter()
