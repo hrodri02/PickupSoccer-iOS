@@ -18,7 +18,7 @@ protocol GamesViewToGamesPresenter: AnyObject {
 }
 
 protocol GamesPresenterToGamesView: AnyObject {
-    func displayGames(_ coordinateToGame: [String : Game])
+    func displayGames(_ coordinateToGame: [CLLocationCoordinate2D : Game])
     func displayErrorMessage(_ errorMessage: String)
 }
 
@@ -29,7 +29,7 @@ protocol GamesPresenterToGamesInteractor {
 }
 
 protocol GamesInteractorToGamesPresenter: AnyObject {
-    func onFetchGamesSuccess(_ games: [String : Game])
+    func onFetchGamesSuccess(_ games: [CLLocationCoordinate2D : Game])
     func onFetchGamesFailed(_ errorMessage: String)
 }
 

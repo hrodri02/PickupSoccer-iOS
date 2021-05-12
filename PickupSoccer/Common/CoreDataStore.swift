@@ -14,7 +14,7 @@ protocol DataStore {
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[String : Game], Error>) -> Void)
+                    completion: @escaping (Result<[CLLocationCoordinate2D : Game], Error>) -> Void)
     func save(_ game: Game, completion: @escaping (Error?) -> Void)
 }
 
@@ -36,13 +36,13 @@ class CoreDataStore: DataStore
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[String : Game], Error>) -> Void)
+                    completion: @escaping (Result<[CLLocationCoordinate2D : Game], Error>) -> Void)
     {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
         do {
             let managedObjects: [NSManagedObject] = try managedObjectContext.fetch(fetchRequest)
             
-            var coordinateToGame = [String : Game]()
+            var coordinateToGame = [CLLocationCoordinate2D : Game]()
             for mo in managedObjects {
                 let address = mo.value(forKey: "address") as? String
                 let locationMO = mo.value(forKey: "location") as? NSManagedObject
@@ -51,7 +51,6 @@ class CoreDataStore: DataStore
                 let longitude = locationMO?.value(forKey: "longitude") as? Double
                 let start = dateIntervalMO?.value(forKey: "start") as? Date
                 let end = dateIntervalMO?.value(forKey: "end") as? Date
-                let key = "lat=\(latitude!), lon=\(longitude!)"
                 let location = CLLocationCoordinate2D(latitude: latitude!,
                                                       longitude: longitude!)
                 let dateInterval = DateInterval(start: start!, end: end!)
@@ -60,7 +59,7 @@ class CoreDataStore: DataStore
                    game.location.latitude < center.latitude + latitudeDelta / 2 &&
                    game.location.longitude > center.longitude - longitudeDelta / 2 &&
                     game.location.longitude < center.longitude + longitudeDelta / 2 {
-                    coordinateToGame[key] = game
+                    coordinateToGame[location] = game
                 }
             }
             completion(Result.success(coordinateToGame))

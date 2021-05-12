@@ -38,7 +38,7 @@ class GamesPresenter: GamesViewToGamesPresenter
 }
 
 extension GamesPresenter: GamesInteractorToGamesPresenter {
-    func onFetchGamesSuccess(_ coordinateToGame: [String : Game]) {
+    func onFetchGamesSuccess(_ coordinateToGame: [CLLocationCoordinate2D : Game]) {
         view?.displayGames(coordinateToGame)
     }
     

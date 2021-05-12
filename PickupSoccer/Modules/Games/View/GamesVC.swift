@@ -21,7 +21,7 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     let userLocationService: UserLocationServiceProtocol
     var userCoordinate: CLLocationCoordinate2D?
     var annotations: [GameAnnotation] = []
-    var coordinateToAnnotation: [String: GameAnnotation] = [:]
+    var coordinateToAnnotation: [CLLocationCoordinate2D: GameAnnotation] = [:]
     var selectedItem: Int = 0
     var presenter: GamesViewToGamesPresenter?
     
@@ -244,7 +244,7 @@ class GamesVC: UIViewController, UICollectionViewDelegate
 }
 
 extension GamesVC: GamesPresenterToGamesView {
-    func displayGames(_ coordinateToGame: [String : Game]) {
+    func displayGames(_ coordinateToGame: [CLLocationCoordinate2D : Game]) {
         annotations.removeAll()
         
         // remove old annotations that are no longer within the visible region
@@ -298,8 +298,7 @@ extension GamesVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let coordinate = view.annotation?.coordinate {
-            let key = "lat=\(coordinate.latitude), lon=\(coordinate.longitude)"
-            if let annotation = coordinateToAnnotation[key],
+            if let annotation = coordinateToAnnotation[coordinate],
                 let targetItem = annotations.firstIndex(of: annotation)
             {
                 let currItem = selectedItem % annotations.count
