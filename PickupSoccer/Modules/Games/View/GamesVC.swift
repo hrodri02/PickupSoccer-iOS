@@ -28,6 +28,7 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.delegate = self
+        mapView.showsUserLocation = true
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
     }()
