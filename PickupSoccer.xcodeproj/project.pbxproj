@@ -43,6 +43,7 @@
 		2F86A79325FFAA960093BB38 /* CalendarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79225FFAA960093BB38 /* CalendarPresenter.swift */; };
 		2F86A79525FFAB5D0093BB38 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79425FFAB5D0093BB38 /* CalendarVC.swift */; };
 		2F86A79725FFAD800093BB38 /* CalendarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79625FFAD800093BB38 /* CalendarRouter.swift */; };
+		2F921196264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2F921195264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg */; };
 		2F9273DD264C124400624B38 /* CLLCoordinate2D+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9273DC264C124400624B38 /* CLLCoordinate2D+Ext.swift */; };
 		2FA375A225EDB93700016633 /* GameTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA375A125EDB93700016633 /* GameTimeVC.swift */; };
 		2FA50F8E25DB6EB6000F401A /* CalendarPickerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA50F8D25DB6EB6000F401A /* CalendarPickerHeaderView.swift */; };
@@ -112,6 +113,7 @@
 		2F86A79225FFAA960093BB38 /* CalendarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPresenter.swift; sourceTree = "<group>"; };
 		2F86A79425FFAB5D0093BB38 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		2F86A79625FFAD800093BB38 /* CalendarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarRouter.swift; sourceTree = "<group>"; };
+		2F921195264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "pexels-kaboompics-com-6050.jpeg"; sourceTree = SOURCE_ROOT; };
 		2F9273DC264C124400624B38 /* CLLCoordinate2D+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLCoordinate2D+Ext.swift"; sourceTree = "<group>"; };
 		2FA375A125EDB93700016633 /* GameTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeVC.swift; sourceTree = "<group>"; };
 		2FA50F8D25DB6EB6000F401A /* CalendarPickerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerHeaderView.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				2FA3758725ED3D4E00016633 /* Common */,
 				2F28E35725E6A65800E64E70 /* Extensions */,
 				2FA3758B25ED3F2300016633 /* Modules */,
+				2F921195264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg */,
 				2F8666132604CDD7007978B9 /* CalendarVC_MVVM.swift */,
 				2F8666152604DC6D007978B9 /* CalendarViewModel.swift */,
 				2F18899225D97FA600ECA469 /* AppDelegate.swift */,
@@ -529,6 +532,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F921196264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg in Resources */,
 				2F18899F25D97FAA00ECA469 /* LaunchScreen.storyboard in Resources */,
 				2F18899C25D97FAA00ECA469 /* Assets.xcassets in Resources */,
 			);
