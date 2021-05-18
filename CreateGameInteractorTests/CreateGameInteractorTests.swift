@@ -17,7 +17,8 @@ class CreateGameInteractorTests: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
-        createGameInteractor = CreateGameInteractor(userLocationService: MockUserLocationService())
+        createGameInteractor = CreateGameInteractor(userLocationService: MockUserLocationService(),
+                                                    dataStore: MockDataStore())
         mockPresenter = MockPresenter()
         createGameInteractor.presenter = mockPresenter
     }
@@ -83,4 +84,20 @@ class MockPresenter: CreateGameInteractorToCreateGamePresenter {
     func convertDateIntervalToStartDateAndDuration(_ dateInterval: DateInterval) {
         
     }
+    
+    func failedToSaveNewGame(errorMessage: String) {
+        
+    }
+}
+
+class MockDataStore: DataStore {
+    func fetchGames(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees, completion: @escaping (Result<[CLLocationCoordinate2D : Game], Error>) -> Void) {
+        
+    }
+    
+    func save(_ game: Game, completion: @escaping (Error?) -> Void) {
+        
+    }
+    
+    
 }

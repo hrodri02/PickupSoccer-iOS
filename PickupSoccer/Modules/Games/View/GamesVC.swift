@@ -14,7 +14,6 @@ class GamesVC: UIViewController, UICollectionViewDelegate
 {
     let DUPLICATE_ANNOTATIONS_DATA_SETS = 1000
     let MAX_LATITUDINAL_METERS: Double = 10_000
-    let MAX_LONGITUDINAL_METTERS: Double = 10_000
     let INIT_LATITUDINAL_METERS: Double = 5000
     let INIT_LONGITUDINAL_METERS: Double = 5000
     let KM_IN_DEGREE: Double = 111
@@ -111,14 +110,15 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     
     @objc func redoSearchButtonTapped() {
         let latitudinalMeters = mapView.region.span.latitudeDelta * (KM_IN_DEGREE * 1000)
-        let longitudinalMeters = mapView.region.span.longitudeDelta * (KM_IN_DEGREE * 1000)
         var latitudeDelta = mapView.region.span.latitudeDelta
         var longitudeDelta = mapView.region.span.longitudeDelta
         // if region is too big, zoom into a smaller region
-        if latitudinalMeters > MAX_LATITUDINAL_METERS || longitudinalMeters > MAX_LONGITUDINAL_METTERS {
+        if latitudinalMeters > MAX_LATITUDINAL_METERS {
+            let heightWidthRatioOfSafeArea: Double = Double(self.safeAreaLayoutFrame.height /
+                                                            self.safeAreaLayoutFrame.width)
             let region = MKCoordinateRegion(center: mapView.region.center,
                                             latitudinalMeters: MAX_LATITUDINAL_METERS,
-                                            longitudinalMeters: MAX_LONGITUDINAL_METTERS)
+                                            longitudinalMeters: MAX_LATITUDINAL_METERS * heightWidthRatioOfSafeArea)
             latitudeDelta = region.span.latitudeDelta
             longitudeDelta = region.span.longitudeDelta
             mapView.setRegion(region, animated: true)
@@ -152,24 +152,24 @@ class GamesVC: UIViewController, UICollectionViewDelegate
             switch result {
             case .success(let userCoordinate):
                 self.userCoordinate = userCoordinate
-                self.zoom(into: userCoordinate)
-                let degrees = (self.INIT_LATITUDINAL_METERS * 2 / 1000) / self.KM_IN_DEGREE
+                let heightWidthRatioOfSafeArea: Double = Double(self.safeAreaLayoutFrame.height /
+                                                          self.safeAreaLayoutFrame.width)
+                let region = MKCoordinateRegion(center: userCoordinate,
+                                                latitudinalMeters: self.INIT_LONGITUDINAL_METERS * heightWidthRatioOfSafeArea,
+                                                longitudinalMeters: self.INIT_LONGITUDINAL_METERS)
+                self.mapView.setRegion(region, animated: false)
+                let latitudeDelta = region.span.latitudeDelta
+                let longitudeDelta = region.span.longitudeDelta
+                
                 self.fetchGames(coordinate: userCoordinate,
-                                latitudeDelta: degrees,
-                                longitudeDelta: degrees)
+                                latitudeDelta: latitudeDelta,
+                                longitudeDelta: longitudeDelta)
             case .failure(let error):
                 print(error.localizedDescription)
                 // TODO: - display a message to tell the user to enable app to use their location
                 //         so that they can join and create games near their location
             }
         }
-    }
-    
-    func zoom(into userCoordinate: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: userCoordinate,
-                                        latitudinalMeters: INIT_LATITUDINAL_METERS,
-                                        longitudinalMeters: INIT_LONGITUDINAL_METERS)
-        mapView.setRegion(region, animated: false)
     }
     
     func fetchGames(coordinate: CLLocationCoordinate2D,
@@ -325,7 +325,15 @@ extension GamesVC: MKMapViewDelegate {
         }
     }
     
-    
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        let renderer = MKPolygonRenderer(overlay: overlay)
+//        renderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.5)
+//        return renderer
+//    }
+//
+//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+//        print("final latitudeDelta = \(mapView.region.span.latitudeDelta), final longitudeDelta = \(mapView.region.span.longitudeDelta)")
+//    }
 }
 
 extension GamesVC: UICollectionViewDataSource {
