@@ -187,7 +187,6 @@ class GamesVC: UIViewController, UICollectionViewDelegate
         let minLineSpacing = CarouselLayoutConstants.horizontalSpaceBetweenCells + (deltaWidth / 2.0)
         let item = (collectionView.bounds.midX - CarouselLayoutConstants.minCellWidth / 2.0) / (CarouselLayoutConstants.minCellWidth + minLineSpacing)
         selectedItem = Int(round(item))
-        print(selectedItem)
     }
 }
 
