@@ -50,7 +50,6 @@ extension UserLocationService: CLLocationManagerDelegate {
             if let completionHandler = self.completionHandler {
                 completionHandler(Result.failure(UserLocationError.deniedSharingLocation))
             }
-            print(CLAuthorizationStatus.denied)
         default:
             print("denied")
         }
