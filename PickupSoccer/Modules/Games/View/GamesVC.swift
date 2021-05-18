@@ -12,7 +12,7 @@ import CoreData
 
 class GamesVC: UIViewController, UICollectionViewDelegate
 {
-    let DUPLICATE_ANNOTATIONS_DATA_SETS = 1000
+    let NUM_ANNOTATIONS_DATA_SETS = 3
     let MAX_LATITUDINAL_METERS: Double = 10_000
     let INIT_LATITUDINAL_METERS: Double = 5000
     let INIT_LONGITUDINAL_METERS: Double = 5000
@@ -181,6 +181,11 @@ class GamesVC: UIViewController, UICollectionViewDelegate
                                    longitudeDelta: longitudeDelta)
     }
     
+    /*
+        midX = collectionView.bounds.midX
+        midX = item * (minCellWidth + minLineSpacing) + minCellWidth / 2
+        item = (midX - minCellWidth / 2) / (minCellWidth + minLineSpacing)
+     */
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let maxZoom: CGFloat = CarouselLayoutConstants.maxCellHeight / CarouselLayoutConstants.minCellHeight
         let deltaWidth = CarouselLayoutConstants.minCellWidth * (maxZoom - 1.0)
@@ -216,8 +221,9 @@ extension GamesVC: GamesPresenterToGamesView {
         }
         
         collectionView.reloadData()
+        // calculate new selectedItem, then scroll to it
         if annotations.count > 0 {
-            selectedItem = (DUPLICATE_ANNOTATIONS_DATA_SETS / 2) * annotations.count
+            selectedItem = (NUM_ANNOTATIONS_DATA_SETS / 2) * annotations.count
             collectionView.scrollToItem(at: IndexPath(item: selectedItem, section: 0),
                                         at: .centeredHorizontally,
                                         animated: false)
@@ -254,37 +260,23 @@ extension GamesVC: MKMapViewDelegate {
                 }
                 
                 let stepsToRight = (currItem > targetItem) ? annotations.count - (currItem) + targetItem : targetItem - currItem
+                let right = (selectedItem + stepsToRight >= annotations.count * NUM_ANNOTATIONS_DATA_SETS) ? Int.max : stepsToRight
+                
                 let stepsToLeft = (currItem > targetItem) ? currItem - targetItem : annotations.count - targetItem + (currItem)
-                if selectedItem - stepsToLeft < 0 {
-                    selectedItem += stepsToRight
-                }
-                else if selectedItem + stepsToRight >= annotations.count * DUPLICATE_ANNOTATIONS_DATA_SETS {
-                    selectedItem -= stepsToLeft
-                }
-                else {
-                    selectedItem += (stepsToLeft <= stepsToRight) ? -stepsToLeft : stepsToRight
-                }
+                let left = (selectedItem - stepsToLeft < 0) ? Int.max : stepsToLeft
+                
+                selectedItem += (left <= right) ? -left : right
                 collectionView.scrollToItem(at: IndexPath(item: selectedItem, section: 0),
                                             at: .centeredHorizontally,
                                             animated: true)
             }
         }
     }
-    
-//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//        let renderer = MKPolygonRenderer(overlay: overlay)
-//        renderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.5)
-//        return renderer
-//    }
-//
-//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//        print("final latitudeDelta = \(mapView.region.span.latitudeDelta), final longitudeDelta = \(mapView.region.span.longitudeDelta)")
-//    }
 }
 
 extension GamesVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return annotations.count * DUPLICATE_ANNOTATIONS_DATA_SETS
+        return annotations.count * NUM_ANNOTATIONS_DATA_SETS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
