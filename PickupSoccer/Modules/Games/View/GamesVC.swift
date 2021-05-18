@@ -189,59 +189,6 @@ class GamesVC: UIViewController, UICollectionViewDelegate
         selectedItem = Int(round(item))
         print(selectedItem)
     }
-    
-    
-    private func setupTopNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close,
-                                                           target: self,
-                                                           action: #selector(closeButtonTapped))
-    }
-    
-    private func addSubviews() {
-        mapView.addSubview(redoSearchButton)
-        mapView.addSubview(collectionView)
-        mapView.addSubview(addGameButton)
-        view.addSubview(mapView)
-    }
-    
-    private func setMapViewConstraints() {
-        NSLayoutConstraint.activate([
-            mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        ])
-    }
-    
-    private func setRedoSearchButtonConstriants() {
-        let padding: CGFloat = 10
-        let width = redoSearchButton.titleLabel?.intrinsicContentSize.width ?? 0.0
-        let height = redoSearchButton.titleLabel?.intrinsicContentSize.height ?? 0.0
-        NSLayoutConstraint.activate([
-            redoSearchButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: SCREEN_HEIGHT * 0.05),
-            redoSearchButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            redoSearchButton.widthAnchor.constraint(equalToConstant: width + padding),
-            redoSearchButton.heightAnchor.constraint(equalToConstant: height + padding),
-        ])
-    }
-    
-    private func setCollectionViewContraints() {
-        NSLayoutConstraint.activate([
-            collectionView.bottomAnchor.constraint(equalTo: addGameButton.topAnchor, constant: -10),
-            collectionView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: SCREEN_HEIGHT * 0.25)
-        ])
-    }
-    
-    private func setAddGameButtonConstraints() {
-        NSLayoutConstraint.activate([
-            addGameButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -SCREEN_WIDTH * 0.05),
-            addGameButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -SCREEN_WIDTH * 0.05),
-            addGameButton.widthAnchor.constraint(equalTo: mapView.widthAnchor, multiplier: 0.125),
-            addGameButton.heightAnchor.constraint(equalTo: mapView.widthAnchor, multiplier: 0.125)
-        ])
-    }
 }
 
 extension GamesVC: GamesPresenterToGamesView {
@@ -347,5 +294,60 @@ extension GamesVC: UICollectionViewDataSource {
         let annotation = annotations[index]
         cell.configure(with: annotation, index: index)
         return cell
+    }
+}
+
+// MARK: - set up UI
+extension GamesVC {
+    private func setupTopNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close,
+                                                           target: self,
+                                                           action: #selector(closeButtonTapped))
+    }
+    
+    private func addSubviews() {
+        mapView.addSubview(redoSearchButton)
+        mapView.addSubview(collectionView)
+        mapView.addSubview(addGameButton)
+        view.addSubview(mapView)
+    }
+    
+    private func setMapViewConstraints() {
+        NSLayoutConstraint.activate([
+            mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
+    
+    private func setRedoSearchButtonConstriants() {
+        let padding: CGFloat = 10
+        let width = redoSearchButton.titleLabel?.intrinsicContentSize.width ?? 0.0
+        let height = redoSearchButton.titleLabel?.intrinsicContentSize.height ?? 0.0
+        NSLayoutConstraint.activate([
+            redoSearchButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: SCREEN_HEIGHT * 0.05),
+            redoSearchButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            redoSearchButton.widthAnchor.constraint(equalToConstant: width + padding),
+            redoSearchButton.heightAnchor.constraint(equalToConstant: height + padding),
+        ])
+    }
+    
+    private func setCollectionViewContraints() {
+        NSLayoutConstraint.activate([
+            collectionView.bottomAnchor.constraint(equalTo: addGameButton.topAnchor, constant: -10),
+            collectionView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: mapView.trailingAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: SCREEN_HEIGHT * 0.25)
+        ])
+    }
+    
+    private func setAddGameButtonConstraints() {
+        NSLayoutConstraint.activate([
+            addGameButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -SCREEN_WIDTH * 0.05),
+            addGameButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -SCREEN_WIDTH * 0.05),
+            addGameButton.widthAnchor.constraint(equalTo: mapView.widthAnchor, multiplier: 0.125),
+            addGameButton.heightAnchor.constraint(equalTo: mapView.widthAnchor, multiplier: 0.125)
+        ])
     }
 }
