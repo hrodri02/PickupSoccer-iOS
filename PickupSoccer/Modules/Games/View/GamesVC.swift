@@ -166,8 +166,6 @@ class GamesVC: UIViewController, UICollectionViewDelegate
                                 longitudeDelta: longitudeDelta)
             case .failure(let error):
                 print(error.localizedDescription)
-                // TODO: - display a message to tell the user to enable app to use their location
-                //         so that they can join and create games near their location
             }
         }
     }
