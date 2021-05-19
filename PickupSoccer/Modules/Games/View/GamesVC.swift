@@ -194,21 +194,21 @@ class GamesVC: UIViewController, UICollectionViewDelegate
 }
 
 extension GamesVC: GamesPresenterToGamesView {
-    func displayGames(_ coordinateToGame: [CLLocationCoordinate2D : Game]) {
+    func displayGames(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel]) {
         annotations.removeAll()
         
         // remove old annotations that are no longer within the visible region
         for (coordinate, annotation) in coordinateToAnnotation {
-            if coordinateToGame[coordinate] == nil {
+            if coordinateToGameViewModel[coordinate] == nil {
                 mapView.removeAnnotation(annotation)
                 coordinateToAnnotation[coordinate] = nil
             }
         }
         
         // add new annotations
-        for (coordinate, game) in coordinateToGame {
+        for (coordinate, gameViewModel) in coordinateToGameViewModel {
             if coordinateToAnnotation[coordinate] == nil {
-                let annotation = GameAnnotation(game: game)
+                let annotation = GameAnnotation(gameViewModel: gameViewModel, coordinate: coordinate)
                 mapView.addAnnotation(annotation)
                 coordinateToAnnotation[coordinate] = annotation
             }
