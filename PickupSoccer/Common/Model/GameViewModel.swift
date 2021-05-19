@@ -7,3 +7,25 @@
 //
 
 import Foundation
+
+struct GameViewModel
+{
+    let address: String
+    let startDate: String
+    let duration: String
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, h:mm a"
+        return formatter
+    }()
+    
+    init(game: Game) {
+        self.address = game.address
+        self.startDate = GameViewModel.dateFormatter.string(from: game.dateInterval.start)
+        
+        let durationInMins = game.dateInterval.duration / 60
+        let hours = Int(durationInMins) / 60
+        let mins = Int(durationInMins) % 60
+        self.duration = "\(hours) h \(mins) m"
+    }
+}
