@@ -12,7 +12,7 @@ import CoreData
 
 class GamesVC: UIViewController, UICollectionViewDelegate
 {
-    let NUM_ANNOTATIONS_DATA_SETS = 3
+    let NUM_ANNOTATIONS_DATA_SETS = 1000
     let MAX_LATITUDINAL_METERS: Double = 10_000
     let INIT_LATITUDINAL_METERS: Double = 5000
     let INIT_LONGITUDINAL_METERS: Double = 5000
@@ -195,17 +195,22 @@ class GamesVC: UIViewController, UICollectionViewDelegate
 
 extension GamesVC: GamesPresenterToGamesView {
     func displayGames(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel]) {
-        annotations.removeAll()
-        
-        // remove old annotations that are no longer within the visible region
+        removeAnnotationsNotInRegion(coordinateToGameViewModel)
+        addNewAnnotations(coordinateToGameViewModel)
+        addAnnotationsToDataSource()
+        reloadGamesView()
+    }
+    
+    private func removeAnnotationsNotInRegion(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel]) {
         for (coordinate, annotation) in coordinateToAnnotation {
             if coordinateToGameViewModel[coordinate] == nil {
                 mapView.removeAnnotation(annotation)
                 coordinateToAnnotation[coordinate] = nil
             }
         }
-        
-        // add new annotations
+    }
+    
+    private func addNewAnnotations(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel]) {
         for (coordinate, gameViewModel) in coordinateToGameViewModel {
             if coordinateToAnnotation[coordinate] == nil {
                 let annotation = GameAnnotation(gameViewModel: gameViewModel, coordinate: coordinate)
@@ -213,11 +218,16 @@ extension GamesVC: GamesPresenterToGamesView {
                 coordinateToAnnotation[coordinate] = annotation
             }
         }
-        
+    }
+    
+    private func addAnnotationsToDataSource() {
+        annotations.removeAll()
         for (_, annotation) in coordinateToAnnotation {
             annotations.append(annotation)
         }
-        
+    }
+    
+    private func reloadGamesView() {
         collectionView.reloadData()
         // calculate new selectedItem, then scroll to it
         if annotations.count > 0 {
