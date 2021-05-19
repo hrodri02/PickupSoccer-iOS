@@ -53,6 +53,7 @@
 		2FB11A3C2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */; };
 		2FDC2DAB26038E7B00B6C876 /* CreateGameInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC2DAA26038E7B00B6C876 /* CreateGameInteractorTests.swift */; };
 		2FE5BDA726496D5F00B2CB85 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5BDA626496D5F00B2CB85 /* CoreDataStore.swift */; };
+		2FEA597526554F17008810DC /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEA597426554F17008810DC /* GameViewModel.swift */; };
 		2FEAEC3225E0120D00826A89 /* SetTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAEC3125E0120D00826A89 /* SetTimeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +137,7 @@
 		2FDC2DAA26038E7B00B6C876 /* CreateGameInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameInteractorTests.swift; sourceTree = "<group>"; };
 		2FDC2DAC26038E7B00B6C876 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FE5BDA626496D5F00B2CB85 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		2FEA597426554F17008810DC /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		2FEAEC3125E0120D00826A89 /* SetTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				2F38FB9125D9837200056052 /* Game.swift */,
+				2FEA597426554F17008810DC /* GameViewModel.swift */,
 				2F38FB9625D9A49800056052 /* GameAnnotation.swift */,
 				2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */,
 			);
@@ -624,6 +627,7 @@
 				2F169ED825DB60F500FAFA06 /* CalendarDateViewCVCell.swift in Sources */,
 				2F4C9A512638BAF70095F114 /* CarouselLayout.swift in Sources */,
 				2F6BCB2326024038000DA4C5 /* App.swift in Sources */,
+				2FEA597526554F17008810DC /* GameViewModel.swift in Sources */,
 				2FA50F8E25DB6EB6000F401A /* CalendarPickerHeaderView.swift in Sources */,
 				2FB11A3C2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld in Sources */,
 				2F38FB9725D9A49800056052 /* GameAnnotation.swift in Sources */,
