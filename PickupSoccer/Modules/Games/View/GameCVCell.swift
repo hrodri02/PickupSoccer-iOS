@@ -75,18 +75,11 @@ class GameCVCell: UICollectionViewCell {
     }
     
     public func configure(with annotation: GameAnnotation, index: Int) {
-        if let game = annotation.game {
-            let address = game.address
+        if let viewModel = annotation.gameViewModel {
+            let address = viewModel.address
             locationLabel.text = "\(index). \(address)"
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM d, h:mm a"
-            dateLabel.text = dateFormatter.string(from: game.dateInterval.start)
-            
-            let durationInMins = game.dateInterval.duration / 60
-            let hours = Int(durationInMins) / 60
-            let mins = Int(durationInMins) % 60
-            durationLabel.text = "\(hours) h \(mins) m"
+            dateLabel.text = viewModel.startDate
+            durationLabel.text = viewModel.duration
         }
     }
     
