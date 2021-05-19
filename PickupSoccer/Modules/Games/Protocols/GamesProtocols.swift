@@ -18,7 +18,7 @@ protocol GamesViewToGamesPresenter: AnyObject {
 }
 
 protocol GamesPresenterToGamesView: AnyObject {
-    func displayGames(_ coordinateToGame: [CLLocationCoordinate2D : Game])
+    func displayGames(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel])
     func displayErrorMessage(_ errorMessage: String)
 }
 
