@@ -239,7 +239,7 @@ extension GamesVC: GamesPresenterToGamesView {
     }
     
     func displayErrorMessage(_ errorMessage: String) {
-        
+        presentErrorMessage(errorMessage)
     }
 }
 
