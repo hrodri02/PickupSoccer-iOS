@@ -27,8 +27,8 @@ class GamesInteractor: GamesPresenterToGamesInteractor {
     {
         dataStore.fetchGames(center: center, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta) { (result) in
             switch result {
-            case .success(let coordinateToGame):
-                self.presenter?.onFetchGamesSuccess(coordinateToGame)
+            case .success(let games):
+                self.presenter?.onFetchGamesSuccess(games)
             case .failure(let error):
                 self.presenter?.onFetchGamesFailed(error.localizedDescription)
             }
