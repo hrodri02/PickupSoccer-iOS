@@ -13,12 +13,16 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
     weak var presenter: CreateGameInteractorToCreateGamePresenter?
     private var userLocationService: UserLocationServiceProtocol
     private let dataStore: DataStore
-    private var newGame: Game
+    private var address: String
+    private var dateInterval: DateInterval
+    private var location: CLLocationCoordinate2D
     
     init(userLocationService: UserLocationServiceProtocol, dataStore: DataStore) {
         self.dataStore = dataStore
         self.userLocationService = userLocationService
-        self.newGame = Game()
+        self.address = ""
+        self.dateInterval = DateInterval()
+        self.location = CLLocationCoordinate2D()
         super.init()
     }
     
@@ -59,7 +63,7 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
     }
     
     func setDateIntervalOfNewGame(_ interval: DateInterval) {
-        newGame.setDateInterval(interval)
+        self.dateInterval = interval
     }
     
     func generateUsersLocation(completionHandler: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
@@ -69,19 +73,19 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
     }
     
     func setLocationOfNewGame(_ location: CLLocationCoordinate2D) {
-        newGame.setLocation(location)
+        self.location = location
     }
     
     func returnStartDateAndEndDateOfGame() {
-        presenter?.convertDateIntervalToStartDateAndDuration(newGame.dateInterval)
+        presenter?.convertDateIntervalToStartDateAndDuration(dateInterval)
     }
     
     func setAddressOfNewGame(_ address: String) {
-        newGame.setAddress(address)
+        self.address = address
     }
     
     func saveNewGame() {
-        dataStore.save(newGame) { (error) in
+        dataStore.saveGame(address, location, dateInterval) { (error) in
             if let err = error {
                 self.presenter?.failedToSaveNewGame(errorMessage: err.localizedDescription)
             }
