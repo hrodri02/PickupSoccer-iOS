@@ -29,7 +29,7 @@ protocol GamesPresenterToGamesInteractor {
 }
 
 protocol GamesInteractorToGamesPresenter: AnyObject {
-    func onFetchGamesSuccess(_ games: [CLLocationCoordinate2D : Game])
+    func onFetchGamesSuccess(_ games: [GameMO])
     func onFetchGamesFailed(_ errorMessage: String)
 }
 
