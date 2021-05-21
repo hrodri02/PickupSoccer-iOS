@@ -1,8 +1,16 @@
+enum Position: Int {
+    case position1
+    case position2
+}
+
+print(Position.position1.rawValue)
+
 // my location
 //37.70676399399633, -122.41537376707768
 
 // ocean view park
 //37.71590334951762, -122.45735797571214
+
 import CoreLocation
 
 let mcdonals = CLLocation(latitude: 37.70676399399633, longitude: -122.41537376707768)
