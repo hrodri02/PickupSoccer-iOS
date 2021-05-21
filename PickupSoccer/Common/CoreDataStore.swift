@@ -14,8 +14,11 @@ protocol DataStore {
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[CLLocationCoordinate2D : Game], Error>) -> Void)
-    func save(_ game: Game, completion: @escaping (Error?) -> Void)
+                    completion: @escaping (Result<[GameMO], Error>) -> Void)
+    func saveGame(_ address: String,
+                  _ location: CLLocationCoordinate2D,
+                  _ dateInterval: DateInterval,
+                  completion: @escaping (Error?) -> Void)
 }
 
 class CoreDataStore: DataStore
@@ -36,40 +39,37 @@ class CoreDataStore: DataStore
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[CLLocationCoordinate2D : Game], Error>) -> Void)
+                    completion: @escaping (Result<[GameMO], Error>) -> Void)
     {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
         do {
-            let managedObjects: [NSManagedObject] = try managedObjectContext.fetch(fetchRequest)
+            let managedObjects: [GameMO] = try managedObjectContext.fetch(fetchRequest) as! [GameMO]
             
-            var coordinateToGame = [CLLocationCoordinate2D : Game]()
+            var gamesInRegion = [GameMO]()
             for mo in managedObjects {
-                let address = mo.value(forKey: "address") as? String
-                let locationMO = mo.value(forKey: "location") as? NSManagedObject
-                let dateIntervalMO = mo.value(forKey: "dateInterval") as? NSManagedObject
-                let latitude = locationMO?.value(forKey: "latitude") as? Double
-                let longitude = locationMO?.value(forKey: "longitude") as? Double
-                let start = dateIntervalMO?.value(forKey: "start") as? Date
-                let end = dateIntervalMO?.value(forKey: "end") as? Date
-                let location = CLLocationCoordinate2D(latitude: latitude!,
-                                                      longitude: longitude!)
-                let dateInterval = DateInterval(start: start!, end: end!)
-                let game = Game(location, dateInterval, address ?? "")
-                if game.location.latitude > center.latitude - latitudeDelta / 2 &&
-                   game.location.latitude < center.latitude + latitudeDelta / 2 &&
-                   game.location.longitude > center.longitude - longitudeDelta / 2 &&
-                    game.location.longitude < center.longitude + longitudeDelta / 2 {
-                    coordinateToGame[location] = game
+                if let location = mo.location {
+                    if location.latitude > center.latitude - latitudeDelta / 2 &&
+                       location.latitude < center.latitude + latitudeDelta / 2 &&
+                       location.longitude > center.longitude - longitudeDelta / 2 &&
+                       location.longitude < center.longitude + longitudeDelta / 2
+                    {
+                        gamesInRegion.append(mo)
+                    }
                 }
+                
             }
-            completion(Result.success(coordinateToGame))
+            completion(Result.success(gamesInRegion))
         }
         catch {
             completion(Result.failure(error))
         }
     }
     
-    func save(_ game: Game, completion: @escaping (Error?) -> Void) {
+    func saveGame(_ address: String,
+                  _ location: CLLocationCoordinate2D,
+                  _ dateInterval: DateInterval,
+                  completion: @escaping (Error?) -> Void)
+    {
         // 1. get reference to app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         // 2. get reference to managed object context
@@ -79,17 +79,19 @@ class CoreDataStore: DataStore
         let locationEntity = NSEntityDescription.entity(forEntityName: "Location", in: managedObjectConext)!
         let dateIntervalEntity = NSEntityDescription.entity(forEntityName: "DateInterval", in: managedObjectConext)!
         // 4. create managed objects
-        let gameMO = NSManagedObject(entity: gameEntity, insertInto: managedObjectConext)
-        let locationMO = NSManagedObject(entity: locationEntity, insertInto: managedObjectConext)
-        let dateIntervalMO = NSManagedObject(entity: dateIntervalEntity, insertInto: managedObjectConext)
+        let gameMO = NSManagedObject(entity: gameEntity, insertInto: managedObjectConext) as! GameMO
+        let locationMO = NSManagedObject(entity: locationEntity, insertInto: managedObjectConext) as! LocationMO
+        let dateIntervalMO = NSManagedObject(entity: dateIntervalEntity, insertInto: managedObjectConext) as! DateIntervalMO
+        
         // 5. set properties of game entity
-        locationMO.setValue(game.location.latitude, forKey: "latitude")
-        locationMO.setValue(game.location.longitude, forKey: "longitude")
-        dateIntervalMO.setValue(game.dateInterval.start, forKey: "start")
-        dateIntervalMO.setValue(game.dateInterval.end, forKey: "end")
-        gameMO.setValue(game.address, forKey: "address")
-        gameMO.setValue(locationMO, forKey: "location")
-        gameMO.setValue(dateIntervalMO, forKey: "dateInterval")
+        locationMO.latitude = location.latitude
+        locationMO.longitude = location.longitude
+        dateIntervalMO.start = dateInterval.start
+        dateIntervalMO.end = dateInterval.end
+        gameMO.address = address
+        gameMO.location = locationMO
+        gameMO.dateInterval = dateIntervalMO
+        
         // 6. save managed object context
         do {
             try managedObjectConext.save()
