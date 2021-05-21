@@ -8,6 +8,7 @@
 
 import XCTest
 import CoreLocation
+import CoreData
 @testable import PickupSoccer
 
 class GamesInteractorTests: XCTestCase {
@@ -34,10 +35,10 @@ class GamesInteractorTests: XCTestCase {
                                              longitudeDelta: longtidueDelta)
         { (result) in
             switch result {
-            case .success(let coordinateToGame):
-                for (_, game) in coordinateToGame {
-                    print(game)
-                }
+            case .success(let games):
+            for game in games {
+                print("{location:\n\t{latitude = \(game.location?.latitude)},\n\t{longitude = \(game.location?.longitude)}")
+            }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -53,8 +54,8 @@ class GamesInteractorTests: XCTestCase {
                                              longitudeDelta: longtidueDelta)
         { (result) in
             switch result {
-            case .success(let coordinateToGame):
-                for (_, game) in coordinateToGame {
+            case .success(let games):
+                for game in games {
                     print(game)
                 }
             case .failure(let error):
@@ -65,50 +66,87 @@ class GamesInteractorTests: XCTestCase {
 }
 
 class MockDataStore: DataStore {
-    let games: [Game]
+    let games: [GameMO]
     var fetchedGamesFromDB: Bool
+    
     init() {
-        let inside1 = CLLocationCoordinate2D(latitude: 1, longitude: 1)
-        let inside2 = CLLocationCoordinate2D(latitude: -1, longitude: 1)
-        let inside3 = CLLocationCoordinate2D(latitude: -1, longitude: -1)
-        let inside4 = CLLocationCoordinate2D(latitude: 1, longitude: -1)
-        let outside = CLLocationCoordinate2D(latitude: 6, longitude: 6)
-        games = [Game(inside1, DateInterval(start: Date(), duration: 3600)),
-                 Game(inside2, DateInterval(start: Date(), duration: 3600)),
-                 Game(inside3, DateInterval(start: Date(), duration: 3600)),
-                 Game(inside4, DateInterval(start: Date(), duration: 3600)),
-                 Game(outside, DateInterval(start: Date(), duration: 3600)),]
-        fetchedGamesFromDB = true
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let managedObjectContext = appDelegate?.persistentContainer.viewContext
+        
+        let inside1 = LocationMO(context: managedObjectContext!) //CLLocationCoordinate2D(latitude: 1, longitude: 1)
+        inside1.latitude = 1.0
+        inside1.longitude = 1.0
+        
+        let inside2 = LocationMO(context: managedObjectContext!) // CLLocationCoordinate2D(latitude: -1, longitude: 1)
+        inside2.latitude = -1.0
+        inside2.longitude = 1.0
+        
+        let inside3 = LocationMO(context: managedObjectContext!) // CLLocationCoordinate2D(latitude: -1, longitude: -1)
+        inside3.latitude = -1.0
+        inside3.longitude = -1.0
+        
+        let inside4 = LocationMO(context: managedObjectContext!) //CLLocationCoordinate2D(latitude: 1, longitude: -1)
+        inside4.latitude = 1.0
+        inside4.longitude = -1.0
+        
+        let outside = LocationMO(context: managedObjectContext!) //CLLocationCoordinate2D(latitude: 6, longitude: 6)
+        outside.latitude = 6.0
+        outside.longitude = 6.0
+        
+        let game1 = GameMO(context: managedObjectContext!)
+        game1.location = inside1
+        
+        let game2 = GameMO(context: managedObjectContext!)
+        game2.location = inside2
+        
+        let game3 = GameMO(context: managedObjectContext!)
+        game3.location = inside3
+        
+        let game4 = GameMO(context: managedObjectContext!)
+        game4.location = inside4
+        
+        let game5 = GameMO(context: managedObjectContext!)
+        game5.location = outside
+        
+        games = [game1, game2, game3, game4, game5]
+        fetchedGamesFromDB = false
     }
     
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[CLLocationCoordinate2D : Game], Error>) -> Void)
+                    completion: @escaping (Result<[GameMO], Error>) -> Void)
     {
         /*
         -90 <= latitude <= 90
         -180 <= longitude <= 180
         */
         if fetchedGamesFromDB {
-            var coordinateToGame = [CLLocationCoordinate2D : Game]()
-            for game in games {
-                if game.location.latitude > center.latitude - latitudeDelta / 2.0 &&
-                   game.location.latitude < center.latitude + latitudeDelta / 2.0 &&
-                   game.location.longitude < center.longitude + longitudeDelta / 2.0 &&
-                   game.location.longitude > center.longitude - longitudeDelta / 2.0
-                {
-                    coordinateToGame[game.location] = game
+            var gamesInRegion = [GameMO]()
+            for mo in games {
+                if let location = mo.location {
+                    if location.latitude > center.latitude - latitudeDelta / 2 &&
+                       location.latitude < center.latitude + latitudeDelta / 2 &&
+                       location.longitude > center.longitude - longitudeDelta / 2 &&
+                       location.longitude < center.longitude + longitudeDelta / 2
+                    {
+                        gamesInRegion.append(mo)
+                    }
                 }
+                
             }
-            completion(.success(coordinateToGame))
+            completion(Result.success(gamesInRegion))
         }
         else {
             completion(.failure(DB_Error.failedToFecthGames))
         }
     }
     
-    func save(_ game: Game, completion: @escaping (Error?) -> Void) {
+    func saveGame(_ address: String,
+                  _ location: CLLocationCoordinate2D,
+                  _ dateInterval: DateInterval,
+                  completion: @escaping (Error?) -> Void)
+    {
         
     }
 }
