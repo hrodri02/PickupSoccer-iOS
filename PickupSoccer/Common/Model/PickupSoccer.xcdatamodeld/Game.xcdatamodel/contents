@@ -16,7 +16,7 @@
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="location" inverseEntity="Game"/>
     </entity>
     <entity name="User" representedClassName="UserMO" syncable="YES" codeGenerationType="class">
-        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="firstName" attributeType="String"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
     </entity>
     <elements>
