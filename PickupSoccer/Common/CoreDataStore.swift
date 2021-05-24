@@ -10,17 +10,6 @@ import CoreLocation
 import CoreData
 import UIKit
 
-protocol DataStore {
-    func fetchGames(center: CLLocationCoordinate2D,
-                    latitudeDelta: CLLocationDegrees,
-                    longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[GameMO], Error>) -> Void)
-    func saveGame(_ address: String,
-                  _ location: CLLocationCoordinate2D,
-                  _ dateInterval: DateInterval,
-                  completion: @escaping (Error?) -> Void)
-}
-
 class CoreDataStore: DataStore
 {
     let managedObjectContext: NSManagedObjectContext!
@@ -39,7 +28,7 @@ class CoreDataStore: DataStore
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[GameMO], Error>) -> Void)
+                    completion: @escaping (Result<[Game], Error>) -> Void)
     {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
         do {
