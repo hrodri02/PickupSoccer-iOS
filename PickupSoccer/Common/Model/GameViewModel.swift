@@ -19,24 +19,13 @@ struct GameViewModel
         return formatter
     }()
     
-    init(game: GameMO) {
+    init(game: Game) {
         self.address = game.address ?? ""
-        if let start = game.dateInterval?.start {
-            self.startDate = GameViewModel.dateFormatter.string(from: start)
-        }
-        else {
-            self.startDate = ""
-        }
-        
-        if let dateInterval = game.dateInterval, let start = dateInterval.start, let end = dateInterval.end {
-            let durationInSecs = Int(end.timeIntervalSince1970 - start.timeIntervalSince1970)
-            let durationInMins = durationInSecs / 60
-            let hours = Int(durationInMins) / 60
-            let mins = Int(durationInMins) % 60
-            self.duration = "\(hours) h \(mins) m"
-        }
-        else {
-            self.duration = ""
-        }
+        self.startDate = GameViewModel.dateFormatter.string(from: game.timeInterval.start)
+        let durationInSecs = Int(game.timeInterval.duration)
+        let durationInMins = durationInSecs / 60
+        let hours = Int(durationInMins) / 60
+        let mins = Int(durationInMins) % 60
+        self.duration = "\(hours) h \(mins) m"
     }
 }
