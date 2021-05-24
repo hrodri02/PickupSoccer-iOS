@@ -29,7 +29,7 @@ protocol GamesPresenterToGamesInteractor {
 }
 
 protocol GamesInteractorToGamesPresenter: AnyObject {
-    func onFetchGamesSuccess(_ games: [GameMO])
+    func onFetchGamesSuccess(_ games: [Game])
     func onFetchGamesFailed(_ errorMessage: String)
 }
 
