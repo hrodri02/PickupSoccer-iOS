@@ -1,9 +1,25 @@
-enum Position: Int {
-    case position1
-    case position2
+class MyObj
+{
+    var prop1: String
+    
+    init(prop1: String) {
+        self.prop1 = prop1
+    }
 }
 
-print(Position.position1.rawValue)
+protocol MyObjProtocol
+{
+    var prop1: String {get set}
+}
+
+extension MyObj: MyObjProtocol { }
+
+func someFunc(_ obj: MyObjProtocol) {
+    print(obj.prop1)
+}
+
+let obj = MyObj(prop1: "prop1")
+someFunc(obj)
 
 // my location
 //37.70676399399633, -122.41537376707768
