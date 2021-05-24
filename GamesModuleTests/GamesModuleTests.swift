@@ -37,7 +37,7 @@ class GamesInteractorTests: XCTestCase {
             switch result {
             case .success(let games):
             for game in games {
-                print("{location:\n\t{latitude = \(game.location?.latitude)},\n\t{longitude = \(game.location?.longitude)}")
+                print("{location:\n\t{latitude = \(game.coordinate.latitude)},\n\t{longitude = \(game.coordinate.longitude)}")
             }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -65,75 +65,53 @@ class GamesInteractorTests: XCTestCase {
     }
 }
 
+class MockGame: Game {
+    var gameAddress: String
+    var coordinate: CLLocationCoordinate2D
+    var timeInterval: DateInterval
+    
+    init(location: CLLocationCoordinate2D) {
+        gameAddress = ""
+        timeInterval = DateInterval()
+        coordinate = location
+    }
+}
+
 class MockDataStore: DataStore {
-    let games: [GameMO]
+    let games: [Game]
     var fetchedGamesFromDB: Bool
     
     init() {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        let managedObjectContext = appDelegate?.persistentContainer.viewContext
         
-        let inside1 = LocationMO(context: managedObjectContext!) //CLLocationCoordinate2D(latitude: 1, longitude: 1)
-        inside1.latitude = 1.0
-        inside1.longitude = 1.0
-        
-        let inside2 = LocationMO(context: managedObjectContext!) // CLLocationCoordinate2D(latitude: -1, longitude: 1)
-        inside2.latitude = -1.0
-        inside2.longitude = 1.0
-        
-        let inside3 = LocationMO(context: managedObjectContext!) // CLLocationCoordinate2D(latitude: -1, longitude: -1)
-        inside3.latitude = -1.0
-        inside3.longitude = -1.0
-        
-        let inside4 = LocationMO(context: managedObjectContext!) //CLLocationCoordinate2D(latitude: 1, longitude: -1)
-        inside4.latitude = 1.0
-        inside4.longitude = -1.0
-        
-        let outside = LocationMO(context: managedObjectContext!) //CLLocationCoordinate2D(latitude: 6, longitude: 6)
-        outside.latitude = 6.0
-        outside.longitude = 6.0
-        
-        let game1 = GameMO(context: managedObjectContext!)
-        game1.location = inside1
-        
-        let game2 = GameMO(context: managedObjectContext!)
-        game2.location = inside2
-        
-        let game3 = GameMO(context: managedObjectContext!)
-        game3.location = inside3
-        
-        let game4 = GameMO(context: managedObjectContext!)
-        game4.location = inside4
-        
-        let game5 = GameMO(context: managedObjectContext!)
-        game5.location = outside
-        
-        games = [game1, game2, game3, game4, game5]
-        fetchedGamesFromDB = false
+        let inside1 = MockGame(location: CLLocationCoordinate2D(latitude: 1, longitude: 1))
+        let inside2 = MockGame(location: CLLocationCoordinate2D(latitude: -1, longitude: 1))
+        let inside3 = MockGame(location: CLLocationCoordinate2D(latitude: -1, longitude: -1))
+        let inside4 = MockGame(location: CLLocationCoordinate2D(latitude: 1, longitude: -1))
+        let outside = MockGame(location: CLLocationCoordinate2D(latitude: 6, longitude: 6))
+        games = [inside1, inside2, inside3, inside4, outside]
+        fetchedGamesFromDB = true
     }
     
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
-                    completion: @escaping (Result<[GameMO], Error>) -> Void)
+                    completion: @escaping (Result<[Game], Error>) -> Void)
     {
         /*
         -90 <= latitude <= 90
         -180 <= longitude <= 180
         */
         if fetchedGamesFromDB {
-            var gamesInRegion = [GameMO]()
-            for mo in games {
-                if let location = mo.location {
-                    if location.latitude > center.latitude - latitudeDelta / 2 &&
-                       location.latitude < center.latitude + latitudeDelta / 2 &&
-                       location.longitude > center.longitude - longitudeDelta / 2 &&
-                       location.longitude < center.longitude + longitudeDelta / 2
-                    {
-                        gamesInRegion.append(mo)
-                    }
+            var gamesInRegion = [Game]()
+            for game in games {
+                let location = game.coordinate
+                if location.latitude > center.latitude - latitudeDelta / 2 &&
+                   location.latitude < center.latitude + latitudeDelta / 2 &&
+                   location.longitude > center.longitude - longitudeDelta / 2 &&
+                   location.longitude < center.longitude + longitudeDelta / 2
+                {
+                    gamesInRegion.append(game)
                 }
-                
             }
             completion(Result.success(gamesInRegion))
         }

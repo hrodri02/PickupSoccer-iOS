@@ -91,7 +91,7 @@ class MockPresenter: CreateGameInteractorToCreateGamePresenter {
 }
 
 class MockDataStore: DataStore {
-    func fetchGames(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees, completion: @escaping (Result<[GameMO], Error>) -> Void) {
+    func fetchGames(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees, completion: @escaping (Result<[Game], Error>) -> Void) {
         
     }
     
