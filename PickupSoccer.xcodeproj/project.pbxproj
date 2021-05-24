@@ -16,6 +16,7 @@
 		2F18899C25D97FAA00ECA469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F18899B25D97FAA00ECA469 /* Assets.xcassets */; };
 		2F18899F25D97FAA00ECA469 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F18899D25D97FAA00ECA469 /* LaunchScreen.storyboard */; };
 		2F28E35925E6A66A00E64E70 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */; };
+		2F2964EF265BEEB500558C2E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2964EE265BEEB500558C2E /* DataStore.swift */; };
 		2F2D0AFB25F2840900FC87AA /* CreateGameProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0AFA25F2840900FC87AA /* CreateGameProtocols.swift */; };
 		2F2D0AFE25F30A6300FC87AA /* CreateGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */; };
 		2F2D0B0125F310E000FC87AA /* CreateGameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0B0025F310E000FC87AA /* CreateGameRouter.swift */; };
@@ -46,6 +47,8 @@
 		2F921196264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2F921195264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg */; };
 		2F92119E264EBF5900ECAC96 /* GamesModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F92119D264EBF5900ECAC96 /* GamesModuleTests.swift */; };
 		2F9273DD264C124400624B38 /* CLLCoordinate2D+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9273DC264C124400624B38 /* CLLCoordinate2D+Ext.swift */; };
+		2F9F2107265BD55800F92024 /* GameMO+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F2106265BD55800F92024 /* GameMO+Ext.swift */; };
+		2F9F2109265BD57A00F92024 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F2108265BD57A00F92024 /* Game.swift */; };
 		2FA375A225EDB93700016633 /* GameTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA375A125EDB93700016633 /* GameTimeVC.swift */; };
 		2FA50F8E25DB6EB6000F401A /* CalendarPickerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA50F8D25DB6EB6000F401A /* CalendarPickerHeaderView.swift */; };
 		2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA50F8F25DB6EE8000F401A /* CalendarPickerFooterView.swift */; };
@@ -93,6 +96,7 @@
 		2F18899E25D97FAA00ECA469 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F1889A025D97FAA00ECA469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
+		2F2964EE265BEEB500558C2E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		2F2D0AFA25F2840900FC87AA /* CreateGameProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameProtocols.swift; sourceTree = "<group>"; };
 		2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameInteractor.swift; sourceTree = "<group>"; };
 		2F2D0B0025F310E000FC87AA /* CreateGameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameRouter.swift; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 		2F92119D264EBF5900ECAC96 /* GamesModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesModuleTests.swift; sourceTree = "<group>"; };
 		2F92119F264EBF5900ECAC96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F9273DC264C124400624B38 /* CLLCoordinate2D+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLCoordinate2D+Ext.swift"; sourceTree = "<group>"; };
+		2F9F2106265BD55800F92024 /* GameMO+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameMO+Ext.swift"; sourceTree = "<group>"; };
+		2F9F2108265BD57A00F92024 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		2FA375A125EDB93700016633 /* GameTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeVC.swift; sourceTree = "<group>"; };
 		2FA50F8D25DB6EB6000F401A /* CalendarPickerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerHeaderView.swift; sourceTree = "<group>"; };
 		2FA50F8F25DB6EE8000F401A /* CalendarPickerFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerFooterView.swift; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 			children = (
 				2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */,
 				2F9273DC264C124400624B38 /* CLLCoordinate2D+Ext.swift */,
+				2F9F2106265BD55800F92024 /* GameMO+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -270,6 +277,7 @@
 		2F38FB9025D9836500056052 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2F9F2108265BD57A00F92024 /* Game.swift */,
 				2F16C1F72656A697001FF64E /* User.swift */,
 				2FEA597426554F17008810DC /* GameViewModel.swift */,
 				2F38FB9625D9A49800056052 /* GameAnnotation.swift */,
@@ -424,6 +432,7 @@
 				2F38FB9025D9836500056052 /* Model */,
 				2F4C9A502638BAF70095F114 /* CarouselLayout.swift */,
 				2FE5BDA626496D5F00B2CB85 /* CoreDataStore.swift */,
+				2F2964EE265BEEB500558C2E /* DataStore.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -641,6 +650,7 @@
 				2F8666142604CDD8007978B9 /* CalendarVC_MVVM.swift in Sources */,
 				2F9273DD264C124400624B38 /* CLLCoordinate2D+Ext.swift in Sources */,
 				2F690C2525FB04F900A7C054 /* CalendarInteractor.swift in Sources */,
+				2F9F2107265BD55800F92024 /* GameMO+Ext.swift in Sources */,
 				2F18899525D97FA600ECA469 /* SceneDelegate.swift in Sources */,
 				2F360DE025FEB37B009B711F /* GameDetailsFooterView.swift in Sources */,
 				2F86A79125FFA6D40093BB38 /* CalendarProtocols.swift in Sources */,
@@ -659,9 +669,11 @@
 				2FA375A225EDB93700016633 /* GameTimeVC.swift in Sources */,
 				2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */,
 				2F6BCB2126023DD6000DA4C5 /* UserLocationService.swift in Sources */,
+				2F9F2109265BD57A00F92024 /* Game.swift in Sources */,
 				2F2D0AFB25F2840900FC87AA /* CreateGameProtocols.swift in Sources */,
 				2F45EE922640996D00F3A3B4 /* GameCVCell.swift in Sources */,
 				2F46E9C62600F4EB0023D667 /* CalendarModule.swift in Sources */,
+				2F2964EF265BEEB500558C2E /* DataStore.swift in Sources */,
 				2F16C1F82656A697001FF64E /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
