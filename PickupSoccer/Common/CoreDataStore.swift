@@ -64,9 +64,13 @@ class CoreDataStore: DataStore
         // 2. get reference to managed object context
         let managedObjectConext = appDelegate.persistentContainer.viewContext
         // 3. create a game entity
-        let gameEntity = NSEntityDescription.entity(forEntityName: "Game", in: managedObjectConext)!
-        let locationEntity = NSEntityDescription.entity(forEntityName: "Location", in: managedObjectConext)!
-        let dateIntervalEntity = NSEntityDescription.entity(forEntityName: "DateInterval", in: managedObjectConext)!
+        guard let gameEntity = NSEntityDescription.entity(forEntityName: "Game", in: managedObjectConext),
+            let locationEntity = NSEntityDescription.entity(forEntityName: "Location", in: managedObjectConext),
+            let dateIntervalEntity = NSEntityDescription.entity(forEntityName: "DateInterval", in: managedObjectConext) else
+        {
+            fatalError("Failed to create entity descriptions for Game, Location, and DateInterval entities.")
+        }
+        
         // 4. create managed objects
         let gameMO = NSManagedObject(entity: gameEntity, insertInto: managedObjectConext) as! GameMO
         let locationMO = NSManagedObject(entity: locationEntity, insertInto: managedObjectConext) as! LocationMO
