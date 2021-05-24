@@ -6,4 +6,10 @@
 //  Copyright © 2021 Heriberto Rodriguez. All rights reserved.
 //
 
-import Foundation
+import CoreLocation
+
+protocol Game {
+    var address: String? {get set}
+    var coordinate: CLLocationCoordinate2D {get set}
+    var timeInterval: DateInterval {get set}
+}
