@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class GamesVC: UIViewController, UICollectionViewDelegate
+class GamesVC: UIViewController
 {
     let NUM_ANNOTATIONS_DATA_SETS = 1000
     let MAX_LATITUDINAL_METERS: Double = 10_000
@@ -180,6 +180,7 @@ class GamesVC: UIViewController, UICollectionViewDelegate
     }
     
     /*
+        Note: This method is only called if collectionView delegate is set and GamesVC adopts the delegate
         midX = collectionView.bounds.midX
         midX = item * (minCellWidth + minLineSpacing) + minCellWidth / 2
         item = (midX - minCellWidth / 2) / (minCellWidth + minLineSpacing)
@@ -293,6 +294,13 @@ extension GamesVC: UICollectionViewDataSource {
         let annotation = annotations[index]
         cell.configure(with: annotation, index: index)
         return cell
+    }
+}
+
+extension GamesVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let gameVC = GameModule.build()
+        navigationController?.pushViewController(gameVC, animated: false)
     }
 }
 
