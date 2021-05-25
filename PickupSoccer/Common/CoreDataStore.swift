@@ -31,22 +31,14 @@ class CoreDataStore: DataStore
                     completion: @escaping (Result<[Game], Error>) -> Void)
     {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
+        let predicateFormat = "location.latitude > %f AND location.latitude < %f AND location.longitude > %f AND location.longitude < %f"
+        fetchRequest.predicate = NSPredicate(format: predicateFormat,
+                                             center.latitude - latitudeDelta / 2,
+                                             center.latitude + latitudeDelta / 2,
+                                             center.longitude - longitudeDelta / 2,
+                                             center.longitude + longitudeDelta / 2)
         do {
-            let managedObjects: [GameMO] = try managedObjectContext.fetch(fetchRequest) as! [GameMO]
-            
-            var gamesInRegion = [GameMO]()
-            for mo in managedObjects {
-                if let location = mo.location {
-                    if location.latitude > center.latitude - latitudeDelta / 2 &&
-                       location.latitude < center.latitude + latitudeDelta / 2 &&
-                       location.longitude > center.longitude - longitudeDelta / 2 &&
-                       location.longitude < center.longitude + longitudeDelta / 2
-                    {
-                        gamesInRegion.append(mo)
-                    }
-                }
-                
-            }
+            let gamesInRegion: [GameMO] = try managedObjectContext.fetch(fetchRequest) as! [GameMO]
             completion(Result.success(gamesInRegion))
         }
         catch {
