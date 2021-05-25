@@ -6,4 +6,14 @@
 //  Copyright © 2021 Heriberto Rodriguez. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class GameRouter: GamePresenterToGameRouter {
+    deinit {
+        print("GameRouter deinit")
+    }
+    
+    func dismiss(_ navigationController: UINavigationController) {
+        navigationController.popToRootViewController(animated: true)
+    }
+}

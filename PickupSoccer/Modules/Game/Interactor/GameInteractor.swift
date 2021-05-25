@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+class GameInteractor {
+    var presenter: GameInteractorToGamePresenter?
+    
+    deinit {
+        print("GameInteractor deinit")
+    }
+}
+
+extension GameInteractor: GamePresenterToGameInteractor {
+    func fetchPlayersForGame() {
+        let players = [User(firstName: "Heriberto", lastName: "Rodriguez", position: .centerMidfield)]
+        presenter?.onFetchPlayersSuccess(players)
+    }
+}

@@ -7,3 +7,29 @@
 //
 
 import Foundation
+
+class GamePresenter {
+    var view: GamePresenterToGameView?
+    weak var interactor: GamePresenterToGameInteractor?
+    var router: GamePresenterToGameRouter?
+    
+    deinit {
+        print("GamePresenter deinit")
+    }
+}
+
+extension GamePresenter: GameViewToGamePresenter {
+    func updateGameView() {
+        interactor?.fetchPlayersForGame()
+    }
+}
+
+extension GamePresenter: GameInteractorToGamePresenter {
+    func onFetchPlayersSuccess(_ players: [User]) {
+        view?.displayPlayers(players)
+    }
+    
+    func onFetchPlayersFailed(_ errorMessage: String) {
+        view?.displayErrorMessage(errorMessage)
+    }
+}

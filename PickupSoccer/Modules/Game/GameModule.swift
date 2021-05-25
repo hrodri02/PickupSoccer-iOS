@@ -6,4 +6,21 @@
 //  Copyright © 2021 Heriberto Rodriguez. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class GameModule {
+    static func build() -> UIViewController {
+        let gameVC = GameVC()
+        let interactor = GameInteractor()
+        let presenter = GamePresenter()
+        let router = GameRouter()
+        
+        gameVC.presenter = presenter
+        
+        presenter.view = gameVC
+        presenter.interactor = interactor
+        presenter.router = router
+        
+        return gameVC
+    }
+}
