@@ -10,6 +10,7 @@ import UIKit
 
 class HomeTeamCVCell: UICollectionViewCell
 {
+    static let verticalPaddingBeforeFirstImageView: CGFloat = 20.0
     static let deltaXBetweenImageViews: CGFloat = 10.0
     
     var imageViewHeight: CGFloat {
@@ -21,7 +22,7 @@ class HomeTeamCVCell: UICollectionViewCell
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.alignment = .center
-        stackView.spacing = (bounds.height - imageViewHeight * 4.0 - 40.0) / 3.0
+        stackView.spacing = (bounds.height - imageViewHeight * 4.0 - 2 * HomeTeamCVCell.verticalPaddingBeforeFirstImageView) / 3.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -119,10 +120,10 @@ class HomeTeamCVCell: UICollectionViewCell
     
     private func setVerticalStackViewConstraints() {
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: HomeTeamCVCell.verticalPaddingBeforeFirstImageView),
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: HomeTeamCVCell.deltaXBetweenImageViews),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -HomeTeamCVCell.deltaXBetweenImageViews),
-            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -HomeTeamCVCell.verticalPaddingBeforeFirstImageView)
         ])
     }
     
