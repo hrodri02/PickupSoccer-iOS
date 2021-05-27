@@ -42,7 +42,10 @@ class GameVC: UIViewController {
         view.addSubview(collectionView)
         setImageViewConstraints()
         setCollectionViewConstraints()
-        
+        setBackgroundImage()
+    }
+    
+    private func setBackgroundImage() {
         if let imageURL = Bundle.main.url(forResource: "pexels-photo-2291006", withExtension: "jpeg") {
             do {
                 let imageData = try Data(contentsOf: imageURL)
@@ -52,8 +55,6 @@ class GameVC: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        
-        view.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.7)
     }
     
     private func setImageViewConstraints() {
