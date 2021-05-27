@@ -10,8 +10,10 @@ import UIKit
 
 class HomeTeamCVCell: UICollectionViewCell
 {
+    static let deltaXBetweenImageViews: CGFloat = 10.0
+    
     var imageViewHeight: CGFloat {
-        return (bounds.width - 50.0) / 4.0
+        return (bounds.width - 5.0 * HomeTeamCVCell.deltaXBetweenImageViews) / 4.0
     }
     
     lazy var verticalStackView: UIStackView = {
@@ -33,7 +35,7 @@ class HomeTeamCVCell: UICollectionViewCell
     let defenseStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = HomeTeamCVCell.deltaXBetweenImageViews
         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +45,7 @@ class HomeTeamCVCell: UICollectionViewCell
     let midFieldStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = HomeTeamCVCell.deltaXBetweenImageViews
         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +55,7 @@ class HomeTeamCVCell: UICollectionViewCell
     let forwardStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = HomeTeamCVCell.deltaXBetweenImageViews
         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -118,8 +120,8 @@ class HomeTeamCVCell: UICollectionViewCell
     private func setVerticalStackViewConstraints() {
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: HomeTeamCVCell.deltaXBetweenImageViews),
+            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -HomeTeamCVCell.deltaXBetweenImageViews),
             verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
     }
