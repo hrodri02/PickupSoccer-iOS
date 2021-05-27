@@ -50,6 +50,9 @@
 		2F86A79325FFAA960093BB38 /* CalendarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79225FFAA960093BB38 /* CalendarPresenter.swift */; };
 		2F86A79525FFAB5D0093BB38 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79425FFAB5D0093BB38 /* CalendarVC.swift */; };
 		2F86A79725FFAD800093BB38 /* CalendarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F86A79625FFAD800093BB38 /* CalendarRouter.swift */; };
+		2F8BB1D8265E7AED003892E7 /* HomeTeamCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BB1D7265E7AED003892E7 /* HomeTeamCVCell.swift */; };
+		2F8BB1DA265E7DA2003892E7 /* pexels-photo-2291006.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2F8BB1D9265E7DA2003892E7 /* pexels-photo-2291006.jpeg */; };
+		2F8BB1DC265E8630003892E7 /* pexels-photo-5246967.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2F8BB1DB265E8630003892E7 /* pexels-photo-5246967.jpeg */; };
 		2F921196264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2F921195264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg */; };
 		2F92119E264EBF5900ECAC96 /* GamesModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F92119D264EBF5900ECAC96 /* GamesModuleTests.swift */; };
 		2F9273DD264C124400624B38 /* CLLCoordinate2D+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9273DC264C124400624B38 /* CLLCoordinate2D+Ext.swift */; };
@@ -138,6 +141,9 @@
 		2F86A79225FFAA960093BB38 /* CalendarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPresenter.swift; sourceTree = "<group>"; };
 		2F86A79425FFAB5D0093BB38 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		2F86A79625FFAD800093BB38 /* CalendarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarRouter.swift; sourceTree = "<group>"; };
+		2F8BB1D7265E7AED003892E7 /* HomeTeamCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTeamCVCell.swift; sourceTree = "<group>"; };
+		2F8BB1D9265E7DA2003892E7 /* pexels-photo-2291006.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "pexels-photo-2291006.jpeg"; sourceTree = SOURCE_ROOT; };
+		2F8BB1DB265E8630003892E7 /* pexels-photo-5246967.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "pexels-photo-5246967.jpeg"; sourceTree = SOURCE_ROOT; };
 		2F921195264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "pexels-kaboompics-com-6050.jpeg"; sourceTree = SOURCE_ROOT; };
 		2F92119B264EBF5900ECAC96 /* GamesModuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesModuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F92119D264EBF5900ECAC96 /* GamesModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesModuleTests.swift; sourceTree = "<group>"; };
@@ -220,6 +226,8 @@
 				2F28E35725E6A65800E64E70 /* Extensions */,
 				2FA3758B25ED3F2300016633 /* Modules */,
 				2F921195264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg */,
+				2F8BB1D9265E7DA2003892E7 /* pexels-photo-2291006.jpeg */,
+				2F8BB1DB265E8630003892E7 /* pexels-photo-5246967.jpeg */,
 				2F8666132604CDD7007978B9 /* CalendarVC_MVVM.swift */,
 				2F8666152604DC6D007978B9 /* CalendarViewModel.swift */,
 				2F18899225D97FA600ECA469 /* AppDelegate.swift */,
@@ -315,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				2F39109F265D3F4B00B74C8C /* GameVC.swift */,
+				2F8BB1D7265E7AED003892E7 /* HomeTeamCVCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -664,7 +673,9 @@
 			files = (
 				2F921196264EB4FB00ECAC96 /* pexels-kaboompics-com-6050.jpeg in Resources */,
 				2F18899F25D97FAA00ECA469 /* LaunchScreen.storyboard in Resources */,
+				2F8BB1DA265E7DA2003892E7 /* pexels-photo-2291006.jpeg in Resources */,
 				2F18899C25D97FAA00ECA469 /* Assets.xcassets in Resources */,
+				2F8BB1DC265E8630003892E7 /* pexels-photo-5246967.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +758,7 @@
 				2F46E9C62600F4EB0023D667 /* CalendarModule.swift in Sources */,
 				2F2964EF265BEEB500558C2E /* DataStore.swift in Sources */,
 				2F16C1F82656A697001FF64E /* User.swift in Sources */,
+				2F8BB1D8265E7AED003892E7 /* HomeTeamCVCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

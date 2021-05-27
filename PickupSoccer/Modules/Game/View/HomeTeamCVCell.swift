@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TeamCVCell: UICollectionViewCell
+class HomeTeamCVCell: UICollectionViewCell
 {
     var imageViewHeight: CGFloat {
         return (bounds.width - 50.0) / 4.0
