@@ -21,6 +21,8 @@ class GameModule {
         presenter.interactor = interactor
         presenter.router = router
         
+        interactor.presenter = presenter
+        
         return gameVC
     }
 }
