@@ -9,8 +9,8 @@
 import Foundation
 
 class GamePresenter {
-    var view: GamePresenterToGameView?
-    weak var interactor: GamePresenterToGameInteractor?
+    weak var view: GamePresenterToGameView?
+    var interactor: GamePresenterToGameInteractor?
     var router: GamePresenterToGameRouter?
     
     deinit {
