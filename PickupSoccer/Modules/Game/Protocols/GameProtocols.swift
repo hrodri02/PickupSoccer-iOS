@@ -29,6 +29,6 @@ protocol GameInteractorToGamePresenter: AnyObject {
 }
 
 // MARK: - communication between presenter and router
-protocol GamePresenterToGameRouter: AnyObject {
+protocol GamePresenterToGameRouter {
     func dismiss(_ navigationController: UINavigationController)
 }
