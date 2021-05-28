@@ -9,21 +9,21 @@
 import UIKit
 
 // MARK: - communication between view and presenter
-protocol GameViewToGamePresenter: AnyObject {
+protocol GameViewToGamePresenter {
     func updateGameView()
 }
 
-protocol GamePresenterToGameView {
+protocol GamePresenterToGameView: AnyObject {
     func displayPlayers(_ players: [User])
     func displayErrorMessage(_ errorMessage: String)
 }
 
 // MARK: - communication between presenter and interactor
-protocol GamePresenterToGameInteractor: AnyObject {
+protocol GamePresenterToGameInteractor {
     func fetchPlayersForGame()
 }
 
-protocol GameInteractorToGamePresenter {
+protocol GameInteractorToGamePresenter: AnyObject {
     func onFetchPlayersSuccess(_ players: [User])
     func onFetchPlayersFailed(_ errorMessage: String)
 }
