@@ -13,8 +13,22 @@ struct User
     let uid: Int
     let firstName: String
     let lastName: String
+    // TODO: - these properties need to be replaced with a dictionary
     var isWithHomeTeam: Bool
     var position: Position
+    /*
+     user can be part of many games
+     gameIdToUserInfo = {
+        gameId1 : {
+            position: leftFullBack,
+            isWithHomeTeam: true
+        },
+        gameId2 : {
+            position: leftCenterBack,
+            isWithHomeTeam: false
+        },
+     }
+     */
 }
 
 extension User: Hashable {
