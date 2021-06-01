@@ -107,12 +107,7 @@ extension GameInteractor: GamePresenterToGameInteractor {
     }
     
     func checkIfUserIsPartOfGame() {
-        if user.position == .none {
-            presenter?.onUserIsNotPartOfGame()
-        }
-        else {
-            presenter?.onUserIsPartOfGame()
-        }
+        presenter?.verifiedIfUserIsPartOfGame(user.position != .none)
     }
     
     func removeUserFromGame() {

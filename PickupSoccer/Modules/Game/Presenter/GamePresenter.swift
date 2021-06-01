@@ -49,11 +49,12 @@ extension GamePresenter: GameInteractorToGamePresenter {
         view?.displayPlayers(homeTeam, awayTeam)
     }
     
-    func onUserIsPartOfGame() {
-        view?.displayConfirmationAlert()
-    }
-    
-    func onUserIsNotPartOfGame() {
-        view?.displayErrorMessage("You are not part of the Game")
+    func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool) {
+        if isPartOfGame {
+            view?.displayConfirmationAlert()
+        }
+        else {
+            view?.displayErrorMessage("You are not part of the Game")
+        }
     }
 }
