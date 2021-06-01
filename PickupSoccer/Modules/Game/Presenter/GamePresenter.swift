@@ -22,14 +22,38 @@ extension GamePresenter: GameViewToGamePresenter {
     func updateGameView() {
         interactor?.fetchPlayersForGame()
     }
+    
+    func didSelectNewPosition(_ position: Position, isHomeTeam: Bool) {
+        interactor?.updateUserPosition(position, isHomeTeam: isHomeTeam)
+    }
+    
+    func exitGameButtonTapped() {
+        interactor?.checkIfUserIsPartOfGame()
+    }
+    
+    func confirmButtonTapped() {
+        interactor?.removeUserFromGame()
+    }
 }
 
 extension GamePresenter: GameInteractorToGamePresenter {
-    func onFetchPlayersSuccess(_ players: [User]) {
-        view?.displayPlayers(players)
+    func onFetchPlayersSuccess(_ homeTeam: Set<User>, _ awayTeam: Set<User>) {
+        view?.displayPlayers(homeTeam, awayTeam)
     }
     
     func onFetchPlayersFailed(_ errorMessage: String) {
         view?.displayErrorMessage(errorMessage)
+    }
+    
+    func onUpdatedTeams(_ homeTeam: Set<User>, _ awayTeam: Set<User>) {
+        view?.displayPlayers(homeTeam, awayTeam)
+    }
+    
+    func onUserIsPartOfGame() {
+        view?.displayConfirmationAlert()
+    }
+    
+    func onUserIsNotPartOfGame() {
+        view?.displayErrorMessage("You are not part of the Game")
     }
 }
