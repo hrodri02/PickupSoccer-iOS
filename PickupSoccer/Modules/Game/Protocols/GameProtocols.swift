@@ -11,21 +11,30 @@ import UIKit
 // MARK: - communication between view and presenter
 protocol GameViewToGamePresenter {
     func updateGameView()
+    func didSelectNewPosition(_ position: Position, isHomeTeam: Bool)
+    func exitGameButtonTapped()
+    func confirmButtonTapped()
 }
 
 protocol GamePresenterToGameView: AnyObject {
-    func displayPlayers(_ players: [User])
+    func displayPlayers(_ homeTeam: Set<User>, _ awayTeam: Set<User>)
     func displayErrorMessage(_ errorMessage: String)
+    func displayConfirmationAlert()
 }
 
 // MARK: - communication between presenter and interactor
 protocol GamePresenterToGameInteractor {
     func fetchPlayersForGame()
+    func updateUserPosition(_ position: Position, isHomeTeam: Bool)
+    func checkIfUserIsPartOfGame()
+    func removeUserFromGame()
 }
 
 protocol GameInteractorToGamePresenter: AnyObject {
-    func onFetchPlayersSuccess(_ players: [User])
+    func onFetchPlayersSuccess(_ homeTeam: Set<User>, _ awayTeam: Set<User>)
+    func onUpdatedTeams(_ homeTeam: Set<User>, _ awayTeam: Set<User>)
     func onFetchPlayersFailed(_ errorMessage: String)
+    func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool)
 }
 
 // MARK: - communication between presenter and router
