@@ -9,7 +9,9 @@
 import UIKit
 
 class GameVC: UIViewController {
-    weak var presenter: GameViewToGamePresenter?
+    var presenter: GameViewToGamePresenter?
+    var homeTeam = Set<User>()
+    var awayTeam = Set<User>()
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -25,7 +27,8 @@ class GameVC: UIViewController {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(HomeTeamCVCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView.register(HomeTeamCVCell.self, forCellWithReuseIdentifier: "HomeCellId")
+        collectionView.register(AwayTeamCVCell.self, forCellWithReuseIdentifier: "AwayCellId")
         collectionView.isPagingEnabled = true
         collectionView.backgroundView = self.imageView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,9 +43,15 @@ class GameVC: UIViewController {
         super.viewDidLoad()
         view.addSubview(imageView)
         view.addSubview(collectionView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Exit", style: .plain, target: self, action: #selector(exitGameButtonTapped))
         setImageViewConstraints()
         setCollectionViewConstraints()
         setBackgroundImage()
+        presenter?.updateGameView()
+    }
+    
+    @objc func exitGameButtonTapped() {
+        presenter?.exitGameButtonTapped()
     }
     
     private func setBackgroundImage() {
@@ -77,12 +86,25 @@ class GameVC: UIViewController {
 }
 
 extension GameVC: GamePresenterToGameView {
-    func displayPlayers(_ players: [User]) {
-        
+    func displayPlayers(_ homeTeam: Set<User>, _ awayTeam: Set<User>) {
+        self.homeTeam = homeTeam
+        self.awayTeam = awayTeam
+        collectionView.reloadData()
     }
     
     func displayErrorMessage(_ errorMessage: String) {
         presentErrorMessage(errorMessage)
+    }
+    
+    func displayConfirmationAlert() {
+        let alertController = UIAlertController(title: nil, message: "Are you sure you want to exit this game?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
+            self.presenter?.confirmButtonTapped()
+        }
+        alertController.addAction(confirmAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -92,7 +114,18 @@ extension GameVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! HomeTeamCVCell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCellId", for: indexPath) as! HomeTeamCVCell
+            cell.configure(with: homeTeam) { [unowned self] (newPosition) in
+                self.presenter?.didSelectNewPosition(newPosition, isHomeTeam: true)
+            }
+            return cell
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AwayCellId", for: indexPath) as! AwayTeamCVCell
+        cell.configure(with: awayTeam) { [unowned self] (newPosition) in
+            self.presenter?.didSelectNewPosition(newPosition, isHomeTeam: false)
+        }
         return cell
     }
 }
