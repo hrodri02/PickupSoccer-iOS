@@ -9,6 +9,7 @@
         <attribute name="address" optional="YES" attributeType="String"/>
         <relationship name="dateInterval" maxCount="1" deletionRule="Cascade" destinationEntity="DateInterval" inverseName="game" inverseEntity="DateInterval"/>
         <relationship name="location" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="game" inverseEntity="Location"/>
+        <relationship name="players" optional="YES" toMany="YES" maxCount="44" deletionRule="Cascade" destinationEntity="UserGame" inverseName="game" inverseEntity="UserGame"/>
     </entity>
     <entity name="Location" representedClassName="LocationMO" syncable="YES" codeGenerationType="class">
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -18,11 +19,19 @@
     <entity name="User" representedClassName="UserMO" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" attributeType="String"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserGame" inverseName="player" inverseEntity="UserGame"/>
+    </entity>
+    <entity name="UserGame" representedClassName="UserGame" syncable="YES" codeGenerationType="class">
+        <attribute name="isWithHomeTeam" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="position" attributeType="Integer 16" minValueString="0" maxValueString="10" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="players" inverseEntity="Game"/>
+        <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="games" inverseEntity="User"/>
     </entity>
     <elements>
-        <element name="DateInterval" positionX="-56.6810302734375" positionY="18.61579895019531" width="128" height="74"/>
-        <element name="Game" positionX="-254.6184692382812" positionY="-124.9482421875" width="128" height="74"/>
-        <element name="Location" positionX="-331.7847900390625" positionY="18.29898071289062" width="128" height="74"/>
-        <element name="User" positionX="-198" positionY="-27" width="128" height="59"/>
+        <element name="DateInterval" positionX="-38.98486328125" positionY="-266.5601806640625" width="128" height="74"/>
+        <element name="Game" positionX="-254.6184692382812" positionY="-124.9482421875" width="128" height="103"/>
+        <element name="Location" positionX="-382.4235229492188" positionY="-270.9738464355469" width="128" height="74"/>
+        <element name="User" positionX="-160.8968505859375" positionY="202.6236572265625" width="128" height="74"/>
+        <element name="UserGame" positionX="-37.82489013671875" positionY="-4.838775634765625" width="128" height="89"/>
     </elements>
 </model>
