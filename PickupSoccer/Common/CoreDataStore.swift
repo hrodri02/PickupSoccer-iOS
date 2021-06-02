@@ -51,22 +51,18 @@ class CoreDataStore: DataStore
                   _ dateInterval: DateInterval,
                   completion: @escaping (Error?) -> Void)
     {
-        // 1. get reference to app delegate
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // 2. get reference to managed object context
-        let managedObjectConext = appDelegate.persistentContainer.viewContext
         // 3. create a game entity
-        guard let gameEntity = NSEntityDescription.entity(forEntityName: "Game", in: managedObjectConext),
-            let locationEntity = NSEntityDescription.entity(forEntityName: "Location", in: managedObjectConext),
-            let dateIntervalEntity = NSEntityDescription.entity(forEntityName: "DateInterval", in: managedObjectConext) else
+        guard let gameEntity = NSEntityDescription.entity(forEntityName: "Game", in: managedObjectContext),
+            let locationEntity = NSEntityDescription.entity(forEntityName: "Location", in: managedObjectContext),
+            let dateIntervalEntity = NSEntityDescription.entity(forEntityName: "DateInterval", in: managedObjectContext) else
         {
             fatalError("Failed to create entity descriptions for Game, Location, and DateInterval entities.")
         }
         
         // 4. create managed objects
-        let gameMO = NSManagedObject(entity: gameEntity, insertInto: managedObjectConext) as! GameMO
-        let locationMO = NSManagedObject(entity: locationEntity, insertInto: managedObjectConext) as! LocationMO
-        let dateIntervalMO = NSManagedObject(entity: dateIntervalEntity, insertInto: managedObjectConext) as! DateIntervalMO
+        let gameMO = NSManagedObject(entity: gameEntity, insertInto: managedObjectContext) as! GameMO
+        let locationMO = NSManagedObject(entity: locationEntity, insertInto: managedObjectContext) as! LocationMO
+        let dateIntervalMO = NSManagedObject(entity: dateIntervalEntity, insertInto: managedObjectContext) as! DateIntervalMO
         
         // 5. set properties of game entity
         locationMO.latitude = location.latitude
@@ -79,11 +75,10 @@ class CoreDataStore: DataStore
         
         // 6. save managed object context
         do {
-            try managedObjectConext.save()
+            try managedObjectContext.save()
         }
         catch {
             completion(error)
         }
-
     }
 }
