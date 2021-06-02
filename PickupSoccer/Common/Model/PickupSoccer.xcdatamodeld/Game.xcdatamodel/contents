@@ -3,7 +3,7 @@
     <entity name="DateInterval" representedClassName="DateIntervalMO" syncable="YES" codeGenerationType="class">
         <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="dateInterval" inverseEntity="Game"/>
+        <relationship name="game" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="dateInterval" inverseEntity="Game"/>
     </entity>
     <entity name="Game" representedClassName="GameMO" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String"/>
@@ -13,14 +13,14 @@
     <entity name="Location" representedClassName="LocationMO" syncable="YES" codeGenerationType="class">
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="location" inverseEntity="Game"/>
+        <relationship name="game" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="location" inverseEntity="Game"/>
     </entity>
     <entity name="User" representedClassName="UserMO" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" attributeType="String"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="DateInterval" positionX="-56.6810302734375" positionY="18.61579895019531" width="128" height="88"/>
+        <element name="DateInterval" positionX="-56.6810302734375" positionY="18.61579895019531" width="128" height="74"/>
         <element name="Game" positionX="-254.6184692382812" positionY="-124.9482421875" width="128" height="74"/>
         <element name="Location" positionX="-331.7847900390625" positionY="18.29898071289062" width="128" height="74"/>
         <element name="User" positionX="-198" positionY="-27" width="128" height="59"/>
