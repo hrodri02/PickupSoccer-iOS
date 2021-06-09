@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+extension PlayerInfo {
+    var positionEnum: Position {
+        get {
+            return Position(rawValue: position)!
+        }
+        set {
+            position = newValue.rawValue
+        }
+    }
+}
