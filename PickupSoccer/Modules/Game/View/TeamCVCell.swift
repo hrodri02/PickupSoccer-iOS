@@ -91,7 +91,7 @@ class TeamCVCell: UICollectionViewCell
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with players: Set<User>, newPositionSelected: @escaping (Position) -> Void) {
+    public func configure(with players: [User : Position], newPositionSelected: @escaping (Position) -> Void) {
         self.newPositionSelected = newPositionSelected
         
         for imageView in imageViews {
@@ -99,8 +99,8 @@ class TeamCVCell: UICollectionViewCell
         }
         
         let imageData = getSoccerPlayerImage()
-        for player in players {
-            if let data = imageData, let index = positionToIndex[player.position] {
+        for (_, position) in players {
+            if let data = imageData, let index = positionToIndex[position] {
                 imageViews[index].image = UIImage(data: data)
             }
         }
