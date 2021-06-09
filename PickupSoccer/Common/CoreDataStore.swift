@@ -1,4 +1,3 @@
-//
 //  CoreDataStore.swift
 //  PickupSoccer
 //
@@ -25,6 +24,85 @@ class CoreDataStore: DataStore
         print("CoreDataStore deinit")
     }
     
+    // MARK: - methods for saving, updating, deleting, and fetching a user
+    func fetchUser(with uid: String, completion: (Result<User, Error>) -> Void) {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "User")
+        fetchRequest.predicate = NSPredicate(format: "uid == %@", uid)
+        
+        do {
+            let users = try managedObjectContext.fetch(fetchRequest) as! [UserMO]
+            if let userMO = users.first {
+                let user = User(userMO: userMO)
+                completion(.success(user))
+            }
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func fetchUsers(for game: Game,
+                    completion: (Result<[String: PlayerInfo], Error>) -> Void)
+    {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "PlayerInfo")
+        fetchRequest.predicate = NSPredicate(format: "game.id == %@", game.id ?? "")
+        
+        do {
+            let playerInfoArr = try managedObjectContext.fetch(fetchRequest) as! [PlayerInfo]
+            var uidToPlayerInfo = [String : PlayerInfo]()
+            for playerInfo in playerInfoArr {
+                if let uid = playerInfo.player?.uid {
+                    uidToPlayerInfo[uid] = playerInfo
+                }
+            }
+            completion(.success(uidToPlayerInfo))
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func saveUser(firstName: String, lastName: String, completion: (Result<User, Error>) -> Void) {
+        guard let userEntity = NSEntityDescription.entity(forEntityName: "User", in: managedObjectContext) else {
+            fatalError("Failed to create entity description User.")
+        }
+        
+        let userMO = NSManagedObject(entity: userEntity, insertInto: managedObjectContext) as! UserMO
+        userMO.uid = UUID().uuidString
+        userMO.firstName = firstName
+        userMO.lastName = lastName
+        
+        do {
+            try managedObjectContext.save()
+            let user = User(userMO: userMO)
+            completion(.success(user))
+            
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func deleteAllUsers() {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "User")
+        fetchRequest.includesPropertyValues = false
+        
+        do {
+            let users: [NSManagedObject] = try managedObjectContext.fetch(fetchRequest)
+            
+            for user in users {
+                managedObjectContext.delete(user)
+            }
+            
+            try managedObjectContext.save()
+            print("Users deleted successfully")
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    // MARK: - methods for saving, updating, deleting, and fetching a game
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
@@ -39,6 +117,14 @@ class CoreDataStore: DataStore
                                              center.longitude + longitudeDelta / 2)
         do {
             let gamesInRegion: [GameMO] = try managedObjectContext.fetch(fetchRequest) as! [GameMO]
+            for game in gamesInRegion {
+                if let players = game.players, let address = game.address {
+                    print("game at \(address) has \(players.count) players")
+                }
+                else {
+                    print("players set is null")
+                }
+            }
             completion(Result.success(gamesInRegion))
         }
         catch {
@@ -69,6 +155,7 @@ class CoreDataStore: DataStore
         locationMO.longitude = location.longitude
         dateIntervalMO.start = dateInterval.start
         dateIntervalMO.end = dateInterval.end
+        gameMO.id = UUID().uuidString
         gameMO.address = address
         gameMO.location = locationMO
         gameMO.dateInterval = dateIntervalMO
@@ -79,6 +166,83 @@ class CoreDataStore: DataStore
         }
         catch {
             completion(error)
+        }
+    }
+    
+    // MARK: - methods for saving, updating, deleting, and fetching player information
+    func addUserToGame(uid: String,
+                       gameId: String,
+                       position: Position,
+                       isWithHomeTeam: Bool,
+                       completion: (Result<PlayerInfo, Error>) -> Void)
+    {
+        let userFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "User")
+        userFetchRequest.predicate = NSPredicate(format: "uid == %@", uid)
+        let gameFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
+        gameFetchRequest.predicate = NSPredicate(format: "id == %@", gameId)
+        
+        do {
+            let users = try managedObjectContext.fetch(userFetchRequest) as! [UserMO]
+            let games = try managedObjectContext.fetch(gameFetchRequest) as! [GameMO]
+            if let user = users.first, let game = games.first {
+                guard let playerInfoEntity = NSEntityDescription.entity(forEntityName: "PlayerInfo", in: managedObjectContext) else {
+                    fatalError("Failed to get playerInfo entity.")
+                }
+                
+                let playerInfo = NSManagedObject(entity: playerInfoEntity, insertInto: managedObjectContext) as! PlayerInfo
+                playerInfo.player = user
+                playerInfo.game = game
+                playerInfo.positionEnum = position
+                playerInfo.isWithHomeTeam = isWithHomeTeam
+                try managedObjectContext.save()
+                completion(.success(playerInfo))
+            }
+            else {
+                print("Failed to get user or game")
+            }
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func updateUserInfoForGame(uid: String,
+                               gameId: String,
+                               position: Position,
+                               isWithHomeTeam: Bool,
+                               completion: (Result<PlayerInfo, Error>) -> Void)
+    {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "PlayerInfo")
+        fetchRequest.predicate = NSPredicate(format: "player.uid == %@ AND game.id == %@", uid, gameId)
+        
+        do {
+            let playerInfoArr = try managedObjectContext.fetch(fetchRequest) as! [PlayerInfo]
+            if let oldPlayerInfo = playerInfoArr.first {
+                oldPlayerInfo.isWithHomeTeam = isWithHomeTeam
+                oldPlayerInfo.positionEnum = position
+                try managedObjectContext.save()
+                completion(.success(oldPlayerInfo))
+            }
+        }
+        catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func removeUserFromGame(uid: String, gameId: String, completion: (Result<PlayerInfo, Error>) -> Void) {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "PlayerInfo")
+        fetchRequest.predicate = NSPredicate(format: "player.uid == %@ AND game.id == %@", uid, gameId)
+        
+        do {
+            let playerInfoArr = try managedObjectContext.fetch(fetchRequest) as! [PlayerInfo]
+            if let playerInfo = playerInfoArr.first {
+                managedObjectContext.delete(playerInfo)
+                try managedObjectContext.save()
+                completion(.success(playerInfo))
+            }
+        }
+        catch {
+            completion(.failure(error))
         }
     }
 }
