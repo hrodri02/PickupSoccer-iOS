@@ -18,6 +18,11 @@ class GamesRouter: GamesPresenterToGamesRouter {
         navigationController.pushViewController(createGameVC, animated: true)
     }
     
+    func pushGameVC(_ navigationController: UINavigationController, game: Game) {
+        let gameVC = GameModule.build(game: game)
+        navigationController.pushViewController(gameVC, animated: false)
+    }
+    
     func dismissGamesModule(_ navigationController: UINavigationController) {
         navigationController.viewControllers = []
     }

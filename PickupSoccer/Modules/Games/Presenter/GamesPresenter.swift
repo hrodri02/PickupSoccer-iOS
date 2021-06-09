@@ -35,6 +35,11 @@ class GamesPresenter: GamesViewToGamesPresenter
     func addGameButtonTapped(_ navigationController: UINavigationController) {
         router.pushCreateGameVC(navigationController)
     }
+    
+    func gameCellTapped(index: Int, _ navigationController: UINavigationController) {
+        let game = interactor.getGame(index: index)
+        router.pushGameVC(navigationController, game: game)
+    }
 }
 
 extension GamesPresenter: GamesInteractorToGamesPresenter {

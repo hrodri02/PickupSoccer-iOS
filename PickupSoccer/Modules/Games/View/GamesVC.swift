@@ -299,8 +299,11 @@ extension GamesVC: UICollectionViewDataSource {
 
 extension GamesVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let gameVC = GameModule.build()
-        navigationController?.pushViewController(gameVC, animated: false)
+        guard let navController = navigationController else {
+            fatalError("Failed to unwrap navigationController")
+        }
+        let index = indexPath.item % annotations.count
+        presenter?.gameCellTapped(index: index, navController)
     }
 }
 

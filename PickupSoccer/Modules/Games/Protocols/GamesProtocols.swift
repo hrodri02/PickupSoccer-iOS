@@ -15,6 +15,7 @@ protocol GamesViewToGamesPresenter: AnyObject {
                          latitudeDelta: CLLocationDegrees,
                          longitudeDelta: CLLocationDegrees)
     func addGameButtonTapped(_ navigationController: UINavigationController)
+    func gameCellTapped(index: Int, _ navigationController: UINavigationController)
 }
 
 protocol GamesPresenterToGamesView: AnyObject {
@@ -26,6 +27,7 @@ protocol GamesPresenterToGamesInteractor {
     func fetchGames(center: CLLocationCoordinate2D,
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees)
+    func getGame(index: Int) -> Game
 }
 
 protocol GamesInteractorToGamesPresenter: AnyObject {
@@ -36,4 +38,5 @@ protocol GamesInteractorToGamesPresenter: AnyObject {
 protocol GamesPresenterToGamesRouter {
     func pushCreateGameVC(_ navigationController: UINavigationController)
     func dismissGamesModule(_ navigationController: UINavigationController)
+    func pushGameVC(_ navigationController: UINavigationController, game: Game)
 }
