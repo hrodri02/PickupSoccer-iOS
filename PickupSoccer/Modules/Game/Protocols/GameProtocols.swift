@@ -17,7 +17,7 @@ protocol GameViewToGamePresenter {
 }
 
 protocol GamePresenterToGameView: AnyObject {
-    func displayPlayers(_ homeTeam: Set<User>, _ awayTeam: Set<User>)
+    func displayPlayers(_ homeTeam: [User : Position], _ awayTeam: [User : Position])
     func displayErrorMessage(_ errorMessage: String)
     func displayConfirmationAlert()
 }
@@ -31,8 +31,8 @@ protocol GamePresenterToGameInteractor {
 }
 
 protocol GameInteractorToGamePresenter: AnyObject {
-    func onFetchPlayersSuccess(_ homeTeam: Set<User>, _ awayTeam: Set<User>)
-    func onUpdatedTeams(_ homeTeam: Set<User>, _ awayTeam: Set<User>)
+    func onFetchPlayersSuccess(_ homeTeam: [User : Position], _ awayTeam: [User : Position])
+    func onUpdatedTeams(_ homeTeam: [User : Position], _ awayTeam: [User : Position])
     func onFetchPlayersFailed(_ errorMessage: String)
     func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool)
 }
