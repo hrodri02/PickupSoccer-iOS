@@ -45,4 +45,19 @@ extension GameMO: Game
             dateInterval?.end = newValue.end
         }
     }
+    
+    var playersInfo: Array<PlayerInfoProtocol> {
+        get {
+            if let players = self.players {
+                var playersInfoArr = Array<PlayerInfoProtocol>()
+                for player in players {
+                    if let playerInfoMO = player as? PlayerInfoMO {
+                        playersInfoArr.append(playerInfoMO)
+                    }
+                }
+                return playersInfoArr
+            }
+            return Array<PlayerInfoProtocol>()
+        }
+    }
 }
