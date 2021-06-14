@@ -9,17 +9,20 @@
 import Foundation
 
 class GameInteractor {
+    weak var presenter: GameInteractorToGamePresenter?
+    
     private let dataStore: DataStore
     private let game: Game
-    weak var presenter: GameInteractorToGamePresenter?
     private var positionsOccupiedInHomeTeam = Set<Position>()
     private var positionsOccupiedInAwayTeam = Set<Position>()
-    private var homeTeam = [User : Position]()
-    private var awayTeam = [User : Position]()
+    private var homeTeam = [String : Position]()
+    private var awayTeam = [String : Position]()
+    private var user: User?
     
     init(dataStore: DataStore, game: Game) {
         self.dataStore = dataStore
         self.game = game
+        self.user = UserManager.shared.getUser()
     }
     
     deinit {
@@ -30,16 +33,14 @@ class GameInteractor {
 extension GameInteractor: GamePresenterToGameInteractor {
     func fetchPlayersForGame() {
         for playerInfo in game.playersInfo {
-            if let userMO = playerInfo.player {
-                let user = User(userMO: userMO)
-                if playerInfo.isWithHomeTeam {
-                    homeTeam[user] = playerInfo.positionEnum
-                    positionsOccupiedInHomeTeam.insert(playerInfo.positionEnum)
-                }
-                else {
-                    awayTeam[user] = playerInfo.positionEnum
-                    positionsOccupiedInAwayTeam.insert(playerInfo.positionEnum)
-                }
+            let uid = playerInfo.uid
+            if playerInfo.isWithHomeTeam {
+                homeTeam[uid] = playerInfo.positionEnum
+                positionsOccupiedInHomeTeam.insert(playerInfo.positionEnum)
+            }
+            else {
+                awayTeam[uid] = playerInfo.positionEnum
+                positionsOccupiedInAwayTeam.insert(playerInfo.positionEnum)
             }
         }
         
@@ -62,18 +63,18 @@ extension GameInteractor: GamePresenterToGameInteractor {
     }
     
     private func updateUserInfo(newPosition: Position, isNewPositionInHomeTeam: Bool) {
-        guard let user = UserManager.shared.getUser() else {
-            fatalError("Failed to get user")
+        guard let uid = user?.uid else {
+            fatalError("Failed to get uid")
         }
         
-        if let position = homeTeam[user] {
+        if let position = homeTeam[uid] {
             if !isNewPositionInHomeTeam {
                 removeUserFromCurrentTeam(position: position, isWithHomeTeam: true)
             }
             
             updateUserPosition(position: newPosition, isWithHomeTeam: isNewPositionInHomeTeam)
         }
-        else if let position = awayTeam[user] {
+        else if let position = awayTeam[uid] {
             if isNewPositionInHomeTeam {
                 removeUserFromCurrentTeam(position: position, isWithHomeTeam: false)
             }
@@ -86,30 +87,30 @@ extension GameInteractor: GamePresenterToGameInteractor {
     }
     
     private func removeUserFromCurrentTeam(position: Position, isWithHomeTeam: Bool) {
-        guard let user = UserManager.shared.getUser() else {
-            fatalError("Failed to get user")
+        guard let uid = user?.uid else {
+            fatalError("Failed to get uid")
         }
         
         if isWithHomeTeam {
             positionsOccupiedInHomeTeam.remove(position)
-            homeTeam[user] = nil
+            homeTeam[uid] = nil
         }
         else {
             positionsOccupiedInAwayTeam.remove(position)
-            awayTeam[user] = nil
+            awayTeam[uid] = nil
         }
     }
     
     private func updateUserPosition(position: Position, isWithHomeTeam: Bool) {
-        guard let user = UserManager.shared.getUser() else {
-            fatalError("Failed to get user")
+        guard let uid = user?.uid else {
+            fatalError("Failed to get uid")
         }
         
         guard let gameId = game.id else {
             fatalError("Failed to get gameId")
         }
         
-        dataStore.updateUserInfoForGame(uid: user.uid,
+        dataStore.updateUserInfoForGame(uid: uid,
                                         gameId: gameId,
                                         position: position,
                                         isWithHomeTeam: isWithHomeTeam)
@@ -117,11 +118,11 @@ extension GameInteractor: GamePresenterToGameInteractor {
             switch (result) {
             case .success(let playerInfo):
                 if playerInfo.isWithHomeTeam {
-                    self.homeTeam[user] = playerInfo.positionEnum
+                    self.homeTeam[uid] = playerInfo.positionEnum
                     self.positionsOccupiedInHomeTeam.insert(playerInfo.positionEnum)
                 }
                 else {
-                    self.awayTeam[user] = playerInfo.positionEnum
+                    self.awayTeam[uid] = playerInfo.positionEnum
                     self.positionsOccupiedInAwayTeam.insert(playerInfo.positionEnum)
                 }
             case .failure(let error):
@@ -131,15 +132,15 @@ extension GameInteractor: GamePresenterToGameInteractor {
     }
     
     private func addUserToGame(position: Position, isWithHomeTeam: Bool) {
-        guard let user = UserManager.shared.getUser() else {
-            fatalError("Failed to get user")
+        guard let uid = user?.uid else {
+            fatalError("Failed to get uid")
         }
         
         guard let gameId = game.id else {
             fatalError("Failed to get gameId")
         }
         
-        dataStore.addUserToGame(uid: user.uid,
+        dataStore.addUserToGame(uid: uid,
                                 gameId: gameId,
                                 position: position,
                                 isWithHomeTeam: isWithHomeTeam)
@@ -147,11 +148,11 @@ extension GameInteractor: GamePresenterToGameInteractor {
             switch (result) {
             case .success(let playerInfo):
                 if playerInfo.isWithHomeTeam {
-                    self.homeTeam[user] = playerInfo.positionEnum
+                    self.homeTeam[uid] = playerInfo.positionEnum
                     self.positionsOccupiedInHomeTeam.insert(playerInfo.positionEnum)
                 }
                 else {
-                    self.awayTeam[user] = playerInfo.positionEnum
+                    self.awayTeam[uid] = playerInfo.positionEnum
                     self.positionsOccupiedInAwayTeam.insert(playerInfo.positionEnum)
                 }
             case .failure(let error):
@@ -161,26 +162,26 @@ extension GameInteractor: GamePresenterToGameInteractor {
     }
     
     func checkIfUserIsPartOfGame() {
-        guard let user = UserManager.shared.getUser() else {
-            fatalError("Failed to get user")
+        guard let uid = UserManager.shared.getUser()?.uid else {
+            fatalError("Failed to get uid")
         }
         
-        let isUserInHomeTeam = homeTeam[user] != nil
-        let isUserInAwayTeam = awayTeam[user] != nil
+        let isUserInHomeTeam = homeTeam[uid] != nil
+        let isUserInAwayTeam = awayTeam[uid] != nil
         
         presenter?.verifiedIfUserIsPartOfGame(isUserInHomeTeam || isUserInAwayTeam)
     }
     
     func removeUserFromGame() {
-        guard let user = UserManager.shared.getUser() else {
-            fatalError("Failed to get user")
+        guard let uid = user?.uid else {
+            fatalError("Failed to get uid")
         }
         
         guard let gameId = game.id else {
             fatalError("Failed to get gameId")
         }
         
-        dataStore.removeUserFromGame(uid: user.uid, gameId: gameId) { (result) in
+        dataStore.removeUserFromGame(uid: uid, gameId: gameId) { (result) in
             switch result {
             case .success(let playerInfo):
                 self.removeUserFromCurrentTeam(position: playerInfo.positionEnum,

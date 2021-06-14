@@ -10,9 +10,9 @@ import UIKit
 
 class TeamCVCell: UICollectionViewCell
 {
-    var newPositionSelected: ((Position) -> ())?
     static let verticalPaddingBeforeFirstImageView: CGFloat = 20.0
     static let deltaXBetweenImageViews: CGFloat = 10.0
+    var newPositionSelected: ((Position) -> ())?
     var imageViews = [UIImageView]()
     var soccerPlayerImageData: Data?
     var imageViewHeight: CGFloat {
@@ -91,7 +91,7 @@ class TeamCVCell: UICollectionViewCell
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with players: [User : Position], newPositionSelected: @escaping (Position) -> Void) {
+    public func configure(with players: [String : Position], newPositionSelected: @escaping (Position) -> Void) {
         self.newPositionSelected = newPositionSelected
         
         for imageView in imageViews {

@@ -10,8 +10,8 @@ import UIKit
 
 class GameVC: UIViewController {
     var presenter: GameViewToGamePresenter?
-    var homeTeam = [User : Position]()
-    var awayTeam = [User : Position]()
+    var homeTeam = [String : Position]()
+    var awayTeam = [String : Position]()
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -86,7 +86,7 @@ class GameVC: UIViewController {
 }
 
 extension GameVC: GamePresenterToGameView {
-    func displayPlayers(_ homeTeam: [User : Position], _ awayTeam: [User : Position]) {
+    func displayPlayers(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
         self.homeTeam = homeTeam
         self.awayTeam = awayTeam
         collectionView.reloadData()

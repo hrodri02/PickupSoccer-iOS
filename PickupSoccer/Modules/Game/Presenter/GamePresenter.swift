@@ -37,7 +37,7 @@ extension GamePresenter: GameViewToGamePresenter {
 }
 
 extension GamePresenter: GameInteractorToGamePresenter {
-    func onFetchPlayersSuccess(_ homeTeam: [User : Position], _ awayTeam: [User : Position]) {
+    func onFetchPlayersSuccess(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
         view?.displayPlayers(homeTeam, awayTeam)
     }
     
@@ -45,7 +45,7 @@ extension GamePresenter: GameInteractorToGamePresenter {
         view?.displayErrorMessage(errorMessage)
     }
     
-    func onUpdatedTeams(_ homeTeam: [User : Position], _ awayTeam: [User : Position]) {
+    func onUpdatedTeams(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
         view?.displayPlayers(homeTeam, awayTeam)
     }
     

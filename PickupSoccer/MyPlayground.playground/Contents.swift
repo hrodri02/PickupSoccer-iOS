@@ -1,3 +1,36 @@
+
+
+protocol UserProtocol: Hashable {
+    var uid: Int64 {get set}
+    var firstName: String? {get set}
+    var lastName: String? {get set}
+}
+
+struct User: UserProtocol {
+    var uid: Int64
+    var firstName: String?
+    var lastName: String?
+    var dummy: Dummy?
+}
+
+struct Dummy {
+    let someProp: Int
+}
+
+
+func compare(user1: User, user2: User) {
+    if user1 == user2 {
+        print("users are equal")
+    }
+    else {
+        print("users are not equal")
+    }
+}
+
+let user1 = User(uid: 0, firstName: "Bert", lastName: "Rod")
+let user2 = User(uid: 1, firstName: "Berto", lastName: "Rod")
+compare(user1: user1, user2: user2)
+
 class MyObj
 {
     var prop1: String
