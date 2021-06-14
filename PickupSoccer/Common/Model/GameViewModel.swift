@@ -10,6 +10,7 @@ import Foundation
 
 struct GameViewModel
 {
+    let id: String
     let address: String
     let startDate: String
     let duration: String
@@ -20,6 +21,7 @@ struct GameViewModel
     }()
     
     init(game: Game) {
+        self.id =  game.id ?? ""
         self.address = game.address ?? ""
         self.startDate = GameViewModel.dateFormatter.string(from: game.timeInterval.start)
         let durationInSecs = Int(game.timeInterval.duration)
