@@ -303,7 +303,9 @@ extension GamesVC: UICollectionViewDelegate {
             fatalError("Failed to unwrap navigationController")
         }
         let index = indexPath.item % annotations.count
-        presenter?.gameCellTapped(index: index, navController)
+        if let id = annotations[index].gameViewModel?.id {
+            presenter?.gameCellTapped(id: id, navController)
+        }
     }
 }
 

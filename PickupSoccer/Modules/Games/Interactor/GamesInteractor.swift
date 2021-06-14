@@ -23,8 +23,11 @@ class GamesInteractor: GamesPresenterToGamesInteractor {
         print("Games Interactor \(#function)")
     }
     
-    func getGame(index: Int) -> Game {
-        return games[index]
+    func getGame(with id: String) -> Game? {
+        let game = games.first { (game) -> Bool in
+            return game.id == id
+        }
+        return game
     }
     
     func fetchGames(center: CLLocationCoordinate2D,
