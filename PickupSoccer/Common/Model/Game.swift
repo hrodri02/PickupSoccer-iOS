@@ -8,8 +8,11 @@
 
 import CoreLocation
 
-protocol Game {
+protocol Game
+{
+    var id: String? {get set}
     var address: String? {get set}
     var coordinate: CLLocationCoordinate2D {get set}
     var timeInterval: DateInterval {get set}
+    var playersInfo: Array<PlayerInfoProtocol> {get}
 }
