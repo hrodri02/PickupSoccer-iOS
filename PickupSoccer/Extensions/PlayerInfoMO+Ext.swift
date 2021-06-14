@@ -7,3 +7,33 @@
 //
 
 import Foundation
+
+extension PlayerInfoMO: PlayerInfoProtocol
+{
+    var uid: String {
+        get {
+            if let uid = player?.uid {
+                return uid
+            }
+            return ""
+        }
+    }
+    
+    var gameId: String {
+        get {
+            if let id = game?.id {
+                return id
+            }
+            return ""
+        }
+    }
+    
+    var positionEnum: Position {
+        get {
+            return Position(rawValue: position)!
+        }
+        set {
+            position = newValue.rawValue
+        }
+    }
+}
