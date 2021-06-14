@@ -10,9 +10,8 @@ import CoreLocation
 
 protocol DataStore {
     // MARK: - methods for saving, updating, deleting, and fetching a user
+    func fetchAllUsers()
     func fetchUser(with uid: String, completion: (Result<User, Error>) -> Void)
-    func fetchUsers(for game: Game,
-                    completion: (Result<[String: PlayerInfo], Error>) -> Void)
     func saveUser(firstName: String,
                   lastName: String,
                   completion: (Result<User, Error>) -> Void)
@@ -31,13 +30,13 @@ protocol DataStore {
                        gameId: String,
                        position: Position,
                        isWithHomeTeam: Bool,
-                       completion: (Result<PlayerInfo, Error>) -> Void)
+                       completion: (Result<PlayerInfoProtocol, Error>) -> Void)
     func updateUserInfoForGame(uid: String,
                                gameId: String,
                                position: Position,
                                isWithHomeTeam: Bool,
-                               completion: (Result<PlayerInfo, Error>) -> Void)
+                               completion: (Result<PlayerInfoProtocol, Error>) -> Void)
     func removeUserFromGame(uid: String,
                             gameId: String,
-                            completion: (Result<PlayerInfo, Error>) -> Void)
+                            completion: (Result<PlayerInfoProtocol, Error>) -> Void)
 }
