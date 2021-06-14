@@ -8,40 +8,14 @@
 
 import Foundation
 
-struct User
+protocol User
 {
-    let uid: Int
-    let firstName: String
-    let lastName: String
-    // TODO: - these properties need to be replaced with a dictionary
-    var isWithHomeTeam: Bool
-    var position: Position
-    /*
-     user can be part of many games
-     gameIdToUserInfo = {
-        gameId1 : {
-            position: leftFullBack,
-            isWithHomeTeam: true
-        },
-        gameId2 : {
-            position: leftCenterBack,
-            isWithHomeTeam: false
-        },
-     }
-     */
+    var uid: String? {get set}
+    var firstName: String? {get set}
+    var lastName: String? {get set}
 }
 
-extension User: Hashable {
-    static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.uid == rhs.uid
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(uid)
-    }
-}
-
-enum Position {
+enum Position: Int16 {
     case goalKeeper
     case leftFullBack
     case leftCenterBack
