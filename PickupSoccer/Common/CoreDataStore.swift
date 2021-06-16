@@ -235,8 +235,8 @@ class CoreDataStore: DataStore
             let playerInfoArr = try managedObjectContext.fetch(fetchRequest) as! [PlayerInfoMO]
             if let playerInfo = playerInfoArr.first {
                 managedObjectContext.delete(playerInfo)
-                try managedObjectContext.save()
                 completion(.success(playerInfo))
+                try managedObjectContext.save()
             }
         }
         catch {
