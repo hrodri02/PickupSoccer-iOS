@@ -31,7 +31,9 @@ class CoreDataStore: DataStore
         do {
             let users = try managedObjectContext.fetch(fetchRequest) as! [UserMO]
             for user in users {
-                print(user.uid)
+                if let uid = user.uid {
+                    print(uid)
+                }
             }
         }
         catch {
@@ -148,6 +150,23 @@ class CoreDataStore: DataStore
         // 6. save managed object context
         do {
             try managedObjectContext.save()
+        }
+        catch {
+            completion(error)
+        }
+    }
+    
+    func deleteGame(_ gameId: String, completion: (Error?) -> Void) {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", gameId)
+        
+        do {
+            let games = try managedObjectContext.fetch(fetchRequest) as! [GameMO]
+            if let game = games.first {
+                managedObjectContext.delete(game)
+                try managedObjectContext.save()
+                completion(nil)
+            }
         }
         catch {
             completion(error)
