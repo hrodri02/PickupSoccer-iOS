@@ -13,11 +13,14 @@ import CoreData
 
 class GamesInteractorTests: XCTestCase {
     var gamesInteractor: GamesInteractor!
+    var presenter: MockPresenter!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
         gamesInteractor = GamesInteractor(dataStore: MockDataStore())
+        presenter = MockPresenter()
+        gamesInteractor.presenter = presenter
     }
 
     override func tearDownWithError() throws {
@@ -30,42 +33,46 @@ class GamesInteractorTests: XCTestCase {
         let center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         let latitudeDelta: CLLocationDegrees = 10
         let longtidueDelta: CLLocationDegrees = 10
-        gamesInteractor.dataStore.fetchGames(center: center,
-                                             latitudeDelta: latitudeDelta,
-                                             longitudeDelta: longtidueDelta)
-        { (result) in
-            switch result {
-            case .success(let games):
-            for game in games {
-                print("{location:\n\t{latitude = \(game.coordinate.latitude)},\n\t{longitude = \(game.coordinate.longitude)}")
-            }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+        gamesInteractor.fetchGames(center: center,
+                                   latitudeDelta: latitudeDelta,
+                                   longitudeDelta: longtidueDelta)
+        for game in presenter.games {
+            printGame(game)
         }
+    }
+    
+    private func printGame(_ game: Game) {
+        print("{location:\n\t{latitude = \(game.coordinate.latitude)},\n\t{longitude = \(game.coordinate.longitude)}")
     }
     
     func testFecthGamesFailed() {
         let center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         let latitudeDelta: CLLocationDegrees = 10
         let longtidueDelta: CLLocationDegrees = 10
-        gamesInteractor.dataStore.fetchGames(center: center,
-                                             latitudeDelta: latitudeDelta,
-                                             longitudeDelta: longtidueDelta)
-        { (result) in
-            switch result {
-            case .success(let games):
-                for game in games {
-                    print(game)
-                }
-            case .failure(let error):
-                XCTAssertEqual(error as? DB_Error, DB_Error.failedToFecthGames)
-            }
-        }
+        gamesInteractor.fetchGames(center: center,
+                                           latitudeDelta: latitudeDelta,
+                                           longitudeDelta: longtidueDelta)
+        XCTAssertNotNil(presenter.errorMessage)
+    }
+}
+
+class MockPresenter: GamesInteractorToGamesPresenter {
+    var games = [Game]()
+    var errorMessage: String?
+    
+    func onFetchGamesSuccess(_ games: [Game]) {
+        self.games = games
+    }
+    
+    func onFetchGamesFailed(_ errorMessage: String) {
+        self.errorMessage = errorMessage
     }
 }
 
 class MockGame: Game {
+    var id: String?
+    var address: String?
+    var playersInfo: Array<PlayerInfoProtocol>
     var gameAddress: String
     var coordinate: CLLocationCoordinate2D
     var timeInterval: DateInterval
@@ -74,6 +81,7 @@ class MockGame: Game {
         gameAddress = ""
         timeInterval = DateInterval()
         coordinate = location
+        playersInfo = []
     }
 }
 
@@ -89,7 +97,7 @@ class MockDataStore: DataStore {
         let inside4 = MockGame(location: CLLocationCoordinate2D(latitude: 1, longitude: -1))
         let outside = MockGame(location: CLLocationCoordinate2D(latitude: 6, longitude: 6))
         games = [inside1, inside2, inside3, inside4, outside]
-        fetchedGamesFromDB = true
+        fetchedGamesFromDB = false
     }
     
     func fetchGames(center: CLLocationCoordinate2D,
@@ -116,7 +124,7 @@ class MockDataStore: DataStore {
             completion(Result.success(gamesInRegion))
         }
         else {
-            completion(.failure(DB_Error.failedToFecthGames))
+            completion(Result.failure(DB_Error.failedToFecthGames))
         }
     }
     
@@ -127,8 +135,47 @@ class MockDataStore: DataStore {
     {
         
     }
+    
+    func fetchAllUsers() {
+        
+    }
+    
+    func fetchUser(with uid: String, completion: (Result<User, Error>) -> Void) {
+        
+    }
+    
+    func saveUser(firstName: String, lastName: String, completion: (Result<User, Error>) -> Void) {
+        
+    }
+    
+    func deleteAllUsers() {
+        
+    }
+    
+    func deleteAllGames() {
+        
+    }
+    
+    func addUserToGame(uid: String, gameId: String, position: Position, isWithHomeTeam: Bool, completion: (Result<PlayerInfoProtocol, Error>) -> Void) {
+        
+    }
+    
+    func updateUserInfoForGame(uid: String, gameId: String, position: Position, isWithHomeTeam: Bool, completion: (Result<PlayerInfoProtocol, Error>) -> Void) {
+        
+    }
+    
+    func removeUserFromGame(uid: String, gameId: String, completion: (Result<PlayerInfoProtocol, Error>) -> Void) {
+        
+    }
 }
 
-enum DB_Error: Error {
+enum DB_Error: LocalizedError {
     case failedToFecthGames
+    
+    var errorDescription: String? {
+        switch self {
+        case .failedToFecthGames:
+            return NSLocalizedString("Failed to fetch games", comment: "")
+        }
+    }
 }
