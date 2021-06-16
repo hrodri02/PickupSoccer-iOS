@@ -43,15 +43,18 @@ class GameVC: UIViewController {
         super.viewDidLoad()
         view.addSubview(imageView)
         view.addSubview(collectionView)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Exit", style: .plain, target: self, action: #selector(exitGameButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(menuButtonTapped))
         setImageViewConstraints()
         setCollectionViewConstraints()
         setBackgroundImage()
         presenter?.updateGameView()
     }
     
-    @objc func exitGameButtonTapped() {
-        presenter?.exitGameButtonTapped()
+    @objc func menuButtonTapped() {
+        presenter?.menuButtonTapped()
     }
     
     private func setBackgroundImage() {
@@ -105,6 +108,26 @@ extension GameVC: GamePresenterToGameView {
         }
         alertController.addAction(confirmAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func displayMenuAlert(_ didUserCreateGame: Bool) {
+        let exitAction = UIAlertAction(title: "Exit", style: .default, handler: { _ in
+            self.presenter?.exitGameButtonTapped()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        var actions = [exitAction, cancelAction]
+        
+        if didUserCreateGame {
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                if let navController = self.navigationController {
+                    self.presenter?.deleteGameButtonTapped(navController)
+                }
+            })
+            actions.append(deleteAction)
+        }
+        
+        presentAlertActionSheet(actions: actions)
     }
 }
 
