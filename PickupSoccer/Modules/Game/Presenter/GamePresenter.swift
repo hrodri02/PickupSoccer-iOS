@@ -24,7 +24,7 @@ extension GamePresenter: GameViewToGamePresenter {
     }
     
     func didSelectNewPosition(_ position: Position, isHomeTeam: Bool) {
-        interactor?.updateUserPosition(position, isHomeTeam: isHomeTeam)
+        interactor?.newPositionSelected(position, isHomeTeam: isHomeTeam)
     }
     
     func exitGameButtonTapped() {
@@ -47,6 +47,14 @@ extension GamePresenter: GameInteractorToGamePresenter {
     
     func onUpdatedTeams(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
         view?.displayPlayers(homeTeam, awayTeam)
+    }
+    
+    func onTimeConflictDetected(_ errorMessage: String) {
+        view?.displayErrorMessage(errorMessage)
+    }
+    
+    func onFailedToAddUserToGame(_ errorMessage: String) {
+        view?.displayErrorMessage(errorMessage)
     }
     
     func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool) {
