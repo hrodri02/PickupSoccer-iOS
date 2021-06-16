@@ -11,7 +11,9 @@ import UIKit
 class GameModule {
     static func build(game: Game) -> UIViewController {
         let gameVC = GameVC()
-        let interactor = GameInteractor(dataStore: App.shared.coreDataStore, game: game)
+        let interactor = GameInteractor(dataStore: App.shared.coreDataStore,
+                                        game: game,
+                                        user: UserManager.shared.getUser())
         let presenter = GamePresenter()
         let router = GameRouter()
         
