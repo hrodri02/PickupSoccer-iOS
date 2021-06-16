@@ -13,6 +13,7 @@ protocol User
     var uid: String? {get set}
     var firstName: String? {get set}
     var lastName: String? {get set}
+    var joinedGames: Array<Game> {get}
 }
 
 enum Position: Int16 {
