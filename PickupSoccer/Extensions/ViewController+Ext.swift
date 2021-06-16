@@ -27,4 +27,14 @@ extension UIViewController
         alertController.addAction(action)
         present(alertController, animated: true, completion: nil)
     }
+    
+    func presentAlertActionSheet(actions: [UIAlertAction]) {
+        let alertController = UIAlertController(title: nil,
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+        for action in actions {
+            alertController.addAction(action)
+        }
+        present(alertController, animated: true, completion: nil)
+    }
 }
