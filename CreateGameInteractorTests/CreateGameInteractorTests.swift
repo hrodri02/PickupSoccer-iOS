@@ -91,6 +91,38 @@ class MockPresenter: CreateGameInteractorToCreateGamePresenter {
 }
 
 class MockDataStore: DataStore {
+    func fetchAllUsers() {
+        
+    }
+    
+    func fetchUser(with uid: String, completion: (Result<User, Error>) -> Void) {
+        
+    }
+    
+    func saveUser(firstName: String, lastName: String, completion: (Result<User, Error>) -> Void) {
+        
+    }
+    
+    func deleteAllUsers() {
+        
+    }
+    
+    func deleteAllGames() {
+        
+    }
+    
+    func addUserToGame(uid: String, gameId: String, position: Position, isWithHomeTeam: Bool, completion: (Result<PlayerInfoProtocol, Error>) -> Void) {
+        
+    }
+    
+    func updateUserInfoForGame(uid: String, gameId: String, position: Position, isWithHomeTeam: Bool, completion: (Result<PlayerInfoProtocol, Error>) -> Void) {
+        
+    }
+    
+    func removeUserFromGame(uid: String, gameId: String, completion: (Result<PlayerInfoProtocol, Error>) -> Void) {
+        
+    }
+    
     func fetchGames(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees, completion: @escaping (Result<[Game], Error>) -> Void) {
         
     }
