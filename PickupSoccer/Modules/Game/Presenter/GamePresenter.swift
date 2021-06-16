@@ -6,7 +6,7 @@
 //  Copyright © 2021 Heriberto Rodriguez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class GamePresenter {
     weak var view: GamePresenterToGameView?
@@ -27,12 +27,27 @@ extension GamePresenter: GameViewToGamePresenter {
         interactor?.newPositionSelected(position, isHomeTeam: isHomeTeam)
     }
     
+    func menuButtonTapped() {
+        interactor?.checkIfUserCreatedGame()
+    }
+    
     func exitGameButtonTapped() {
         interactor?.checkIfUserIsPartOfGame()
     }
     
     func confirmButtonTapped() {
         interactor?.removeUserFromGame()
+    }
+    
+    func deleteGameButtonTapped(_ navigationController: UINavigationController) {
+        interactor?.deleteGame(completion: { (error) in
+            if let err = error {
+                self.view?.displayErrorMessage(err.localizedDescription)
+            }
+            else {
+                self.router?.dismiss(navigationController)
+            }
+        })
     }
 }
 
@@ -64,5 +79,9 @@ extension GamePresenter: GameInteractorToGamePresenter {
         else {
             view?.displayErrorMessage("You are not part of the Game")
         }
+    }
+    
+    func verifiedIfUserCreatedGame(_ didUserCreateGame: Bool) {
+        view?.displayMenuAlert(didUserCreateGame)
     }
 }

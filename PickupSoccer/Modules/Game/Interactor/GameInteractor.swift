@@ -259,4 +259,21 @@ extension GameInteractor: GamePresenterToGameInteractor {
             
         }
     }
+    
+    func checkIfUserCreatedGame() {
+        guard let uid = user?.uid else {
+            fatalError("Failed to get user id")
+        }
+        
+        let isUserCreatorOfGame = uid == game.creatorId
+        presenter?.verifiedIfUserCreatedGame(isUserCreatorOfGame)
+    }
+    
+    func deleteGame(completion: (Error?) -> Void) {
+        guard let gameId = game.id else {
+            fatalError("Failed to get game id")
+        }
+        
+        dataStore.deleteGame(gameId, completion: completion)
+    }
 }

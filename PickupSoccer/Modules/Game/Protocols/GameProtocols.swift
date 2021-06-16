@@ -12,7 +12,9 @@ import UIKit
 protocol GameViewToGamePresenter {
     func updateGameView()
     func didSelectNewPosition(_ position: Position, isHomeTeam: Bool)
+    func menuButtonTapped()
     func exitGameButtonTapped()
+    func deleteGameButtonTapped(_ navigationController: UINavigationController)
     func confirmButtonTapped()
 }
 
@@ -20,6 +22,7 @@ protocol GamePresenterToGameView: AnyObject {
     func displayPlayers(_ homeTeam: [String : Position], _ awayTeam: [String : Position])
     func displayErrorMessage(_ errorMessage: String)
     func displayConfirmationAlert()
+    func displayMenuAlert(_ didUserCreateGame: Bool)
 }
 
 // MARK: - communication between presenter and interactor
@@ -27,7 +30,9 @@ protocol GamePresenterToGameInteractor {
     func fetchPlayersForGame()
     func newPositionSelected(_ position: Position, isHomeTeam: Bool)
     func checkIfUserIsPartOfGame()
+    func checkIfUserCreatedGame()
     func removeUserFromGame()
+    func deleteGame(completion: (Error?) -> Void)
 }
 
 protocol GameInteractorToGamePresenter: AnyObject {
@@ -37,6 +42,7 @@ protocol GameInteractorToGamePresenter: AnyObject {
     func onTimeConflictDetected(_ errorMessage: String)
     func onFailedToAddUserToGame(_ errorMessage: String)
     func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool)
+    func verifiedIfUserCreatedGame(_ didUserCreateGame: Bool)
 }
 
 // MARK: - communication between presenter and router
