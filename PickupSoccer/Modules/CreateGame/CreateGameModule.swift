@@ -22,7 +22,8 @@ class CreateGameModule
         presenter.router = router
         
         let createGameInteractor = CreateGameInteractor(userLocationService: App.shared.userLocationService,
-                                                        dataStore: App.shared.coreDataStore)
+                                                        dataStore: App.shared.coreDataStore,
+                                                        user: UserManager.shared.getUser())
         presenter.createGameInteractor = createGameInteractor
         createGameInteractor.presenter = presenter
         

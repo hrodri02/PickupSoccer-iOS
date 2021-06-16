@@ -16,13 +16,15 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
     private var address: String
     private var dateInterval: DateInterval
     private var location: CLLocationCoordinate2D
+    private var user: User?
     
-    init(userLocationService: UserLocationServiceProtocol, dataStore: DataStore) {
+    init(userLocationService: UserLocationServiceProtocol, dataStore: DataStore, user: User?) {
         self.dataStore = dataStore
         self.userLocationService = userLocationService
         self.address = ""
         self.dateInterval = DateInterval()
         self.location = CLLocationCoordinate2D()
+        self.user = user
         super.init()
     }
     
@@ -85,7 +87,11 @@ class CreateGameInteractor : NSObject, CreateGamePresenterToCreateGameInteractor
     }
     
     func saveNewGame() {
-        dataStore.saveGame(address, location, dateInterval) { (error) in
+        guard let uid = user?.uid else {
+            fatalError("Failed to get user id")
+        }
+        
+        dataStore.saveGame(uid, address, location, dateInterval) { (error) in
             if let err = error {
                 self.presenter?.failedToSaveNewGame(errorMessage: err.localizedDescription)
             }
