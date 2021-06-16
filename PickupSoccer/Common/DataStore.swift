@@ -21,7 +21,8 @@ protocol DataStore {
                     latitudeDelta: CLLocationDegrees,
                     longitudeDelta: CLLocationDegrees,
                     completion: @escaping (Result<[Game], Error>) -> Void)
-    func saveGame(_ address: String,
+    func saveGame(_ creatorId: String,
+                  _ address: String,
                   _ location: CLLocationCoordinate2D,
                   _ dateInterval: DateInterval,
                   completion: @escaping (Error?) -> Void)

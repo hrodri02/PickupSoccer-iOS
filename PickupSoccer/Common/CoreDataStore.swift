@@ -115,7 +115,8 @@ class CoreDataStore: DataStore
         }
     }
     
-    func saveGame(_ address: String,
+    func saveGame(_ creatorId: String,
+                  _ address: String,
                   _ location: CLLocationCoordinate2D,
                   _ dateInterval: DateInterval,
                   completion: @escaping (Error?) -> Void)
@@ -138,6 +139,7 @@ class CoreDataStore: DataStore
         locationMO.longitude = location.longitude
         dateIntervalMO.start = dateInterval.start
         dateIntervalMO.end = dateInterval.end
+        gameMO.creatorId = creatorId
         gameMO.id = UUID().uuidString
         gameMO.address = address
         gameMO.location = locationMO
