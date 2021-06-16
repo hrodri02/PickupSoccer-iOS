@@ -152,6 +152,21 @@ class CoreDataStore: DataStore
         }
     }
     
+    func deleteAllGames() {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Game")
+        
+        do {
+            let games = try managedObjectContext.fetch(fetchRequest)
+            for game in games {
+                managedObjectContext.delete(game)
+            }
+            try managedObjectContext.save()
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // MARK: - methods for saving, updating, deleting, and fetching player information
     func addUserToGame(uid: String,
                        gameId: String,

@@ -25,6 +25,7 @@ protocol DataStore {
                   _ location: CLLocationCoordinate2D,
                   _ dateInterval: DateInterval,
                   completion: @escaping (Error?) -> Void)
+    func deleteAllGames()
     // MARK: - methods for saving, updating, deleting, and fetching player information
     func addUserToGame(uid: String,
                        gameId: String,
