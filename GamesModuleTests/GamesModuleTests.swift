@@ -14,17 +14,21 @@ import CoreData
 class GamesInteractorTests: XCTestCase {
     var gamesInteractor: GamesInteractor!
     var presenter: MockPresenter!
+    var mockDataStore: MockDataStore!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
-        gamesInteractor = GamesInteractor(dataStore: MockDataStore())
+        mockDataStore = MockDataStore()
+        gamesInteractor = GamesInteractor(dataStore: mockDataStore)
         presenter = MockPresenter()
         gamesInteractor.presenter = presenter
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        mockDataStore = nil
+        presenter = nil
         gamesInteractor = nil
         super.tearDown()
     }
@@ -33,12 +37,12 @@ class GamesInteractorTests: XCTestCase {
         let center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         let latitudeDelta: CLLocationDegrees = 10
         let longtidueDelta: CLLocationDegrees = 10
+        mockDataStore.fetchedGamesFromDB = true
         gamesInteractor.fetchGames(center: center,
                                    latitudeDelta: latitudeDelta,
                                    longitudeDelta: longtidueDelta)
-        for game in presenter.games {
-            printGame(game)
-        }
+        let numValidGames = 4
+        XCTAssertEqual(presenter.games.count, numValidGames)
     }
     
     private func printGame(_ game: Game) {
@@ -49,6 +53,7 @@ class GamesInteractorTests: XCTestCase {
         let center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         let latitudeDelta: CLLocationDegrees = 10
         let longtidueDelta: CLLocationDegrees = 10
+        mockDataStore.fetchedGamesFromDB = false
         gamesInteractor.fetchGames(center: center,
                                            latitudeDelta: latitudeDelta,
                                            longitudeDelta: longtidueDelta)
@@ -97,7 +102,7 @@ class MockDataStore: DataStore {
         let inside4 = MockGame(location: CLLocationCoordinate2D(latitude: 1, longitude: -1))
         let outside = MockGame(location: CLLocationCoordinate2D(latitude: 6, longitude: 6))
         games = [inside1, inside2, inside3, inside4, outside]
-        fetchedGamesFromDB = false
+        fetchedGamesFromDB = true
     }
     
     func fetchGames(center: CLLocationCoordinate2D,
