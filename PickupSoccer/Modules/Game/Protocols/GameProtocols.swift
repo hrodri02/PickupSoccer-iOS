@@ -25,7 +25,7 @@ protocol GamePresenterToGameView: AnyObject {
 // MARK: - communication between presenter and interactor
 protocol GamePresenterToGameInteractor {
     func fetchPlayersForGame()
-    func updateUserPosition(_ position: Position, isHomeTeam: Bool)
+    func newPositionSelected(_ position: Position, isHomeTeam: Bool)
     func checkIfUserIsPartOfGame()
     func removeUserFromGame()
 }
@@ -34,6 +34,8 @@ protocol GameInteractorToGamePresenter: AnyObject {
     func onFetchPlayersSuccess(_ homeTeam: [String : Position], _ awayTeam: [String : Position])
     func onUpdatedTeams(_ homeTeam: [String : Position], _ awayTeam: [String : Position])
     func onFetchPlayersFailed(_ errorMessage: String)
+    func onTimeConflictDetected(_ errorMessage: String)
+    func onFailedToAddUserToGame(_ errorMessage: String)
     func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool)
 }
 
