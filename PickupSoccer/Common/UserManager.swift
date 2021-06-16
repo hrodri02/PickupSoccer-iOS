@@ -16,7 +16,7 @@ struct UserManager
 
     private init(dataStore: DataStore) {
         self.dataStore = dataStore
-        let uid = "8195070C-D54D-4C94-9CEF-BD449B209A00"
+        let uid = "97F64D03-28FF-4138-98B9-FA1F69E08CAD"
         
         self.dataStore.fetchUser(with: uid) { (result) in
             switch result {
