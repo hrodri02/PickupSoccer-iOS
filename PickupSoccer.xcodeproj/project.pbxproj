@@ -67,6 +67,7 @@
 		2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA50F8F25DB6EE8000F401A /* CalendarPickerFooterView.swift */; };
 		2FA596F42600FA68009FA3C2 /* CreateGameModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA596F32600FA68009FA3C2 /* CreateGameModule.swift */; };
 		2FB11A3C2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */; };
+		2FB735BC2678D7FA00DCBE9E /* GameModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB735BB2678D7FA00DCBE9E /* GameModuleTests.swift */; };
 		2FC17172266662F90057AE2D /* TeamCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC17171266662F90057AE2D /* TeamCVCell.swift */; };
 		2FC67A8126723FED0016A5F4 /* UserMO+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC67A8026723FED0016A5F4 /* UserMO+Ext.swift */; };
 		2FDC2DAB26038E7B00B6C876 /* CreateGameInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDC2DAA26038E7B00B6C876 /* CreateGameInteractorTests.swift */; };
@@ -84,6 +85,13 @@
 			remoteInfo = PickupSoccer;
 		};
 		2F9211A0264EBF5900ECAC96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F18898725D97FA600ECA469 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F18898E25D97FA600ECA469;
+			remoteInfo = PickupSoccer;
+		};
+		2FB735BE2678D7FB00DCBE9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2F18898725D97FA600ECA469 /* Project object */;
 			proxyType = 1;
@@ -167,6 +175,9 @@
 		2FA50F9125DB7453000F401A /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2FA596F32600FA68009FA3C2 /* CreateGameModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameModule.swift; sourceTree = "<group>"; };
 		2FB11A3B2632EF3B00F0A723 /* Game.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Game.xcdatamodel; sourceTree = "<group>"; };
+		2FB735B92678D7FA00DCBE9E /* GameModuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameModuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FB735BB2678D7FA00DCBE9E /* GameModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModuleTests.swift; sourceTree = "<group>"; };
+		2FB735BD2678D7FA00DCBE9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FC17171266662F90057AE2D /* TeamCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCVCell.swift; sourceTree = "<group>"; };
 		2FC67A8026723FED0016A5F4 /* UserMO+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserMO+Ext.swift"; sourceTree = "<group>"; };
 		2FDC2DA826038E7B00B6C876 /* CreateGameInteractorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreateGameInteractorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +210,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2FB735B62678D7FA00DCBE9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FDC2DA526038E7B00B6C876 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -216,6 +234,7 @@
 				2F6BCB292602D62C000DA4C5 /* CalendarInteractorTests */,
 				2FDC2DA926038E7B00B6C876 /* CreateGameInteractorTests */,
 				2F92119C264EBF5900ECAC96 /* GamesModuleTests */,
+				2FB735BA2678D7FA00DCBE9E /* GameModuleTests */,
 				2F18899025D97FA600ECA469 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -227,6 +246,7 @@
 				2F6BCB282602D62C000DA4C5 /* CalendarInteractorTests.xctest */,
 				2FDC2DA826038E7B00B6C876 /* CreateGameInteractorTests.xctest */,
 				2F92119B264EBF5900ECAC96 /* GamesModuleTests.xctest */,
+				2FB735B92678D7FA00DCBE9E /* GameModuleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -553,6 +573,15 @@
 			path = CreateGame;
 			sourceTree = "<group>";
 		};
+		2FB735BA2678D7FA00DCBE9E /* GameModuleTests */ = {
+			isa = PBXGroup;
+			children = (
+				2FB735BB2678D7FA00DCBE9E /* GameModuleTests.swift */,
+				2FB735BD2678D7FA00DCBE9E /* Info.plist */,
+			);
+			path = GameModuleTests;
+			sourceTree = "<group>";
+		};
 		2FDC2DA926038E7B00B6C876 /* CreateGameInteractorTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,6 +647,24 @@
 			productReference = 2F92119B264EBF5900ECAC96 /* GamesModuleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		2FB735B82678D7FA00DCBE9E /* GameModuleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FB735C22678D7FB00DCBE9E /* Build configuration list for PBXNativeTarget "GameModuleTests" */;
+			buildPhases = (
+				2FB735B52678D7FA00DCBE9E /* Sources */,
+				2FB735B62678D7FA00DCBE9E /* Frameworks */,
+				2FB735B72678D7FA00DCBE9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2FB735BF2678D7FB00DCBE9E /* PBXTargetDependency */,
+			);
+			name = GameModuleTests;
+			productName = GameModuleTests;
+			productReference = 2FB735B92678D7FA00DCBE9E /* GameModuleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2FDC2DA726038E7B00B6C876 /* CreateGameInteractorTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2FDC2DB126038E7B00B6C876 /* Build configuration list for PBXNativeTarget "CreateGameInteractorTests" */;
@@ -657,6 +704,10 @@
 						CreatedOnToolsVersion = 11.4.1;
 						TestTargetID = 2F18898E25D97FA600ECA469;
 					};
+					2FB735B82678D7FA00DCBE9E = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 2F18898E25D97FA600ECA469;
+					};
 					2FDC2DA726038E7B00B6C876 = {
 						CreatedOnToolsVersion = 11.4.1;
 						TestTargetID = 2F18898E25D97FA600ECA469;
@@ -680,6 +731,7 @@
 				2F6BCB272602D62C000DA4C5 /* CalendarInteractorTests */,
 				2FDC2DA726038E7B00B6C876 /* CreateGameInteractorTests */,
 				2F92119A264EBF5900ECAC96 /* GamesModuleTests */,
+				2FB735B82678D7FA00DCBE9E /* GameModuleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -705,6 +757,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2F921199264EBF5900ECAC96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FB735B72678D7FA00DCBE9E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -802,6 +861,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2FB735B52678D7FA00DCBE9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FB735BC2678D7FA00DCBE9E /* GameModuleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FDC2DA426038E7B00B6C876 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -822,6 +889,11 @@
 			isa = PBXTargetDependency;
 			target = 2F18898E25D97FA600ECA469 /* PickupSoccer */;
 			targetProxy = 2F9211A0264EBF5900ECAC96 /* PBXContainerItemProxy */;
+		};
+		2FB735BF2678D7FB00DCBE9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F18898E25D97FA600ECA469 /* PickupSoccer */;
+			targetProxy = 2FB735BE2678D7FB00DCBE9E /* PBXContainerItemProxy */;
 		};
 		2FDC2DAE26038E7B00B6C876 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1075,6 +1147,46 @@
 			};
 			name = Release;
 		};
+		2FB735C02678D7FB00DCBE9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = GameModuleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.GameModuleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PickupSoccer.app/PickupSoccer";
+			};
+			name = Debug;
+		};
+		2FB735C12678D7FB00DCBE9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NL2923UBKV;
+				INFOPLIST_FILE = GameModuleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.GameModuleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PickupSoccer.app/PickupSoccer";
+			};
+			name = Release;
+		};
 		2FDC2DAF26038E7B00B6C876 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1150,6 +1262,15 @@
 			buildConfigurations = (
 				2F9211A2264EBF5900ECAC96 /* Debug */,
 				2F9211A3264EBF5900ECAC96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2FB735C22678D7FB00DCBE9E /* Build configuration list for PBXNativeTarget "GameModuleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FB735C02678D7FB00DCBE9E /* Debug */,
+				2FB735C12678D7FB00DCBE9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
