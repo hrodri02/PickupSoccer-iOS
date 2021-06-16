@@ -11,6 +11,7 @@ import CoreLocation
 protocol Game
 {
     var id: String? {get set}
+    var creatorId: String? {get}
     var address: String? {get set}
     var coordinate: CLLocationCoordinate2D {get set}
     var timeInterval: DateInterval {get set}

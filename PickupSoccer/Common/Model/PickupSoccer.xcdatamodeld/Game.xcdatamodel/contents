@@ -7,6 +7,7 @@
     </entity>
     <entity name="Game" representedClassName="GameMO" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="creatorId" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
         <relationship name="dateInterval" maxCount="1" deletionRule="Cascade" destinationEntity="DateInterval" inverseName="game" inverseEntity="DateInterval"/>
         <relationship name="location" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="game" inverseEntity="Location"/>
@@ -31,7 +32,7 @@
     </entity>
     <elements>
         <element name="DateInterval" positionX="-38.98486328125" positionY="-266.5601806640625" width="128" height="74"/>
-        <element name="Game" positionX="-254.6184692382812" positionY="-124.9482421875" width="128" height="104"/>
+        <element name="Game" positionX="-254.6184692382812" positionY="-124.9482421875" width="128" height="119"/>
         <element name="Location" positionX="-382.4235229492188" positionY="-270.9738464355469" width="128" height="74"/>
         <element name="PlayerInfo" positionX="-37.82489013671875" positionY="-4.838775634765625" width="128" height="89"/>
         <element name="User" positionX="-160.8968505859375" positionY="202.6236572265625" width="128" height="89"/>
