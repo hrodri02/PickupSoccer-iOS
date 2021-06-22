@@ -13,26 +13,40 @@ protocol GameViewToGamePresenter {
     func updateGameView()
     func didSelectNewPosition(_ position: Position, isHomeTeam: Bool)
     func menuButtonTapped()
+    func changePositionButtonTapped(_ viewController: GameVC)
+    func joinGameButtonTapped(_ viewController: GameVC)
     func exitGameButtonTapped()
     func deleteGameButtonTapped(_ navigationController: UINavigationController)
     func confirmButtonTapped()
+}
+
+protocol PlayerInfoVCToGamePresenter {
+    func updatePlayerInfoVC()
+    func doneButtonTapped(_ navigationController: UINavigationController)
 }
 
 protocol GamePresenterToGameView: AnyObject {
     func displayPlayers(_ homeTeam: [String : Position], _ awayTeam: [String : Position])
     func displayErrorMessage(_ errorMessage: String)
     func displayConfirmationAlert()
-    func displayMenuAlert(_ didUserCreateGame: Bool)
+    func displayMenuAlert(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool)
+}
+
+protocol GamePresenterToPlayerInfoVC: AnyObject {
+    func displayFreePositions(_ homeTeam: [Position], _ awayTeam: [Position], userPosition: Position)
 }
 
 // MARK: - communication between presenter and interactor
 protocol GamePresenterToGameInteractor {
     func fetchPlayersForGame()
     func newPositionSelected(_ position: Position, isHomeTeam: Bool)
+    func userUpdatedPosition(_ position: Position, isWithHomeTeam: Bool)
     func checkIfUserIsPartOfGame()
-    func checkIfUserCreatedGame()
+    func checkIfUserCreatedGameOrHasJoinedGame()
     func removeUserFromGame()
     func deleteGame(completion: (Error?) -> Void)
+    
+    func fetchFreePositions()
 }
 
 protocol GameInteractorToGamePresenter: AnyObject {
@@ -42,10 +56,16 @@ protocol GameInteractorToGamePresenter: AnyObject {
     func onTimeConflictDetected(_ errorMessage: String)
     func onFailedToAddUserToGame(_ errorMessage: String)
     func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool)
-    func verifiedIfUserCreatedGame(_ didUserCreateGame: Bool)
+    func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool)
+    
+    func onFetchFreePositionsSuccess(homeTeam: [Position],
+                                     awayTeam: [Position],
+                                     userPosition: Position)
 }
 
 // MARK: - communication between presenter and router
 protocol GamePresenterToGameRouter {
+    func presentPlayerInfoVC(_ viewController: GameVC, presenter: GamePresenter)
+    func dismissPlayerInfoVC(_ navigationController: UINavigationController)
     func dismiss(_ navigationController: UINavigationController)
 }
