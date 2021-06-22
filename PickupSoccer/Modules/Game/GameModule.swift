@@ -19,7 +19,7 @@ class GameModule {
         
         gameVC.presenter = presenter
         
-        presenter.view = gameVC
+        presenter.gameView = gameVC
         presenter.interactor = interactor
         presenter.router = router
         
