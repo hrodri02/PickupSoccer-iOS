@@ -126,21 +126,6 @@ extension GameVC: GamePresenterToGameView {
         collectionView.reloadData()
     }
     
-    func displayErrorMessage(_ errorMessage: String) {
-        presentErrorMessage(errorMessage)
-    }
-    
-    func displayConfirmationAlert() {
-        let alertController = UIAlertController(title: nil, message: "Are you sure you want to exit this game?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
-            self.presenter?.confirmButtonTapped()
-        }
-        alertController.addAction(confirmAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
     func displayMenuAlert(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool) {
         var actions = [UIAlertAction]()
         
@@ -175,6 +160,21 @@ extension GameVC: GamePresenterToGameView {
         }
         
         presentAlertActionSheet(actions: actions)
+    }
+    
+    func displayConfirmationAlert() {
+        let alertController = UIAlertController(title: nil, message: "Are you sure you want to exit this game?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
+            self.presenter?.confirmButtonTapped()
+        }
+        alertController.addAction(confirmAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func displayErrorMessage(_ errorMessage: String) {
+        presentErrorMessage(errorMessage)
     }
 }
 

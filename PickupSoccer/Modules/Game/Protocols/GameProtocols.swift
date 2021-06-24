@@ -11,12 +11,12 @@ import UIKit
 // MARK: - communication between view and presenter
 protocol GameViewToGamePresenter {
     func updateGameView()
-    func didSelectNewPosition(_ position: Position, isWithHomeTeam: Bool)
     func menuButtonTapped()
-    func changePositionButtonTapped(_ viewController: GameVC)
     func joinGameButtonTapped(_ viewController: GameVC)
+    func changePositionButtonTapped(_ viewController: GameVC)
     func exitGameButtonTapped()
     func deleteGameButtonTapped(_ navigationController: UINavigationController)
+    func didSelectNewPosition(_ position: Position, isWithHomeTeam: Bool)
     func confirmButtonTapped()
 }
 
@@ -27,9 +27,9 @@ protocol PlayerInfoVCToGamePresenter {
 
 protocol GamePresenterToGameView: AnyObject {
     func displayPlayers(_ homeTeam: [String : Position], _ awayTeam: [String : Position])
-    func displayErrorMessage(_ errorMessage: String)
-    func displayConfirmationAlert()
     func displayMenuAlert(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool)
+    func displayConfirmationAlert()
+    func displayErrorMessage(_ errorMessage: String)
 }
 
 protocol GamePresenterToPlayerInfoVC: AnyObject {
