@@ -33,7 +33,7 @@ protocol GamePresenterToGameView: AnyObject {
 }
 
 protocol GamePresenterToPlayerInfoVC: AnyObject {
-    func displayFreePositions(_ homeTeam: [Position], _ awayTeam: [Position], userPosition: Position)
+    func displayFreePositions(_ homeTeam: [Position], _ awayTeam: [Position], isWithHomeTeam: Bool)
 }
 
 // MARK: - communication between presenter and interactor
@@ -60,7 +60,7 @@ protocol GameInteractorToGamePresenter: AnyObject {
     
     func onFetchFreePositionsSuccess(homeTeam: [Position],
                                      awayTeam: [Position],
-                                     userPosition: Position)
+                                     isWithHomeTeam: Bool)
 }
 
 // MARK: - communication between presenter and router
