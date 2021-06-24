@@ -24,10 +24,6 @@ extension GamePresenter: GameViewToGamePresenter {
         interactor?.fetchPlayersForGame()
     }
     
-    func didSelectNewPosition(_ position: Position, isWithHomeTeam: Bool) {
-        interactor?.newPositionSelected(position, isWithHomeTeam: isWithHomeTeam)
-    }
-    
     func menuButtonTapped() {
         interactor?.checkIfUserCreatedGameOrHasJoinedGame()
     }
@@ -38,6 +34,10 @@ extension GamePresenter: GameViewToGamePresenter {
     
     func changePositionButtonTapped(_ viewController: GameVC) {
         router?.presentPlayerInfoVC(viewController, presenter: self)
+    }
+    
+    func didSelectNewPosition(_ position: Position, isWithHomeTeam: Bool) {
+        interactor?.newPositionSelected(position, isWithHomeTeam: isWithHomeTeam)
     }
     
     func exitGameButtonTapped() {
@@ -75,12 +75,16 @@ extension GamePresenter: GameInteractorToGamePresenter {
         gameView?.displayPlayers(homeTeam, awayTeam)
     }
     
+    func onUpdatedTeams(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
+        gameView?.displayPlayers(homeTeam, awayTeam)
+    }
+    
     func onFetchPlayersFailed(_ errorMessage: String) {
         gameView?.displayErrorMessage(errorMessage)
     }
     
-    func onUpdatedTeams(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
-        gameView?.displayPlayers(homeTeam, awayTeam)
+    func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool) {
+        gameView?.displayMenuAlert(didUserCreateGame, didUserJoinGame)
     }
     
     func onTimeConflictDetected(_ errorMessage: String) {
@@ -89,10 +93,6 @@ extension GamePresenter: GameInteractorToGamePresenter {
     
     func onFailedToAddUserToGame(_ errorMessage: String) {
         gameView?.displayErrorMessage(errorMessage)
-    }
-    
-    func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool) {
-        gameView?.displayMenuAlert(didUserCreateGame, didUserJoinGame)
     }
     
     func onFetchFreePositionsSuccess(homeTeam: [Position], awayTeam: [Position], isWithHomeTeam: Bool) {

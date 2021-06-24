@@ -14,10 +14,10 @@ protocol GameViewToGamePresenter {
     func menuButtonTapped()
     func joinGameButtonTapped(_ viewController: GameVC)
     func changePositionButtonTapped(_ viewController: GameVC)
-    func exitGameButtonTapped()
-    func deleteGameButtonTapped(_ navigationController: UINavigationController)
     func didSelectNewPosition(_ position: Position, isWithHomeTeam: Bool)
+    func exitGameButtonTapped()
     func confirmButtonTapped()
+    func deleteGameButtonTapped(_ navigationController: UINavigationController)
 }
 
 protocol PlayerInfoVCToGamePresenter {
@@ -50,10 +50,9 @@ protocol GameInteractorToGamePresenter: AnyObject {
     func onFetchPlayersSuccess(_ homeTeam: [String : Position], _ awayTeam: [String : Position])
     func onUpdatedTeams(_ homeTeam: [String : Position], _ awayTeam: [String : Position])
     func onFetchPlayersFailed(_ errorMessage: String)
+    func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool)
     func onTimeConflictDetected(_ errorMessage: String)
     func onFailedToAddUserToGame(_ errorMessage: String)
-    func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool)
-    
     func onFetchFreePositionsSuccess(homeTeam: [Position],
                                      awayTeam: [Position],
                                      isWithHomeTeam: Bool)
