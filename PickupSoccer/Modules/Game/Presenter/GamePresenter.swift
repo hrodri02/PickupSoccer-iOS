@@ -9,7 +9,8 @@
 import UIKit
 
 class GamePresenter {
-    weak var view: GamePresenterToGameView?
+    weak var gameView: GamePresenterToGameView?
+    weak var playerInfoView: GamePresenterToPlayerInfoVC?
     var interactor: GamePresenterToGameInteractor?
     var router: GamePresenterToGameRouter?
     
@@ -28,7 +29,15 @@ extension GamePresenter: GameViewToGamePresenter {
     }
     
     func menuButtonTapped() {
-        interactor?.checkIfUserCreatedGame()
+        interactor?.checkIfUserCreatedGameOrHasJoinedGame()
+    }
+    
+    func joinGameButtonTapped(_ viewController: GameVC) {
+        router?.presentPlayerInfoVC(viewController, presenter: self)
+    }
+    
+    func changePositionButtonTapped(_ viewController: GameVC) {
+        router?.presentPlayerInfoVC(viewController, presenter: self)
     }
     
     func exitGameButtonTapped() {
@@ -42,7 +51,7 @@ extension GamePresenter: GameViewToGamePresenter {
     func deleteGameButtonTapped(_ navigationController: UINavigationController) {
         interactor?.deleteGame(completion: { (error) in
             if let err = error {
-                self.view?.displayErrorMessage(err.localizedDescription)
+                self.gameView?.displayErrorMessage(err.localizedDescription)
             }
             else {
                 self.router?.dismiss(navigationController)
@@ -51,37 +60,51 @@ extension GamePresenter: GameViewToGamePresenter {
     }
 }
 
+extension GamePresenter: PlayerInfoVCToGamePresenter {
+    func updatePlayerInfoVC() {
+        interactor?.fetchFreePositions()
+    }
+    
+    func doneButtonTapped(_ navigationController: UINavigationController) {
+        router?.dismissPlayerInfoVC(navigationController)
+    }
+}
+
 extension GamePresenter: GameInteractorToGamePresenter {
     func onFetchPlayersSuccess(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
-        view?.displayPlayers(homeTeam, awayTeam)
+        gameView?.displayPlayers(homeTeam, awayTeam)
     }
     
     func onFetchPlayersFailed(_ errorMessage: String) {
-        view?.displayErrorMessage(errorMessage)
+        gameView?.displayErrorMessage(errorMessage)
     }
     
     func onUpdatedTeams(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
-        view?.displayPlayers(homeTeam, awayTeam)
+        gameView?.displayPlayers(homeTeam, awayTeam)
     }
     
     func onTimeConflictDetected(_ errorMessage: String) {
-        view?.displayErrorMessage(errorMessage)
+        gameView?.displayErrorMessage(errorMessage)
     }
     
     func onFailedToAddUserToGame(_ errorMessage: String) {
-        view?.displayErrorMessage(errorMessage)
+        gameView?.displayErrorMessage(errorMessage)
     }
     
     func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool) {
         if isPartOfGame {
-            view?.displayConfirmationAlert()
+            gameView?.displayConfirmationAlert()
         }
         else {
-            view?.displayErrorMessage("You are not part of the Game")
+            gameView?.displayErrorMessage("You are not part of the Game")
         }
     }
     
-    func verifiedIfUserCreatedGame(_ didUserCreateGame: Bool) {
-        view?.displayMenuAlert(didUserCreateGame)
+    func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool) {
+        gameView?.displayMenuAlert(didUserCreateGame, didUserJoinGame)
+    }
+    
+    func onFetchFreePositionsSuccess(homeTeam: [Position], awayTeam: [Position], isWithHomeTeam: Bool) {
+        playerInfoView?.displayFreePositions(homeTeam, awayTeam, isWithHomeTeam: isWithHomeTeam)
     }
 }
