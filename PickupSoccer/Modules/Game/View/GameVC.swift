@@ -114,7 +114,7 @@ class GameVC: UIViewController {
 extension GameVC: PlayerInfoVCDelegate {
     func selectedPosition(position: Position, isWithHomeTeam: Bool) {
         if position != .none {
-            presenter?.didSelectNewPosition(position, isHomeTeam: isWithHomeTeam)
+            presenter?.didSelectNewPosition(position, isWithHomeTeam: isWithHomeTeam)
         }
     }
 }

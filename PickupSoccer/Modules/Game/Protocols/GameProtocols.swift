@@ -11,7 +11,7 @@ import UIKit
 // MARK: - communication between view and presenter
 protocol GameViewToGamePresenter {
     func updateGameView()
-    func didSelectNewPosition(_ position: Position, isHomeTeam: Bool)
+    func didSelectNewPosition(_ position: Position, isWithHomeTeam: Bool)
     func menuButtonTapped()
     func changePositionButtonTapped(_ viewController: GameVC)
     func joinGameButtonTapped(_ viewController: GameVC)
@@ -39,14 +39,11 @@ protocol GamePresenterToPlayerInfoVC: AnyObject {
 // MARK: - communication between presenter and interactor
 protocol GamePresenterToGameInteractor {
     func fetchPlayersForGame()
-    func newPositionSelected(_ position: Position, isHomeTeam: Bool)
-    func userUpdatedPosition(_ position: Position, isWithHomeTeam: Bool)
-    func checkIfUserIsPartOfGame()
     func checkIfUserCreatedGameOrHasJoinedGame()
+    func fetchFreePositions()
+    func newPositionSelected(_ position: Position, isWithHomeTeam: Bool)
     func removeUserFromGame()
     func deleteGame(completion: (Error?) -> Void)
-    
-    func fetchFreePositions()
 }
 
 protocol GameInteractorToGamePresenter: AnyObject {
@@ -55,7 +52,6 @@ protocol GameInteractorToGamePresenter: AnyObject {
     func onFetchPlayersFailed(_ errorMessage: String)
     func onTimeConflictDetected(_ errorMessage: String)
     func onFailedToAddUserToGame(_ errorMessage: String)
-    func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool)
     func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool)
     
     func onFetchFreePositionsSuccess(homeTeam: [Position],

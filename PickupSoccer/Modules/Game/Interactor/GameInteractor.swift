@@ -52,9 +52,59 @@ extension GameInteractor: GamePresenterToGameInteractor {
         presenter?.onFetchPlayersSuccess(homeTeam, awayTeam)
     }
     
-    func newPositionSelected(_ position: Position, isHomeTeam: Bool) {
+    func checkIfUserCreatedGameOrHasJoinedGame() {
+        guard let uid = user?.uid else {
+            fatalError("Failed to get user id")
+        }
+        
+        let isUserCreatorOfGame = uid == game.creatorId
+        presenter?.verifiedIfUserCreatedGameOrHasJoinedGame(isUserCreatorOfGame, isUserPartOfGame())
+    }
+    
+    private func isUserPartOfGame() -> Bool {
+        guard let uid = UserManager.shared.getUser()?.uid else {
+            fatalError("Failed to get uid")
+        }
+        
+        let isUserInHomeTeam = homeTeam[uid] != nil
+        let isUserInAwayTeam = awayTeam[uid] != nil
+        
+        return isUserInHomeTeam || isUserInAwayTeam
+    }
+    
+    func fetchFreePositions() {
+        let allPositions: [Position] = [.goalKeeper, .leftFullBack, .leftCenterBack,
+                                        .rightCenterBack, .rightFullBack, .leftSideMidfielder,
+                                        .leftCenterMidfield, .rightCenterMidField, .rightSideMidfielder,
+                                        .leftCenterForward, .rightCenterForward]
+        
+        let positionsOccupiedInHomeTeam  = Set<Position>(homeTeam.values)
+        let positionsOccupiedInAwayTeam  = Set<Position>(awayTeam.values)
+        var freePositionsInHomeTeam = [Position]()
+        var freePositionsInAwayTeam = [Position]()
+        for position in allPositions {
+            if !positionsOccupiedInHomeTeam.contains(position) {
+                freePositionsInHomeTeam.append(position)
+            }
+            
+            if !positionsOccupiedInAwayTeam.contains(position) {
+                freePositionsInAwayTeam.append(position)
+            }
+        }
+        
+        guard let uid = user?.uid else {
+            fatalError("Failed to get user id")
+        }
+        
+        let isWithHomeTeam = homeTeam[uid] != nil
+        presenter?.onFetchFreePositionsSuccess(homeTeam: freePositionsInHomeTeam,
+                                               awayTeam: freePositionsInAwayTeam,
+                                               isWithHomeTeam: isWithHomeTeam)
+    }
+    
+    func newPositionSelected(_ position: Position, isWithHomeTeam: Bool) {
         if isUserPartOfGame() {
-            userUpdatedPosition(position, isWithHomeTeam: isHomeTeam)
+            updateUserPosition(newPosition: position, isNewPositionInHomeTeam: isWithHomeTeam)
         }
         else if let game = isTimeConflict() {
             let gameDate = GameInteractor.dateFormatter.string(from: game.timeInterval.start)
@@ -63,20 +113,8 @@ extension GameInteractor: GamePresenterToGameInteractor {
             presenter?.onTimeConflictDetected(errorMessage)
         }
         else {
-            addUserToGame(position: position, isWithHomeTeam: isHomeTeam)
+            addUserToGame(position: position, isWithHomeTeam: isWithHomeTeam)
         }
-    }
-    
-    func userUpdatedPosition(_ position: Position, isWithHomeTeam: Bool) {
-        updateUserPosition(newPosition: position, isNewPositionInHomeTeam: isWithHomeTeam)
-    }
-    
-    private func getPresentableGameDuration(game: Game) -> String {
-        let durationInSecs = Int(game.timeInterval.duration)
-        let durationInMins = durationInSecs / 60
-        let hours = Int(durationInMins) / 60
-        let mins = Int(durationInMins) % 60
-        return "\(hours) h \(mins) m"
     }
     
     private func updateUserPosition(newPosition: Position, isNewPositionInHomeTeam: Bool) {
@@ -133,6 +171,51 @@ extension GameInteractor: GamePresenterToGameInteractor {
         }
     }
     
+    /*
+       T(n) = O(nlogn), where n = length of joined games array
+       S(n) = O(n)
+    */
+    private func isTimeConflict() -> Game? {
+        let newGameStartDate = game.timeInterval.start
+        let newGameEndDate = game.timeInterval.end
+       
+        guard let joinedGames = user?.joinedGames else {
+            fatalError("Failed to get games user joined")
+        }
+           
+        let games = joinedGames.sorted { (game1, game2) -> Bool in
+            return game1.timeInterval.start < game2.timeInterval.start
+        }
+       
+        let calendar = Calendar.current
+        for game in games {
+            let currGameStartDate = game.timeInterval.start
+            let dayComparisonRes = calendar.compare(newGameStartDate, to: currGameStartDate, toGranularity: .day)
+            if dayComparisonRes == .orderedSame {
+                let startDate = max(currGameStartDate, newGameStartDate)
+                let currGameEndDate = game.timeInterval.end
+                let endDate = min(currGameEndDate, newGameEndDate)
+                let minuteComparisonRes = calendar.compare(startDate, to: endDate, toGranularity: .minute)
+                if minuteComparisonRes == .orderedAscending {
+                    return game
+                }
+            }
+            else if dayComparisonRes == .orderedAscending {
+                break
+            }
+        }
+           
+        return nil
+    }
+    
+    private func getPresentableGameDuration(game: Game) -> String {
+        let durationInSecs = Int(game.timeInterval.duration)
+        let durationInMins = durationInSecs / 60
+        let hours = Int(durationInMins) / 60
+        let mins = Int(durationInMins) % 60
+        return "\(hours) h \(mins) m"
+    }
+    
     private func addUserToGame(position: Position, isWithHomeTeam: Bool) {
         guard let uid = user?.uid else {
             fatalError("Failed to get uid")
@@ -162,58 +245,6 @@ extension GameInteractor: GamePresenterToGameInteractor {
                 self.presenter?.onFailedToAddUserToGame(error.localizedDescription)
             }
         }
-    }
-    
-    /*
-        T(n) = O(nlogn), where n = length of joined games array
-        S(n) = O(n)
-     */
-    private func isTimeConflict() -> Game? {
-        let newGameStartDate = game.timeInterval.start
-        let newGameEndDate = game.timeInterval.end
-        
-        guard let joinedGames = user?.joinedGames else {
-            fatalError("Failed to get games user joined")
-        }
-            
-        let games = joinedGames.sorted { (game1, game2) -> Bool in
-            return game1.timeInterval.start < game2.timeInterval.start
-        }
-        
-        let calendar = Calendar.current
-        for game in games {
-            let currGameStartDate = game.timeInterval.start
-            let dayComparisonRes = calendar.compare(newGameStartDate, to: currGameStartDate, toGranularity: .day)
-            if dayComparisonRes == .orderedSame {
-                let startDate = max(currGameStartDate, newGameStartDate)
-                let currGameEndDate = game.timeInterval.end
-                let endDate = min(currGameEndDate, newGameEndDate)
-                let minuteComparisonRes = calendar.compare(startDate, to: endDate, toGranularity: .minute)
-                if minuteComparisonRes == .orderedAscending {
-                    return game
-                }
-            }
-            else if dayComparisonRes == .orderedAscending {
-                break
-            }
-        }
-        
-        return nil
-    }
-    
-    func checkIfUserIsPartOfGame() {
-        presenter?.verifiedIfUserIsPartOfGame(isUserPartOfGame())
-    }
-    
-    private func isUserPartOfGame() -> Bool {
-        guard let uid = UserManager.shared.getUser()?.uid else {
-            fatalError("Failed to get uid")
-        }
-        
-        let isUserInHomeTeam = homeTeam[uid] != nil
-        let isUserInAwayTeam = awayTeam[uid] != nil
-        
-        return isUserInHomeTeam || isUserInAwayTeam
     }
     
     func removeUserFromGame() {
@@ -249,50 +280,11 @@ extension GameInteractor: GamePresenterToGameInteractor {
         }
     }
     
-    func checkIfUserCreatedGameOrHasJoinedGame() {
-        guard let uid = user?.uid else {
-            fatalError("Failed to get user id")
-        }
-        
-        let isUserCreatorOfGame = uid == game.creatorId
-        presenter?.verifiedIfUserCreatedGameOrHasJoinedGame(isUserCreatorOfGame, isUserPartOfGame())
-    }
-    
     func deleteGame(completion: (Error?) -> Void) {
         guard let gameId = game.id else {
             fatalError("Failed to get game id")
         }
         
         dataStore.deleteGame(gameId, completion: completion)
-    }
-    
-    func fetchFreePositions() {
-        let allPositions: [Position] = [.goalKeeper, .leftFullBack, .leftCenterBack,
-                                        .rightCenterBack, .rightFullBack, .leftSideMidfielder,
-                                        .leftCenterMidfield, .rightCenterMidField, .rightSideMidfielder,
-                                        .leftCenterForward, .rightCenterForward]
-        
-        let positionsOccupiedInHomeTeam  = Set<Position>(homeTeam.values)
-        let positionsOccupiedInAwayTeam  = Set<Position>(awayTeam.values)
-        var freePositionsInHomeTeam = [Position]()
-        var freePositionsInAwayTeam = [Position]()
-        for position in allPositions {
-            if !positionsOccupiedInHomeTeam.contains(position) {
-                freePositionsInHomeTeam.append(position)
-            }
-            
-            if !positionsOccupiedInAwayTeam.contains(position) {
-                freePositionsInAwayTeam.append(position)
-            }
-        }
-        
-        guard let uid = user?.uid else {
-            fatalError("Failed to get user id")
-        }
-        
-        let isWithHomeTeam = homeTeam[uid] != nil
-        presenter?.onFetchFreePositionsSuccess(homeTeam: freePositionsInHomeTeam,
-                                               awayTeam: freePositionsInAwayTeam,
-                                               isWithHomeTeam: isWithHomeTeam)
     }
 }

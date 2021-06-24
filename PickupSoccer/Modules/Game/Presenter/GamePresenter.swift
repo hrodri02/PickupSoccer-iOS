@@ -24,8 +24,8 @@ extension GamePresenter: GameViewToGamePresenter {
         interactor?.fetchPlayersForGame()
     }
     
-    func didSelectNewPosition(_ position: Position, isHomeTeam: Bool) {
-        interactor?.newPositionSelected(position, isHomeTeam: isHomeTeam)
+    func didSelectNewPosition(_ position: Position, isWithHomeTeam: Bool) {
+        interactor?.newPositionSelected(position, isWithHomeTeam: isWithHomeTeam)
     }
     
     func menuButtonTapped() {
@@ -41,7 +41,7 @@ extension GamePresenter: GameViewToGamePresenter {
     }
     
     func exitGameButtonTapped() {
-        interactor?.checkIfUserIsPartOfGame()
+        gameView?.displayConfirmationAlert()
     }
     
     func confirmButtonTapped() {
@@ -89,15 +89,6 @@ extension GamePresenter: GameInteractorToGamePresenter {
     
     func onFailedToAddUserToGame(_ errorMessage: String) {
         gameView?.displayErrorMessage(errorMessage)
-    }
-    
-    func verifiedIfUserIsPartOfGame(_ isPartOfGame: Bool) {
-        if isPartOfGame {
-            gameView?.displayConfirmationAlert()
-        }
-        else {
-            gameView?.displayErrorMessage("You are not part of the Game")
-        }
     }
     
     func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool) {
