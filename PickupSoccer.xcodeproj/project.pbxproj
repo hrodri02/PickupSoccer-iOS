@@ -68,6 +68,7 @@
 		2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA50F8F25DB6EE8000F401A /* CalendarPickerFooterView.swift */; };
 		2FA596F42600FA68009FA3C2 /* CreateGameModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA596F32600FA68009FA3C2 /* CreateGameModule.swift */; };
 		2FAA61E72684AC0A00122641 /* SoccerFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA61E62684AC0A00122641 /* SoccerFieldView.swift */; };
+		2FAA61E92684BE8600122641 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA61E82684BE8600122641 /* PaddingLabel.swift */; };
 		2FB11A3C2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FB11A3A2632EF3B00F0A723 /* PickupSoccer.xcdatamodeld */; };
 		2FB735BC2678D7FA00DCBE9E /* GameModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB735BB2678D7FA00DCBE9E /* GameModuleTests.swift */; };
 		2FC17172266662F90057AE2D /* HomeTeamCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC17171266662F90057AE2D /* HomeTeamCVCell.swift */; };
@@ -178,6 +179,7 @@
 		2FA50F9125DB7453000F401A /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2FA596F32600FA68009FA3C2 /* CreateGameModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameModule.swift; sourceTree = "<group>"; };
 		2FAA61E62684AC0A00122641 /* SoccerFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerFieldView.swift; sourceTree = "<group>"; };
+		2FAA61E82684BE8600122641 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		2FB11A3B2632EF3B00F0A723 /* Game.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Game.xcdatamodel; sourceTree = "<group>"; };
 		2FB735B92678D7FA00DCBE9E /* GameModuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameModuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB735BB2678D7FA00DCBE9E /* GameModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModuleTests.swift; sourceTree = "<group>"; };
@@ -551,6 +553,7 @@
 				2FE5BDA626496D5F00B2CB85 /* CoreDataStore.swift */,
 				2F2964EE265BEEB500558C2E /* DataStore.swift */,
 				2F3BBAA8266A74A30026F4A8 /* UserManager.swift */,
+				2FAA61E82684BE8600122641 /* PaddingLabel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -816,6 +819,7 @@
 				2F8666142604CDD8007978B9 /* CalendarVC_MVVM.swift in Sources */,
 				2F9273DD264C124400624B38 /* CLLCoordinate2D+Ext.swift in Sources */,
 				2FAA61E72684AC0A00122641 /* SoccerFieldView.swift in Sources */,
+				2FAA61E92684BE8600122641 /* PaddingLabel.swift in Sources */,
 				2F690C2525FB04F900A7C054 /* CalendarInteractor.swift in Sources */,
 				2F8BB1DE265FCBDB003892E7 /* AwayTeamCVCell.swift in Sources */,
 				2F9F2107265BD55800F92024 /* GameMO+Ext.swift in Sources */,
