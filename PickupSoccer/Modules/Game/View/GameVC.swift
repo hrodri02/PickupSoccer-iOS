@@ -30,9 +30,16 @@ class GameVC: UIViewController {
         collectionView.register(HomeTeamCVCell.self, forCellWithReuseIdentifier: "HomeCellId")
         collectionView.register(AwayTeamCVCell.self, forCellWithReuseIdentifier: "AwayCellId")
         collectionView.isPagingEnabled = true
-        collectionView.backgroundView = self.imageView
+        collectionView.backgroundView = self.soccerFieldView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
+    }()
+    
+    let soccerFieldView: SoccerFieldView = {
+        let view = SoccerFieldView()
+        view.backgroundColor = UIColor.black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     deinit {
@@ -41,32 +48,48 @@ class GameVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(imageView)
+        collectionView.addSubview(soccerFieldView)
         view.addSubview(collectionView)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(menuButtonTapped))
-        setImageViewConstraints()
+        setupTopNavigationBar()
+        setSoccerFieldViewConstraints()
         setCollectionViewConstraints()
-        setBackgroundImage()
         presenter?.updateGameView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        soccerFieldView.draw()
     }
     
     @objc func menuButtonTapped() {
         presenter?.menuButtonTapped()
     }
     
-    private func setBackgroundImage() {
-        if let imageURL = Bundle.main.url(forResource: "pexels-photo-2291006", withExtension: "jpeg") {
-            do {
-                let imageData = try Data(contentsOf: imageURL)
-                imageView.image = UIImage(data: imageData)
-            }
-            catch {
-                print(error.localizedDescription)
-            }
-        }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let x = scrollView.contentOffset.x
+        let item = Int(x / safeAreaLayoutFrame.width)
+        title = (item == 0) ? "Home Team" : "Away Team"
+    }
+    
+    private func setupTopNavigationBar() {
+        title = "Home Team"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.init(white: 0.8, alpha: 1.0)]
+        navigationController?.navigationBar.barTintColor = .black
+        navigationController?.navigationBar.tintColor = .init(white: 0.8, alpha: 1.0)
+        navigationController?.navigationBar.barStyle = .black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(menuButtonTapped))
+    }
+    
+    private func setSoccerFieldViewConstraints() {
+        NSLayoutConstraint.activate([
+            soccerFieldView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+            soccerFieldView.topAnchor.constraint(equalTo: collectionView.topAnchor),
+            soccerFieldView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
+            soccerFieldView.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
+        ])
     }
     
     private func setImageViewConstraints() {
@@ -85,6 +108,14 @@ class GameVC: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+}
+
+extension GameVC: PlayerInfoVCDelegate {
+    func selectedPosition(position: Position, isWithHomeTeam: Bool) {
+        if position != .none {
+            presenter?.didSelectNewPosition(position, isHomeTeam: isWithHomeTeam)
+        }
     }
 }
 
@@ -110,13 +141,29 @@ extension GameVC: GamePresenterToGameView {
         present(alertController, animated: true, completion: nil)
     }
     
-    func displayMenuAlert(_ didUserCreateGame: Bool) {
-        let exitAction = UIAlertAction(title: "Exit", style: .default, handler: { _ in
-            self.presenter?.exitGameButtonTapped()
-        })
+    func displayMenuAlert(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool) {
+        var actions = [UIAlertAction]()
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        var actions = [exitAction, cancelAction]
+        actions.append(cancelAction)
+        
+        if didUserJoinGame {
+            let changePositionAction = UIAlertAction(title: "Change Position", style: .default, handler: { _ in
+                self.presenter?.changePositionButtonTapped(self)
+            })
+            actions.append(changePositionAction)
+            
+            let exitAction = UIAlertAction(title: "Exit Game", style: .default, handler: { _ in
+                self.presenter?.exitGameButtonTapped()
+            })
+            actions.append(exitAction)
+        }
+        else {
+            let joinAction = UIAlertAction(title: "Join", style: .default) { (_) in
+                self.presenter?.joinGameButtonTapped(self)
+            }
+            actions.append(joinAction)
+        }
         
         if didUserCreateGame {
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
@@ -139,16 +186,12 @@ extension GameVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCellId", for: indexPath) as! HomeTeamCVCell
-            cell.configure(with: homeTeam) { [unowned self] (newPosition) in
-                self.presenter?.didSelectNewPosition(newPosition, isHomeTeam: true)
-            }
+            cell.configure(with: homeTeam)
             return cell
         }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AwayCellId", for: indexPath) as! AwayTeamCVCell
-        cell.configure(with: awayTeam) { [unowned self] (newPosition) in
-            self.presenter?.didSelectNewPosition(newPosition, isHomeTeam: false)
-        }
+        cell.configure(with: awayTeam)
         return cell
     }
 }
