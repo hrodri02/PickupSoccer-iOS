@@ -41,12 +41,10 @@ extension GameInteractor: GamePresenterToGameInteractor {
             let uid = playerInfo.uid
             if playerInfo.isWithHomeTeam {
                 homeTeam[uid] = playerInfo.positionEnum
-                print("uid = \(uid), team = home, position = \(playerInfo.positionEnum)")
                 positionsOccupiedInHomeTeam.insert(playerInfo.positionEnum)
             }
             else {
                 awayTeam[uid] = playerInfo.positionEnum
-                print("uid = \(uid), team = away, position = \(playerInfo.positionEnum)")
                 positionsOccupiedInAwayTeam.insert(playerInfo.positionEnum)
             }
         }
