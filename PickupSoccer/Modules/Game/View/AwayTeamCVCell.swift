@@ -8,20 +8,15 @@
 
 import UIKit
 
-class AwayTeamCVCell: TeamCVCell
+class AwayTeamCVCell: HomeTeamCVCell
 {
-    override var positionToIndex: [Position : Int] {
-        [Position.goalKeeper : 0,
-        Position.leftFullBack: 4,
-        Position.leftCenterBack: 3,
-        Position.rightCenterBack: 2,
-        Position.rightFullBack: 1,
-        Position.leftSideMidfielder: 8,
-        Position.leftCenterMidfield: 7,
-        Position.rightCenterMidField: 6,
-        Position.rightSideMidfielder: 5,
-        Position.leftCenterForward: 10,
-        Position.rightCenterForward: 9]
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = UIColor.systemBlue.withAlphaComponent(0.5)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func addSubviews() {
@@ -30,5 +25,11 @@ class AwayTeamCVCell: TeamCVCell
         verticalStackView.addArrangedSubview(midFieldStackView)
         verticalStackView.addArrangedSubview(defenseStackView)
         verticalStackView.addArrangedSubview(goalieImageView)
+    }
+    
+    override func setBorderColorOfImageViews() {
+        for imageView in imageViews {
+            imageView.layer.borderColor = UIColor.systemBlue.cgColor
+        }
     }
 }
