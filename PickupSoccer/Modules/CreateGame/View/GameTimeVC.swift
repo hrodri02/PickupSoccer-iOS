@@ -178,7 +178,9 @@ extension GameTimeVC
 {
     private func setupTopNavigationBar() {
         title = "Set Time"
-        navigationController?.navigationBar.barTintColor = Colors.mainTextColor
+        navigationController?.navigationBar.barTintColor = UIColor.black
+        navigationController?.navigationBar.tintColor = Colors.mainTextColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.mainTextColor]
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
     }
     
