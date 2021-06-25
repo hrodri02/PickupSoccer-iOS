@@ -175,7 +175,7 @@ extension PlayerInfoVC: UITableViewDataSource {
 
 extension PlayerInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = PaddingLabel(withInsets: 0, 0, 10.0, 0)
+        let label = PaddingLabel(insets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
         label.text = sectionTitles[section]
         label.textColor = .lightGray
         label.backgroundColor = .black
