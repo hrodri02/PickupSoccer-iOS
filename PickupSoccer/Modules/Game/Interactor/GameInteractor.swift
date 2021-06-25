@@ -58,14 +58,11 @@ extension GameInteractor: GamePresenterToGameInteractor {
         }
         
         let isUserCreatorOfGame = uid == game.creatorId
-        presenter?.verifiedIfUserCreatedGameOrHasJoinedGame(isUserCreatorOfGame, isUserPartOfGame())
+        let isUserInGame = isUserPartOfGame(uid)
+        presenter?.verifiedIfUserCreatedGameOrHasJoinedGame(isUserCreatorOfGame, isUserInGame)
     }
     
-    private func isUserPartOfGame() -> Bool {
-        guard let uid = UserManager.shared.getUser()?.uid else {
-            fatalError("Failed to get uid")
-        }
-        
+    private func isUserPartOfGame(_ uid: String) -> Bool {
         let isUserInHomeTeam = homeTeam[uid] != nil
         let isUserInAwayTeam = awayTeam[uid] != nil
         
@@ -103,7 +100,11 @@ extension GameInteractor: GamePresenterToGameInteractor {
     }
     
     func newPositionSelected(_ position: Position, isWithHomeTeam: Bool) {
-        if isUserPartOfGame() {
+        guard let uid = user?.uid else {
+            fatalError("Failed to get uid")
+        }
+        
+        if isUserPartOfGame(uid) {
             updateUserPosition(newPosition: position, isNewPositionInHomeTeam: isWithHomeTeam)
         }
         else if let game = isTimeConflict() {
