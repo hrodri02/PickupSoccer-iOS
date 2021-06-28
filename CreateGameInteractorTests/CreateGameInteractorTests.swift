@@ -18,7 +18,7 @@ class CreateGameInteractorTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
         createGameInteractor = CreateGameInteractor(userLocationService: MockUserLocationService(),
-                                                    dataStore: MockDataStore())
+                                                    dataStore: MockDataStore(), user: nil)
         mockPresenter = MockPresenter()
         createGameInteractor.presenter = mockPresenter
     }
@@ -127,7 +127,11 @@ class MockDataStore: DataStore {
         
     }
     
-    func saveGame(_ address: String, _ location: CLLocationCoordinate2D, _ dateInterval: DateInterval, completion: @escaping (Error?) -> Void) {
+    func saveGame(_ creatorId: String, _ address: String, _ location: CLLocationCoordinate2D, _ dateInterval: DateInterval, completion: @escaping (Error?) -> Void) {
+        
+    }
     
+    func deleteGame(_ gameId: String, completion: (Error?) -> Void) {
+        
     }
 }
