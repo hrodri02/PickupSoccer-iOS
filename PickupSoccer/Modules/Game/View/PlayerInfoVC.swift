@@ -121,6 +121,10 @@ extension PlayerInfoVC: GamePresenterToPlayerInfoVC {
         self.awayTeam = awayTeam
         self.teamSwitch.isOn = isWithHomeTeam
     }
+    
+    func displayErrorMessage(_ errorMessage: String) {
+        presentErrorMessage(errorMessage)
+    }
 }
 
 extension PlayerInfoVC: UITableViewDataSource {
