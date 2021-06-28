@@ -44,3 +44,23 @@ protocol DataStore {
                             gameId: String,
                             completion: (Result<PlayerInfoProtocol, Error>) -> Void)
 }
+
+enum DataStoreError: LocalizedError {
+    case failedToAddUserToGame
+    case failedToUpdateUserPosition
+    case failedToRemoveUserFromGame
+    case failedToDeleteGame
+    
+    var errorDescription: String? {
+        switch self {
+        case .failedToAddUserToGame:
+            return NSLocalizedString("Failed to add user game", comment: "")
+        case .failedToUpdateUserPosition:
+            return NSLocalizedString("Failed to update user position", comment: "")
+        case .failedToRemoveUserFromGame:
+            return NSLocalizedString("Failed to remove user from game", comment: "")
+        case .failedToDeleteGame:
+            return NSLocalizedString("Failed to delete game", comment: "")
+        }
+    }
+}
