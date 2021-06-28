@@ -95,7 +95,15 @@ extension GamePresenter: GameInteractorToGamePresenter {
         gameView?.displayErrorMessage(errorMessage)
     }
     
+    func onFailedToUpdatePlayerPosition(_ errorMessage: String) {
+        playerInfoView?.displayErrorMessage(errorMessage)
+    }
+    
     func onFetchFreePositionsSuccess(homeTeam: [Position], awayTeam: [Position], isWithHomeTeam: Bool) {
         playerInfoView?.displayFreePositions(homeTeam, awayTeam, isWithHomeTeam: isWithHomeTeam)
+    }
+    
+    func onFailedToRemoveUserFromGame(_ errorMessage: String) {
+        gameView?.displayErrorMessage(errorMessage)
     }
 }
