@@ -75,6 +75,8 @@ class MockPresenter: GamesInteractorToGamesPresenter {
 }
 
 class MockGame: Game {
+    var creatorId: String?
+    
     var id: String?
     var address: String?
     var playersInfo: Array<PlayerInfoProtocol>
@@ -133,11 +135,18 @@ class MockDataStore: DataStore {
         }
     }
     
-    func saveGame(_ address: String,
+    func saveGame(_ creatorId: String,
+                  _ address: String,
                   _ location: CLLocationCoordinate2D,
                   _ dateInterval: DateInterval,
                   completion: @escaping (Error?) -> Void)
     {
+        
+    }
+    
+    
+    
+    func deleteGame(_ gameId: String, completion: (Error?) -> Void) {
         
     }
     
