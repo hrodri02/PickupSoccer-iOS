@@ -34,6 +34,7 @@ protocol GamePresenterToGameView: AnyObject {
 
 protocol GamePresenterToPlayerInfoVC: AnyObject {
     func displayFreePositions(_ homeTeam: [Position], _ awayTeam: [Position], isWithHomeTeam: Bool)
+    func displayErrorMessage(_ errorMessage: String)
 }
 
 // MARK: - communication between presenter and interactor
@@ -53,9 +54,11 @@ protocol GameInteractorToGamePresenter: AnyObject {
     func verifiedIfUserCreatedGameOrHasJoinedGame(_ didUserCreateGame: Bool, _ didUserJoinGame: Bool)
     func onTimeConflictDetected(_ errorMessage: String)
     func onFailedToAddUserToGame(_ errorMessage: String)
+    func onFailedToUpdatePlayerPosition(_ errorMessage: String)
     func onFetchFreePositionsSuccess(homeTeam: [Position],
                                      awayTeam: [Position],
                                      isWithHomeTeam: Bool)
+    func onFailedToRemoveUserFromGame(_ errorMessage: String)
 }
 
 // MARK: - communication between presenter and router
