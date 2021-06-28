@@ -78,8 +78,7 @@ class GameModuleTests: XCTestCase {
                             coordinate: CLLocationCoordinate2D(),
                             timeInterval: dateIntervalForNewGame,
                             playersInfo: [])
-        interactor = GameInteractor(dataStore: MockDataStore(), game: newGame, user: user)
-        presenter = MockPresenter()
+        interactor = GameInteractor(dataStore: dataStore, game: newGame, user: user)
         interactor.presenter = presenter
         
         interactor.newPositionSelected(.goalKeeper, isWithHomeTeam: true)
@@ -108,8 +107,7 @@ class GameModuleTests: XCTestCase {
                             coordinate: CLLocationCoordinate2D(),
                             timeInterval: timeInterval1,
                             playersInfo: [])
-        interactor = GameInteractor(dataStore: MockDataStore(), game: newGame, user: user)
-        presenter = MockPresenter()
+        interactor = GameInteractor(dataStore: dataStore, game: newGame, user: user)
         interactor.presenter = presenter
         interactor.newPositionSelected(.goalKeeper, isWithHomeTeam: true)
         let errorMessage = presenter.errorMessage
@@ -136,8 +134,7 @@ class GameModuleTests: XCTestCase {
                             coordinate: CLLocationCoordinate2D(),
                             timeInterval: oneHourFromNowForOneHour,
                             playersInfo: [])
-        interactor = GameInteractor(dataStore: MockDataStore(), game: newGame, user: user)
-        presenter = MockPresenter()
+        interactor = GameInteractor(dataStore: dataStore, game: newGame, user: user)
         interactor.presenter = presenter
         interactor.newPositionSelected(.goalKeeper, isWithHomeTeam: true)
         
@@ -164,8 +161,7 @@ class GameModuleTests: XCTestCase {
                             coordinate: CLLocationCoordinate2D(),
                             timeInterval: nowForOneHour,
                             playersInfo: [])
-        interactor = GameInteractor(dataStore: MockDataStore(), game: newGame, user: user)
-        presenter = MockPresenter()
+        interactor = GameInteractor(dataStore: dataStore, game: newGame, user: user)
         interactor.presenter = presenter
         interactor.newPositionSelected(.goalKeeper, isWithHomeTeam: true)
         
@@ -193,8 +189,7 @@ class GameModuleTests: XCTestCase {
                             coordinate: CLLocationCoordinate2D(),
                             timeInterval: nowForOneHour,
                             playersInfo: [])
-        interactor = GameInteractor(dataStore: MockDataStore(), game: newGame, user: user)
-        presenter = MockPresenter()
+        interactor = GameInteractor(dataStore: dataStore, game: newGame, user: user)
         interactor.presenter = presenter
         interactor.newPositionSelected(.goalKeeper, isWithHomeTeam: true)
         
@@ -218,10 +213,9 @@ class GameModuleTests: XCTestCase {
                                coordinate: CLLocationCoordinate2D(),
                                timeInterval: nowForOneHour,
                                playersInfo: [player1, player2])
-        interactor = GameInteractor(dataStore: MockDataStore(),
+        interactor = GameInteractor(dataStore: dataStore,
                                     game: newGame,
                                     user: nil)
-        presenter = MockPresenter()
         interactor.presenter = presenter
         interactor.fetchPlayersForGame()
         
@@ -319,11 +313,10 @@ class GameModuleTests: XCTestCase {
                         firstName: "Heriberto",
                         lastName: "Rodriguez",
                         joinedGames: [newGame])
-        interactor = GameInteractor(dataStore: MockDataStore(),
+        interactor = GameInteractor(dataStore: dataStore,
                                     game: newGame,
                                     user: user)
         
-        presenter = MockPresenter()
         interactor.presenter = presenter
         
         interactor.fetchPlayersForGame()
@@ -361,11 +354,10 @@ class GameModuleTests: XCTestCase {
                         firstName: "Heriberto",
                         lastName: "Rodriguez",
                         joinedGames: [newGame])
-        interactor = GameInteractor(dataStore: MockDataStore(),
+        interactor = GameInteractor(dataStore: dataStore,
                                     game: newGame,
                                     user: user)
         
-        presenter = MockPresenter()
         interactor.presenter = presenter
         
         interactor.fetchPlayersForGame()
@@ -414,7 +406,6 @@ class GameModuleTests: XCTestCase {
         interactor = GameInteractor(dataStore: dataStore,
                                     game: newGame,
                                     user: user)
-        presenter = MockPresenter()
         interactor.presenter = presenter
         interactor.newPositionSelected(.goalKeeper, isWithHomeTeam: true)
         
@@ -445,7 +436,6 @@ class GameModuleTests: XCTestCase {
         interactor = GameInteractor(dataStore: dataStore,
                                     game: newGame,
                                     user: user)
-        presenter = MockPresenter()
         interactor.presenter = presenter
         dataStore.failedToAddUserToGame = true
         interactor.newPositionSelected(.goalKeeper, isWithHomeTeam: true)
