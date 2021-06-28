@@ -167,7 +167,7 @@ extension GameInteractor: GamePresenterToGameInteractor {
                 }
                 self.presenter?.onUpdatedTeams(homeTeam, awayTeam)
             case .failure(let error):
-                print(error.localizedDescription)
+                self.presenter?.onFailedToUpdatePlayerPosition(error.localizedDescription)
             }
         }
     }
@@ -264,9 +264,8 @@ extension GameInteractor: GamePresenterToGameInteractor {
                 self.presenter?.onUpdatedTeams(self.homeTeam,
                                                self.awayTeam)
             case .failure(let error):
-                print(error.localizedDescription)
+                self.presenter?.onFailedToRemoveUserFromGame(error.localizedDescription)
             }
-            
         }
     }
     
