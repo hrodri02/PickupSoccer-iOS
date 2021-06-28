@@ -1,4 +1,7 @@
+import UIKit
 
+let rect = CGRect(x: 0, y: 0, width: 10, height: 10)
+print(rect.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)))
 
 protocol UserProtocol: Hashable {
     var uid: Int64 {get set}
