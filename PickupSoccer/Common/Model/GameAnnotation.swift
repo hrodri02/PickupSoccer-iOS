@@ -11,17 +11,18 @@ import MapKit
 
 class GameAnnotation: NSObject, MKAnnotation
 {
-    var gameViewModel: GameViewModel?
     var coordinate: CLLocationCoordinate2D
     var title: String?
+    var id: String
     
-    init(gameViewModel: GameViewModel, coordinate: CLLocationCoordinate2D) {
-        self.gameViewModel = gameViewModel
-        self.coordinate = coordinate
-        self.title = gameViewModel.address
+    init(game: Game) {
+        self.id = game.id ?? ""
+        self.coordinate = game.coordinate
+        self.title = game.address
     }
     
     init(coordinate: CLLocationCoordinate2D) {
+        self.id = ""
         self.coordinate = coordinate
     }
 }
