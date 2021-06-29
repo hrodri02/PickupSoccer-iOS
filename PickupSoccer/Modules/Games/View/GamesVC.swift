@@ -19,7 +19,7 @@ class GamesVC: UIViewController
     let KM_IN_DEGREE: Double = 111
     let userLocationService: UserLocationServiceProtocol
     var userCoordinate: CLLocationCoordinate2D?
-    var annotations: [GameAnnotation] = []
+    var viewModels: [GameViewModel] = []
     var coordinateToAnnotation: [CLLocationCoordinate2D: GameAnnotation] = [:]
     var selectedItem: Int = 0
     var presenter: GamesViewToGamesPresenter?
@@ -195,44 +195,49 @@ class GamesVC: UIViewController
 }
 
 extension GamesVC: GamesPresenterToGamesView {
-    func displayGames(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel]) {
-        removeAnnotationsNotInRegion(coordinateToGameViewModel)
-        addNewAnnotations(coordinateToGameViewModel)
-        addAnnotationsToDataSource()
+    func displayGames(_ coordinateToGame: [CLLocationCoordinate2D : Game]) {
+        removeAnnotationsNotInRegion(coordinateToGame)
+        addNewAnnotations(coordinateToGame)
+        createViewModels(from: coordinateToGame)
         reloadGamesView()
     }
     
-    private func removeAnnotationsNotInRegion(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel]) {
+    private func removeAnnotationsNotInRegion(_ coordinateToGame: [CLLocationCoordinate2D : Game]) {
         for (coordinate, annotation) in coordinateToAnnotation {
-            if coordinateToGameViewModel[coordinate] == nil {
+            if coordinateToGame[coordinate] == nil {
                 mapView.removeAnnotation(annotation)
                 coordinateToAnnotation[coordinate] = nil
             }
         }
     }
     
-    private func addNewAnnotations(_ coordinateToGameViewModel: [CLLocationCoordinate2D : GameViewModel]) {
-        for (coordinate, gameViewModel) in coordinateToGameViewModel {
+    private func addNewAnnotations(_ coordinateToGame: [CLLocationCoordinate2D : Game]) {
+        for (coordinate, game) in coordinateToGame {
             if coordinateToAnnotation[coordinate] == nil {
-                let annotation = GameAnnotation(gameViewModel: gameViewModel, coordinate: coordinate)
+                let annotation = GameAnnotation(game: game)
                 mapView.addAnnotation(annotation)
                 coordinateToAnnotation[coordinate] = annotation
             }
         }
     }
     
-    private func addAnnotationsToDataSource() {
-        annotations.removeAll()
-        for (_, annotation) in coordinateToAnnotation {
-            annotations.append(annotation)
+    private func createViewModels(from coordinateToGame: [CLLocationCoordinate2D : Game]) {
+        viewModels.removeAll()
+        for (_, game) in coordinateToGame {
+            let viewModel = GameViewModel(game: game)
+            viewModels.append(viewModel)
         }
+        
+        viewModels = viewModels.sorted(by: { (viewModel1, viewModel2) -> Bool in
+            return viewModel1.id < viewModel2.id
+        })
     }
     
     private func reloadGamesView() {
         collectionView.reloadData()
         // calculate new selectedItem, then scroll to it
-        if annotations.count > 0 {
-            selectedItem = (NUM_ANNOTATIONS_DATA_SETS / 2) * annotations.count
+        if viewModels.count > 0 {
+            selectedItem = (NUM_ANNOTATIONS_DATA_SETS / 2) * viewModels.count
             collectionView.scrollToItem(at: IndexPath(item: selectedItem, section: 0),
                                         at: .centeredHorizontally,
                                         animated: false)
@@ -260,18 +265,20 @@ extension GamesVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let coordinate = view.annotation?.coordinate {
-            if let annotation = coordinateToAnnotation[coordinate],
-                let targetItem = annotations.firstIndex(of: annotation)
+            if let annotation = coordinateToAnnotation[coordinate]
             {
-                let currItem = selectedItem % annotations.count
+                let targetItem = indexOfFirstViewModelThatMatches(annotation)
+                
+                let numGames = viewModels.count
+                let currItem = selectedItem % numGames
                 if currItem == targetItem {
                     return
                 }
                 
-                let stepsToRight = (currItem > targetItem) ? annotations.count - (currItem) + targetItem : targetItem - currItem
-                let right = (selectedItem + stepsToRight >= annotations.count * NUM_ANNOTATIONS_DATA_SETS) ? Int.max : stepsToRight
+                let stepsToRight = (currItem > targetItem) ? numGames - (currItem) + targetItem : targetItem - currItem
+                let right = (selectedItem + stepsToRight >= numGames * NUM_ANNOTATIONS_DATA_SETS) ? Int.max : stepsToRight
                 
-                let stepsToLeft = (currItem > targetItem) ? currItem - targetItem : annotations.count - targetItem + (currItem)
+                let stepsToLeft = (currItem > targetItem) ? currItem - targetItem : numGames - targetItem + (currItem)
                 let left = (selectedItem - stepsToLeft < 0) ? Int.max : stepsToLeft
                 
                 selectedItem += (left <= right) ? -left : right
@@ -281,18 +288,30 @@ extension GamesVC: MKMapViewDelegate {
             }
         }
     }
+    
+    private func indexOfFirstViewModelThatMatches(_ annotation: GameAnnotation) -> Int {
+        var index = 0
+        for i in 0 ..< viewModels.count {
+            let viewModel = viewModels[i]
+            if viewModel.id == annotation.id {
+                index = i
+                break
+            }
+        }
+        return index
+    }
 }
 
 extension GamesVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return annotations.count * NUM_ANNOTATIONS_DATA_SETS
+        return viewModels.count * NUM_ANNOTATIONS_DATA_SETS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! GameCVCell
-        let index = indexPath.item % annotations.count
-        let annotation = annotations[index]
-        cell.configure(with: annotation, index: index)
+        let index = indexPath.item % viewModels.count
+        let viewModel = viewModels[index]
+        cell.configure(with: viewModel, index: index)
         return cell
     }
 }
@@ -302,10 +321,8 @@ extension GamesVC: UICollectionViewDelegate {
         guard let navController = navigationController else {
             fatalError("Failed to unwrap navigationController")
         }
-        let index = indexPath.item % annotations.count
-        if let id = annotations[index].gameViewModel?.id {
-            presenter?.gameCellTapped(id: id, navController)
-        }
+        let index = indexPath.item % viewModels.count
+        presenter?.gameCellTapped(id: viewModels[index].id, navController)
     }
 }
 
