@@ -46,14 +46,13 @@ class GamesPresenter: GamesViewToGamesPresenter
 
 extension GamesPresenter: GamesInteractorToGamesPresenter {
     func onFetchGamesSuccess(_ games: [Game]) {
-        var coordinateToGameViewModel = [CLLocationCoordinate2D : GameViewModel]()
+        var coordinateToGame = [CLLocationCoordinate2D : Game]()
         for game in games {
-            let viewModel = GameViewModel(game: game)
             let coordinate = CLLocationCoordinate2D(latitude: game.coordinate.latitude,
                                                     longitude: game.coordinate.longitude)
-            coordinateToGameViewModel[coordinate] = viewModel
+            coordinateToGame[coordinate] = game
         }
-        view?.displayGames(coordinateToGameViewModel)
+        view?.displayGames(coordinateToGame)
     }
     
     func onFetchGamesFailed(_ errorMessage: String) {
