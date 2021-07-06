@@ -19,6 +19,8 @@
 		2F18899F25D97FAA00ECA469 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F18899D25D97FAA00ECA469 /* LaunchScreen.storyboard */; };
 		2F28E35925E6A66A00E64E70 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */; };
 		2F2964EF265BEEB500558C2E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2964EE265BEEB500558C2E /* DataStore.swift */; };
+		2F2BE89C26948370008536D6 /* UICollectionViewCell+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2BE89B26948370008536D6 /* UICollectionViewCell+Ext.swift */; };
+		2F2BE89E26948587008536D6 /* UITableViewCell+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2BE89D26948587008536D6 /* UITableViewCell+Ext.swift */; };
 		2F2D0AFB25F2840900FC87AA /* CreateGameProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0AFA25F2840900FC87AA /* CreateGameProtocols.swift */; };
 		2F2D0AFE25F30A6300FC87AA /* CreateGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */; };
 		2F2D0B0125F310E000FC87AA /* CreateGameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D0B0025F310E000FC87AA /* CreateGameRouter.swift */; };
@@ -125,6 +127,8 @@
 		2F1889A025D97FAA00ECA469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F28E35825E6A66A00E64E70 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
 		2F2964EE265BEEB500558C2E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		2F2BE89B26948370008536D6 /* UICollectionViewCell+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Ext.swift"; sourceTree = "<group>"; };
+		2F2BE89D26948587008536D6 /* UITableViewCell+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Ext.swift"; sourceTree = "<group>"; };
 		2F2D0AFA25F2840900FC87AA /* CreateGameProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameProtocols.swift; sourceTree = "<group>"; };
 		2F2D0AFD25F30A6300FC87AA /* CreateGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameInteractor.swift; sourceTree = "<group>"; };
 		2F2D0B0025F310E000FC87AA /* CreateGameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameRouter.swift; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 				2F9F2106265BD55800F92024 /* GameMO+Ext.swift */,
 				2F31FB6F267259B80073074D /* PlayerInfoMO+Ext.swift */,
 				2FC67A8026723FED0016A5F4 /* UserMO+Ext.swift */,
+				2F2BE89B26948370008536D6 /* UICollectionViewCell+Ext.swift */,
+				2F2BE89D26948587008536D6 /* UITableViewCell+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -821,6 +827,7 @@
 				2FAA61E72684AC0A00122641 /* SoccerFieldView.swift in Sources */,
 				2FAA61E92684BE8600122641 /* PaddingLabel.swift in Sources */,
 				2F690C2525FB04F900A7C054 /* CalendarInteractor.swift in Sources */,
+				2F2BE89E26948587008536D6 /* UITableViewCell+Ext.swift in Sources */,
 				2F8BB1DE265FCBDB003892E7 /* AwayTeamCVCell.swift in Sources */,
 				2F9F2107265BD55800F92024 /* GameMO+Ext.swift in Sources */,
 				2F18899525D97FA600ECA469 /* SceneDelegate.swift in Sources */,
@@ -847,6 +854,7 @@
 				2FA375A225EDB93700016633 /* GameTimeVC.swift in Sources */,
 				2FA50F9025DB6EE8000F401A /* CalendarPickerFooterView.swift in Sources */,
 				2F6BCB2126023DD6000DA4C5 /* UserLocationService.swift in Sources */,
+				2F2BE89C26948370008536D6 /* UICollectionViewCell+Ext.swift in Sources */,
 				2F3910A0265D3F4B00B74C8C /* GameVC.swift in Sources */,
 				2F9F2109265BD57A00F92024 /* Game.swift in Sources */,
 				2F2D0AFB25F2840900FC87AA /* CreateGameProtocols.swift in Sources */,
