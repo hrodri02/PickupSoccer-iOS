@@ -27,8 +27,8 @@ class GameVC: UIViewController {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(HomeTeamCVCell.self, forCellWithReuseIdentifier: "HomeCellId")
-        collectionView.register(AwayTeamCVCell.self, forCellWithReuseIdentifier: "AwayCellId")
+        collectionView.register(HomeTeamCVCell.self, forCellWithReuseIdentifier:HomeTeamCVCell.cellId)
+        collectionView.register(AwayTeamCVCell.self, forCellWithReuseIdentifier: AwayTeamCVCell.cellId)
         collectionView.isPagingEnabled = true
         collectionView.backgroundView = self.soccerFieldView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -185,12 +185,12 @@ extension GameVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCellId", for: indexPath) as! HomeTeamCVCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTeamCVCell.cellId, for: indexPath) as! HomeTeamCVCell
             cell.configure(with: homeTeam)
             return cell
         }
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AwayCellId", for: indexPath) as! AwayTeamCVCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AwayTeamCVCell.cellId, for: indexPath) as! AwayTeamCVCell
         cell.configure(with: awayTeam)
         return cell
     }

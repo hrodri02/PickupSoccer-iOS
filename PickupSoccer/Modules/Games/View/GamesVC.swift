@@ -47,7 +47,7 @@ class GamesVC: UIViewController
     lazy var collectionView: UICollectionView = {
         let layout = CarouselLayout()
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.register(GameCVCell.self, forCellWithReuseIdentifier: "CellID")
+        collectionView.register(GameCVCell.self, forCellWithReuseIdentifier: GameCVCell.cellId)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.isScrollEnabled = true
@@ -308,7 +308,7 @@ extension GamesVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! GameCVCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GameCVCell.cellId, for: indexPath) as! GameCVCell
         let index = indexPath.item % viewModels.count
         let viewModel = viewModels[index]
         cell.configure(with: viewModel, index: index)

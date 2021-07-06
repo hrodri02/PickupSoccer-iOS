@@ -10,8 +10,6 @@ import UIKit
 
 class CalendarDateViewCVCell: UICollectionViewCell
 {
-    static let reuseIdentifier = String(describing: CalendarDateViewCVCell.self)
-    
     var day: Day? {
         didSet {
             guard let day = day else { return }

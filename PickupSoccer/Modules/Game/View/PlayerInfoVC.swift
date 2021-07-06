@@ -44,8 +44,8 @@ class PlayerInfoVC: UIViewController
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .black
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
-        tableView.register(PositionTVCell.self, forCellReuseIdentifier: "positionCellId")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.cellId)
+        tableView.register(PositionTVCell.self, forCellReuseIdentifier: PositionTVCell.cellId)
         tableView.isScrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
@@ -141,7 +141,7 @@ extension PlayerInfoVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.cellId, for: indexPath)
             cell.backgroundColor = UIColor.init(white: 0.15, alpha: 1.0)
             cell.textLabel?.textColor = UIColor.init(white: 0.9, alpha: 1.0)
             cell.textLabel?.text = (teamSwitch.isOn) ? "Home Team" : "Away Team"
@@ -153,7 +153,7 @@ extension PlayerInfoVC: UITableViewDataSource {
             return cell
         }
         else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "positionCellId", for: indexPath) as! PositionTVCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: PositionTVCell.cellId, for: indexPath) as! PositionTVCell
             let positionName = getPositionName(for: indexPath)
             let isSelected = isPositionSelected(at: indexPath)
             cell.configure(with: positionName, isSelected: isSelected)

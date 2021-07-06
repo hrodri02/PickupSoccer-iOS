@@ -24,7 +24,7 @@ class CalendarVC_MVVM: UIViewController, CalendarPickerFooterViewDelegate {
         layout.minimumInteritemSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(CalendarDateViewCVCell.self, forCellWithReuseIdentifier: CalendarDateViewCVCell.reuseIdentifier)
+        collectionView.register(CalendarDateViewCVCell.self, forCellWithReuseIdentifier: CalendarDateViewCVCell.cellId)
         collectionView.backgroundColor = UIColor.black
         collectionView.isScrollEnabled = false
         collectionView.dataSource = self
@@ -86,7 +86,7 @@ extension CalendarVC_MVVM: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarDateViewCVCell.reuseIdentifier, for: indexPath) as! CalendarDateViewCVCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarDateViewCVCell.cellId, for: indexPath) as! CalendarDateViewCVCell
         let day = viewModel.days[indexPath.item]
         cell.day = day
         return cell
