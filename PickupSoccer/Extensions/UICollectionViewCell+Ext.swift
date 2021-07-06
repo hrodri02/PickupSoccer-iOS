@@ -6,4 +6,9 @@
 //  Copyright © 2021 Heriberto Rodriguez. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+extension UICollectionViewCell
+{
+    static let cellId = String(describing: self)
+}
