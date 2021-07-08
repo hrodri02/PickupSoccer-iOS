@@ -25,7 +25,6 @@ class CarouselLayout: UICollectionViewFlowLayout
         let maxZoom: CGFloat = CarouselLayoutConstants.maxCellHeight / CarouselLayoutConstants.minCellHeight
         let deltaWidth = CarouselLayoutConstants.minCellWidth * (maxZoom - 1.0)
         minimumLineSpacing = CarouselLayoutConstants.horizontalSpaceBetweenCells + (deltaWidth / 2.0)
-        itemSize = CGSize(width: CarouselLayoutConstants.minCellWidth, height: CarouselLayoutConstants.minCellHeight)
     }
 
     required init?(coder aDecoder: NSCoder) {
