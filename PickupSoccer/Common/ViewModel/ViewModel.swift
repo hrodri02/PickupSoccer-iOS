@@ -19,7 +19,7 @@ protocol ViewModelProtocol
 class ViewModel<View, Model>: ViewModelProtocol where View: UICollectionViewCell, Model: Any
 {
     public var cell: UICollectionViewCell.Type { return View.self }
-    public weak var view: View? // Note: view model is created before we have access to the cell
+    public weak var view: View?
     public let model: Model
     private var selectionHandler: ((ViewModel<View, Model>) -> Void)?
     

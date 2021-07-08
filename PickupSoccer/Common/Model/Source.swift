@@ -10,7 +10,6 @@ import UIKit
 
 class Source: NSObject
 {
-    // Note: If I use view model type, I need to speficy the type for its generic parameters
     let NUM_DUP_DATA_SETS: Int = 1000
     let isInfiniteCollectionView: Bool
     let viewModels: [ViewModelProtocol]
