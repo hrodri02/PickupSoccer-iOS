@@ -34,3 +34,19 @@ extension Source: UICollectionViewDataSource {
         return cell
     }
 }
+
+extension Source: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = indexPath.item % viewModels.count
+        let viewModel = viewModels[item]
+        viewModel.callback()
+    }
+}
+
+extension Source: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let item = indexPath.item % viewModels.count
+        let viewModel = viewModels[item]
+        return viewModel.size(collectionViewBounds: collectionView.bounds)
+    }
+}
