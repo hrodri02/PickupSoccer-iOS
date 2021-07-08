@@ -44,12 +44,9 @@ class GamesVC: UIViewController
         return button
     }()
     
-    lazy var collectionView: UICollectionView = {
-        let layout = CarouselLayout()
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+    lazy var collectionView: CollectionView = {
+        let collectionView = CollectionView(layout: CarouselLayout())
         collectionView.register(GameCVCell.self, forCellWithReuseIdentifier: GameCVCell.cellId)
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.isScrollEnabled = true
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +145,7 @@ class GamesVC: UIViewController
     }
     
     func fetchUsersLocation() {
-        userLocationService.generateUsersLocation { (result) in
+        userLocationService.generateUsersLocation { [unowned self] (result) in
             switch result {
             case .success(let userCoordinate):
                 self.userCoordinate = userCoordinate
@@ -225,12 +222,20 @@ extension GamesVC: GamesPresenterToGamesView {
         viewModels.removeAll()
         for (_, game) in coordinateToGame {
             let viewModel = GameViewModel(game: game)
+            viewModel.onSelect { [unowned self] (viewModel) in
+                guard let navController = self.navigationController else {
+                    fatalError("Failed to unwrap navigationController")
+                }
+                self.presenter?.gameCellTapped(game: viewModel.model, navController)
+            }
             viewModels.append(viewModel)
         }
         
         viewModels = viewModels.sorted(by: { (viewModel1, viewModel2) -> Bool in
             return viewModel1.id < viewModel2.id
         })
+        
+        collectionView.source = Source(viewModels: viewModels, isInfiniteCollectionView: true)
     }
     
     private func reloadGamesView() {
@@ -299,30 +304,6 @@ extension GamesVC: MKMapViewDelegate {
             }
         }
         return index
-    }
-}
-
-extension GamesVC: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModels.count * NUM_ANNOTATIONS_DATA_SETS
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GameCVCell.cellId, for: indexPath) as! GameCVCell
-        let index = indexPath.item % viewModels.count
-        let viewModel = viewModels[index]
-        cell.configure(with: viewModel, index: index)
-        return cell
-    }
-}
-
-extension GamesVC: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let navController = navigationController else {
-            fatalError("Failed to unwrap navigationController")
-        }
-        let index = indexPath.item % viewModels.count
-        presenter?.gameCellTapped(id: viewModels[index].id, navController)
     }
 }
 
