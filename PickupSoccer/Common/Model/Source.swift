@@ -13,10 +13,15 @@ class Source: NSObject
     let NUM_DUP_DATA_SETS: Int = 1000
     let isInfiniteCollectionView: Bool
     let viewModels: [ViewModelProtocol]
+    let didEndDecelerating: ((UIScrollView) -> Void)?
     
-    init(viewModels: [ViewModelProtocol], isInfiniteCollectionView: Bool = false) {
+    init(viewModels: [ViewModelProtocol],
+         isInfiniteCollectionView: Bool = false,
+         didEndDecelerating: ((UIScrollView) -> Void)? = nil)
+    {
         self.isInfiniteCollectionView = isInfiniteCollectionView
         self.viewModels = viewModels
+        self.didEndDecelerating = didEndDecelerating
     }
 }
 
@@ -40,6 +45,14 @@ extension Source: UICollectionViewDelegate {
         let item = indexPath.item % viewModels.count
         let viewModel = viewModels[item]
         viewModel.callback()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let didEndDecelerating = didEndDecelerating else {
+            return
+        }
+        
+        didEndDecelerating(scrollView)
     }
 }
 
