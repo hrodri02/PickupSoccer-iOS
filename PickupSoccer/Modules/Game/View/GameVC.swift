@@ -20,15 +20,12 @@ class GameVC: UIViewController {
         return imageView
     }()
     
-    lazy var collectionView: UICollectionView = {
+    lazy var collectionView: CollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(HomeTeamCVCell.self, forCellWithReuseIdentifier:HomeTeamCVCell.cellId)
-        collectionView.register(AwayTeamCVCell.self, forCellWithReuseIdentifier: AwayTeamCVCell.cellId)
+        let collectionView = CollectionView(layout: layout)
+        collectionView.register(TeamCVCell.self, forCellWithReuseIdentifier:TeamCVCell.cellId)
         collectionView.isPagingEnabled = true
         collectionView.backgroundView = self.soccerFieldView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,12 +60,6 @@ class GameVC: UIViewController {
     
     @objc func menuButtonTapped() {
         presenter?.menuButtonTapped()
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let x = scrollView.contentOffset.x
-        let item = Int(x / safeAreaLayoutFrame.width)
-        title = (item == 0) ? "Home Team" : "Away Team"
     }
     
     private func setupTopNavigationBar() {
@@ -123,6 +114,15 @@ extension GameVC: GamePresenterToGameView {
     func displayPlayers(_ homeTeam: [String : Position], _ awayTeam: [String : Position]) {
         self.homeTeam = homeTeam
         self.awayTeam = awayTeam
+        
+        let homeTeamViewModel = TeamViewModel(model: homeTeam)
+        let awayTeamViewModel = TeamViewModel(model: awayTeam)
+        collectionView.source = Source(viewModels: [homeTeamViewModel, awayTeamViewModel], didEndDecelerating: { [unowned self] (scrollView) in
+            let x = scrollView.contentOffset.x
+            let item = Int(x / self.safeAreaLayoutFrame.width)
+            self.title = (item == 0) ? "Home Team" : "Away Team"
+        })
+        
         collectionView.reloadData()
     }
     
@@ -175,29 +175,5 @@ extension GameVC: GamePresenterToGameView {
     
     func displayErrorMessage(_ errorMessage: String) {
         presentErrorMessage(errorMessage)
-    }
-}
-
-extension GameVC: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTeamCVCell.cellId, for: indexPath) as! HomeTeamCVCell
-            cell.configure(with: homeTeam)
-            return cell
-        }
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AwayTeamCVCell.cellId, for: indexPath) as! AwayTeamCVCell
-        cell.configure(with: awayTeam)
-        return cell
-    }
-}
-
-extension GameVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
     }
 }
