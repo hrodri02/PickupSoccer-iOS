@@ -15,21 +15,17 @@ protocol CalendarVCDelegate: AnyObject {
 class CalendarVC: UIViewController {
     weak var delegate: CalendarVCDelegate?
     var presenter: CalendarViewToCalendarPresenter?
-    var days: [Day]?
     var numOfWeeksInMonth: Int?
     private var baseDate: Date
     
-    private lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: CollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = CollectionView(layout: layout)
         collectionView.register(CalendarDateViewCVCell.self, forCellWithReuseIdentifier: CalendarDateViewCVCell.cellId)
         collectionView.backgroundColor = UIColor.black
         collectionView.isScrollEnabled = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -77,7 +73,15 @@ class CalendarVC: UIViewController {
 // MARK: - CalendarPresenterToCalendarView
 extension CalendarVC: CalendarPresenterToCalendarView {
     func showCalendar(with daysOfMonth: [Day], _ numWeeksInMonth: Int) {
-        self.days = daysOfMonth
+        let viewModels = daysOfMonth.map({ (day) -> DayViewModel in
+            let dayViewModel = DayViewModel(day: day, numOfWeeksInMonth: numWeeksInMonth)
+            dayViewModel.onSelect { [unowned self] (viewModel) in
+                let date = viewModel.model.date
+                self.presenter?.userTappedADate(date)
+            }
+            return dayViewModel
+        })
+        collectionView.source = Source(viewModels: viewModels)
         self.numOfWeeksInMonth = numWeeksInMonth
         reloadCalendar()
     }
@@ -96,41 +100,6 @@ extension CalendarVC: CalendarPickerFooterViewDelegate {
         self.baseDate = newBaseDate
         self.headerView.baseDate = newBaseDate
         self.presenter?.updateBaseDate(newBaseDate)
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-extension CalendarVC: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return days?.count ?? 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarDateViewCVCell.cellId, for: indexPath) as! CalendarDateViewCVCell
-        guard let days = days else {
-            fatalError("Failed to unwrap days")
-        }
-        let day = days[indexPath.row]
-        cell.day = day
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension CalendarVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let days = days else {
-            fatalError("Failed to unwrap days")
-        }
-        
-        let date = days[indexPath.item].date
-        presenter?.userTappedADate(date)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = Int(collectionView.frame.width / 7)
-        let height = Int(collectionView.frame.height) / (numOfWeeksInMonth ?? 1)
-        return CGSize(width: width, height: height)
     }
 }
 
