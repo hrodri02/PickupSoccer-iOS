@@ -25,6 +25,7 @@ extension Source: UICollectionViewDataSource {
         return (isInfiniteCollectionView ? NUM_DUP_DATA_SETS : 1) * viewModels.count
     }
     
+    #warning("I might have a problem with cell reuse in collection views that show many cells")
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = indexPath.item % viewModels.count
         let viewModel = viewModels[item]
