@@ -10,5 +10,7 @@ import UIKit
 
 extension UICollectionViewCell
 {
-    static let cellId = String(describing: self)
+    static var cellId: String {
+        String(describing: self)
+    }
 }
