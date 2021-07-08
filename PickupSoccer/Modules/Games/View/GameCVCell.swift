@@ -74,13 +74,6 @@ class GameCVCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with viewModel: GameViewModel, index: Int) {
-        let address = viewModel.address
-        locationLabel.text = "\(index). \(address)"
-        dateLabel.text = viewModel.startDate
-        durationLabel.text = viewModel.duration
-    }
-    
     private func setLocationLabelConstraints() {
         NSLayoutConstraint.activate([
             locationLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
