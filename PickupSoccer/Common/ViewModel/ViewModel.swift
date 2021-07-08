@@ -36,7 +36,7 @@ class ViewModel<View, Model>: ViewModelProtocol where View: UICollectionViewCell
     }
     
     func size(collectionViewBounds: CGRect) -> CGSize {
-        return CGSize.zero
+        return CGSize(width: collectionViewBounds.width, height: collectionViewBounds.height)
     }
     
     func onSelect(_ completionHandler: @escaping (ViewModel<View, Model>) -> Void) {
