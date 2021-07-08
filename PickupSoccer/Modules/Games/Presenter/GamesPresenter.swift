@@ -36,10 +36,7 @@ class GamesPresenter: GamesViewToGamesPresenter
         router.pushCreateGameVC(navigationController)
     }
     
-    func gameCellTapped(id: String, _ navigationController: UINavigationController) {
-        guard let game = interactor.getGame(with: id) else {
-            fatalError("Faild to get game with id = \(id)")
-        }
+    func gameCellTapped(game: Game, _ navigationController: UINavigationController) {
         router.pushGameVC(navigationController, game: game)
     }
 }
