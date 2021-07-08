@@ -10,24 +10,16 @@ import UIKit
 
 class CalendarDateViewCVCell: UICollectionViewCell
 {
-    var day: Day? {
-        didSet {
-            guard let day = day else { return }
-
-            numberLabel.text = day.number
-            accessibilityLabel = CalendarDateViewCVCell.accessibilityDateFormatter.string(from: day.date)
-            updateSelectionStatus()
-        }
-    }
-    
-    private static let accessibilityDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.calendar = Calendar(identifier: .gregorian)
-        dateFormatter.setLocalizedDateFormatFromTemplate("EEEE, MMMM d")
-        return dateFormatter
-    }()
-    
     private var widthAnchorConstraint: NSLayoutConstraint!
+    
+    public lazy var numberLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.textColor = Colors.mainTextColor
+        return label
+    }()
     
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
@@ -35,15 +27,6 @@ class CalendarDateViewCVCell: UICollectionViewCell
         view.clipsToBounds = true
         view.backgroundColor = .systemRed
         return view
-    }()
-
-    private lazy var numberLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = Colors.mainTextColor
-        return label
     }()
 
     override init(frame: CGRect) {
@@ -97,10 +80,8 @@ class CalendarDateViewCVCell: UICollectionViewCell
 }
 
 // MARK: - Appearance
-private extension CalendarDateViewCVCell {
-    func updateSelectionStatus() {
-        guard let day = day else { return }
-
+extension CalendarDateViewCVCell {
+    public func updateSelectionStatus(day: Day) {
         if day.isSelected {
             applySelectedStyle()
         } else {
