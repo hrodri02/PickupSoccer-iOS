@@ -47,4 +47,8 @@ class GameViewModel: ViewModel<GameCVCell, Game>
         return CGSize(width: CarouselLayoutConstants.minCellWidth,
                       height: CarouselLayoutConstants.minCellHeight)
     }
+    
+    private func printViewModel() {
+        print("{\n\tid = \(id)\n\taddress = \(address)\n\tstartDate = \(startDate)\n\tduration = \(duration)\n}")
+    }
 }
